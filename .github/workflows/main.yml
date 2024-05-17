@@ -16,11 +16,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # Updates Node.js version
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         
       # Uses an updated layer caching without deprecation warnings
       - name: Docker Layer Caching
