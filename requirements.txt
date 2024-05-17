@@ -1,4 +1,4 @@
-oauth2client.service_account
+oauth2client
 gspread
 pandas
 numpy
