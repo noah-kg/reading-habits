@@ -4,4 +4,5 @@
 .gitignore.bak
 .ipynb_checkpoints/
 *.json
+*.bak
 __pycache__

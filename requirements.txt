@@ -1,0 +1,17 @@
+pandas
+numpy
+matplotlib
+plotly
+scipy
+networkx
+cufflinks
+seaborn
+chart_studio
+itables
+nbconvert==5.6.1
+jupyter_contrib_nbextensions
+jupyter_nbextensions_configurator
+jupyterlab
+jupyter-client==6.1.12
+jinja2==2.11.3
+markupsafe==2.0.1
