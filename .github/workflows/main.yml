@@ -26,15 +26,6 @@ jobs:
       - name: Docker Layer Caching
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
-        
-      - name: free disk space
-        run: |
-        sudo rm -f /swapfile
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        sudo apt clean
-        docker rmi $(docker image ls -aq)
-        df -h
       
       # Builds docker image
       - name: Build docker images
@@ -54,3 +45,12 @@ jobs:
           branch: docs # The branch the action should deploy to.
           folder: docs # The folder the action should deploy.
       - run: echo "This job's status is ${{ job.status }}."
+      
+        - name: free disk space
+        run: |
+            sudo rm -f /swapfile
+            sudo rm -rf /usr/share/dotnet
+            sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+            sudo apt clean
+            docker rmi $(docker image ls -aq)
+            df -h
