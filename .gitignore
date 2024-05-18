@@ -1,4 +1,5 @@
 #Files to ignore
+GetData.ipynb
 *.exe
 *.log
 .gitignore.bak
