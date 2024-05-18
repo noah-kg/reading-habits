@@ -27,6 +27,12 @@ jobs:
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       
+      # Clean up space
+      - name: Remove unnecessary files
+        run: |
+          rm -rf /usr/share/dotnet
+          rm -rf "$AGENT_TOOLSDIRECTORY"
+          
       # Builds docker image
       - name: Build docker images
         run: docker build -t booksread . -f Dockerfile
@@ -45,12 +51,3 @@ jobs:
           branch: docs # The branch the action should deploy to.
           folder: docs # The folder the action should deploy.
       - run: echo "This job's status is ${{ job.status }}."
-      
-        - name: free disk space
-        run: |
-            sudo rm -f /swapfile
-            sudo rm -rf /usr/share/dotnet
-            sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-            sudo apt clean
-            docker rmi $(docker image ls -aq)
-            df -h
