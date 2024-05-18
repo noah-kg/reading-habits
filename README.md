@@ -1,5 +1,7 @@
 # My Reading Habits
 
+[Analysis](https://noah-kg.github.io/reading-habits/)
+
 An analysis on the books I've read. A fun little side-project to help me remember how to use Git and how to use Python, amongst other things. Data is pulled from my Google Sheet, where I acively track the books I'm reading.
 I track the following for (almost) every book:
 
