@@ -30,8 +30,6 @@ jobs:
       # Clean up space
       - name: Remove unnecessary files
         run: |
-          rm -rf /usr/share/dotnet
-          rm -rf /opt/ghc
           rm -rf "/usr/local/share/boost"
           rm -rf "$AGENT_TOOLSDIRECTORY"
           
