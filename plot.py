@@ -24,7 +24,7 @@ config = {
 }
 
 def gen_layout(fig, title, title_size=40, legendy_anchor='bottom', legendx_anchor='center', 
-               width=1000, height =600, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
+               height =600, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False,
@@ -32,7 +32,6 @@ def gen_layout(fig, title, title_size=40, legendy_anchor='bottom', legendx_ancho
     
     fig.update_layout(
         title=dict(text=title, font=dict(size=title_size, family="Baskerville, Bold", color=fontcolor)),
-        width=width,
         height=height,
         barmode=barmode,
         plot_bgcolor=plot_bg,
