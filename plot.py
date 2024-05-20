@@ -136,3 +136,29 @@ def gen_bar_graph(df, col, title, sub, num=5, color="#d27575"):
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
         
     return fig.show(config=config)
+
+def gen_stacked_bar_graph(dfp, title, sub, color="#d27575"):
+    """
+    Produces a stacked bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col: data to be displayed along x-axis
+    """
+    
+    fig = go.Figure()
+    for val in dfp.columns.unique():
+        fig.add_trace(
+            go.Bar(
+                x = dfp.index,
+                y = dfp[val],
+                customdata = [val] * len(dfp.index),
+                name = str(val),
+                hovertemplate="<b>%{customdata}</b>: %{y}<extra></extra>",
+            )    
+        )
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True)
+        
+    return fig.show(config=config)
