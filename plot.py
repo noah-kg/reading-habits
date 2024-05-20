@@ -127,7 +127,7 @@ def gen_bar_graph(df, col, title, sub, num=5, color="#d27575"):
             y=dfp['Title'],
             name='',
             marker_color=color,
-            # hovertemplate="<b>%{x}</b><br>Podiums: %{y}",
+            hovertemplate="<b>%{x}</b>: %{y}",
         )
     )
     
