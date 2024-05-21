@@ -137,13 +137,14 @@ def gen_bar_graph(df, col, title, sub, num=5, color="#d27575"):
         
     return fig.show(config=config)
 
-def gen_stacked_bar_graph(dfp, title, sub, color="#d27575"):
+def gen_stacked_bar_graph(dfp, title, sub):
     """
     Produces a stacked bar graph with the given dataframe and column.
     
     df: dataframe containing relevant data
     col: data to be displayed along x-axis
     """
+    colors = ['#d27575', '#529b9c']
     
     fig = go.Figure()
     for val in dfp.columns.unique():
@@ -152,9 +153,10 @@ def gen_stacked_bar_graph(dfp, title, sub, color="#d27575"):
                 x = dfp.index,
                 y = dfp[val],
                 customdata = [val] * len(dfp.index),
+                marker_color = colors[1] if val=='Physical' else colors[0],
                 name = str(val),
                 hovertemplate="<b>%{customdata}</b>: %{y}<extra></extra>",
-            )    
+            )
         )
     
     # Styling
