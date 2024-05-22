@@ -111,25 +111,41 @@ def gen_buttons(vals, multi=0):
         )
     return buttons_opts
 
-def gen_bar_graph(df, col, title, sub, num=5, color="#d27575"):
+def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575"):
     """
     Produces a simple bar graph with the given dataframe and column.
     
     df: dataframe containing relevant data
     col: data to be displayed along x-axis
     """
-    dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
-
+    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
     fig = go.Figure()
-    fig.add_trace(
-        go.Bar(
-            x=dfp[col],
-            y=dfp['Title'],
-            name='',
-            marker_color=color,
-            hovertemplate="<b>%{x}</b>: %{y}",
+    
+    if avg:
+        y_min = df[df.columns[1]].min() * 0.95
+        y_max = df[df.columns[1]].max() * 1.05
+        
+        fig.add_trace(
+            go.Bar(
+                x=df[col],
+                y=df[df.columns[1]],
+                name='',
+                marker_color=colors,
+                hovertemplate="<b>%{x}</b>: %{y}",
+            )
         )
-    )
+        fig.update_layout(yaxis_range=[y_min, y_max])
+    else:
+        dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
+        fig.add_trace(
+            go.Bar(
+                x=dfp[col],
+                y=dfp['Title'],
+                name='',
+                marker_color=color,
+                hovertemplate="<b>%{x}</b>: %{y}",
+            )
+        )
     
     # Styling
     title = f"{title}<br><sup>{sub}"
