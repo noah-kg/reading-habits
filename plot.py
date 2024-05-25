@@ -196,3 +196,27 @@ def gen_stacked_bar_graph(dfp, title, sub):
     fig.update_layout(legend=dict(orientation='h', yanchor="top", y=0.99, xanchor="center", x=0.5))
         
     return fig.show(config=config)
+
+def gen_heatmap(df, title, sub):
+    """
+    Produces a heat map with the given dataframe.
+    
+    df: dataframe containing relevant data
+    """
+    
+    fig = go.Figure()
+    fig.add_trace(
+        go.Heatmap(
+            x=df.columns,
+            y=df.index,
+            z=df.loc[df.index],
+            hoverongaps=False,
+            hovertemplate="<b>%{y}-%{x}</b>: %{z}<extra></extra>",
+        ) 
+    )
+    
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45)
+    fig.update_layout(margin_pad=10)
+    
+    return fig.show(config=config)
