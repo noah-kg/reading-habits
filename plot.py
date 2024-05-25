@@ -43,14 +43,16 @@ def gen_layout(fig, title, title_size=40, legendy_anchor='bottom', legendx_ancho
             showgrid=x_showgrid,
             showline=x_showline,
             linecolor=linecolor,
-            gridcolor=gridcolor
+            gridcolor=gridcolor,
+            # autorange=True
         ),
         yaxis=dict(
             showgrid=y_showgrid,
             showline=y_showline,
             showticklabels=y_labels,
             linecolor=linecolor,
-            gridcolor=gridcolor
+            gridcolor=gridcolor,
+            # autorange=True
         ),
         font=dict(
             family="Baskerville",
@@ -131,8 +133,9 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
                 x=df[col],
                 y=df[df.columns[1]],
                 name='',
+                customdata = np.stack((df['Total'], [w_avg] * len(df.index)), axis=-1), #[total, '{w_avg string}']
                 marker_color=colors,
-                hovertemplate="<b>%{x}</b>: %{y}",
+                hovertemplate="<b>%{x} Books</b>: %{customdata[0]}<br><b>Avg. %{customdata[1]}</b>: %{y}",
             )
         )
         
@@ -164,6 +167,66 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
     # Styling
     title = f"{title}<br><sup>{sub}"
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
+        
+    return fig.show(config=config)
+
+def gen_hbar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
+    """
+    Produces a simple bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col: data to be displayed along x-axis
+    """
+    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
+    fig = go.Figure()
+    
+    # do this if you want the average
+    if avg:
+        x_min = df[df.columns[1]].min() * 0.95
+        x_max = df[df.columns[1]].max() * 1.05
+        
+        fig.add_trace(
+            go.Bar(
+                x=df[df.columns[1]],
+                y=df[col],
+                name='',
+                orientation='h',
+                customdata = np.stack((df['Total'], [w_avg] * len(df.index)), axis=-1), #[total, '{w_avg string}']
+                marker_color=colors,
+                hovertemplate="<b>%{y} Books</b>: %{customdata[0]}<br><b>Avg. %{customdata[1]}</b>: %{x}",
+            )
+        )
+        
+        # below is the code for the horizontal line
+        weighted_avg = np.average(df[w_avg], weights=df['Total'])
+        fig.update_layout(yaxis_range=[x_min, x_max])
+        fig.add_vline(x=weighted_avg, line_width=2, line_dash="dash", line_color="#8e7cc3",
+                      annotation_text=f"Weighted Avg: {weighted_avg:.2f}",
+                      annotation_position="top right",
+                      annotation_bordercolor="#c7c7c7",
+                      annotation_borderwidth=1,
+                      annotation_borderpad=3,
+                      annotation_bgcolor="#b4a7d6",
+                      annotation_opacity=0.8)
+    
+    # do this if you just want a normal bar graph
+    else:
+        dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
+        fig.add_trace(
+            go.Bar(
+                x=dfp['Title'],
+                y=dfp[col],
+                name='',
+                orientation='h',
+                marker_color=color,
+                hovertemplate="<b>%{x}</b>: %{y}",
+            )
+        )
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig.update_layout(yaxis=dict(autorange=True))
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, x_showgrid=True, y_showline=True)
         
     return fig.show(config=config)
 
@@ -210,6 +273,8 @@ def gen_heatmap(df, title, sub):
             x=df.columns,
             y=df.index,
             z=df.loc[df.index],
+            # xgap=1,
+            # ygap=1,
             hoverongaps=False,
             hovertemplate="<b>%{y}-%{x}</b>: %{z}<extra></extra>",
         ) 
