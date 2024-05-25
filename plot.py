@@ -111,7 +111,7 @@ def gen_buttons(vals, multi=0):
         )
     return buttons_opts
 
-def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575"):
+def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
     """
     Produces a simple bar graph with the given dataframe and column.
     
@@ -121,6 +121,7 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575"):
     colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
     fig = go.Figure()
     
+    # do this if you want the average
     if avg:
         y_min = df[df.columns[1]].min() * 0.95
         y_max = df[df.columns[1]].max() * 1.05
@@ -134,7 +135,20 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575"):
                 hovertemplate="<b>%{x}</b>: %{y}",
             )
         )
+        
+        # below is the code for the horizontal line
+        weighted_avg = np.average(df[w_avg], weights=df['Total'])
         fig.update_layout(yaxis_range=[y_min, y_max])
+        fig.add_hline(y=weighted_avg, line_width=2, line_dash="dash", line_color="#8e7cc3",
+                      annotation_text=f"Weighted Avg: {weighted_avg:.2f}",
+                      annotation_position="top right",
+                      annotation_bordercolor="#c7c7c7",
+                      annotation_borderwidth=1,
+                      annotation_borderpad=3,
+                      annotation_bgcolor="#b4a7d6",
+                      annotation_opacity=0.8)
+    
+    # do this if you just want a normal bar graph
     else:
         dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
         fig.add_trace(
@@ -178,5 +192,7 @@ def gen_stacked_bar_graph(dfp, title, sub):
     # Styling
     title = f"{title}<br><sup>{sub}"
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True)
+    # fig.update_layout(legend = list(orientation = 'h', xanchor = "center", x = 0.5, y= 1)) )
+    fig.update_layout(legend=dict(orientation='h', yanchor="top", y=0.99, xanchor="center", x=0.5))
         
     return fig.show(config=config)
