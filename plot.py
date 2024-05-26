@@ -124,10 +124,7 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
     fig = go.Figure()
     
     # do this if you want the average
-    if avg:
-        y_min = df[df.columns[1]].min() * 0.95
-        y_max = df[df.columns[1]].max() * 1.05
-        
+    if avg:        
         fig.add_trace(
             go.Bar(
                 x=df[col],
@@ -141,8 +138,8 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
         
         # below is the code for the horizontal line
         weighted_avg = np.average(df[w_avg], weights=df['Total'])
-        fig.update_layout(yaxis_range=[y_min, y_max])
-        fig.add_hline(y=weighted_avg, line_width=2, line_dash="dash", line_color="#8e7cc3",
+        fig.add_hline(y=weighted_avg, line_width=2, 
+                      line_dash="dash", line_color="#8e7cc3",
                       annotation_text=f"Weighted Avg: {weighted_avg:.2f}",
                       annotation_position="top right",
                       annotation_bordercolor="#c7c7c7",
@@ -181,10 +178,7 @@ def gen_hbar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg
     fig = go.Figure()
     
     # do this if you want the average
-    if avg:
-        x_min = df[df.columns[1]].min() * 0.95
-        x_max = df[df.columns[1]].max() * 1.05
-        
+    if avg:        
         fig.add_trace(
             go.Bar(
                 x=df[df.columns[1]],
@@ -199,7 +193,6 @@ def gen_hbar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg
         
         # below is the code for the horizontal line
         weighted_avg = np.average(df[w_avg], weights=df['Total'])
-        fig.update_layout(yaxis_range=[x_min, x_max])
         fig.add_vline(x=weighted_avg, line_width=2, line_dash="dash", line_color="#8e7cc3",
                       annotation_text=f"Weighted Avg: {weighted_avg:.2f}",
                       annotation_position="top right",
@@ -225,7 +218,6 @@ def gen_hbar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg
     
     # Styling
     title = f"{title}<br><sup>{sub}"
-    fig.update_layout(yaxis=dict(autorange=True))
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, x_showgrid=True, y_showline=True)
         
     return fig.show(config=config)
@@ -284,4 +276,43 @@ def gen_heatmap(df, title, sub):
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45)
     fig.update_layout(margin_pad=10)
     
+    return fig.show(config=config)
+
+def top10_graph(df, col1, col2, title, sub, color="#d27575"):
+    """
+    Produces a simple bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col1: data to be displayed along x-axis
+    col2: data to be displayed along y-axis
+    """
+    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
+    ticktext = ['#' + f'{x+1}' for x in list(df.index)][::-1]
+    tickvals = list(df.index)
+    author = df['Author']
+    # ticktext = [t.replace("Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life", "Why Fish Don't Exist") for t in ticktext]
+    
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Bar(
+            x=df[col1],
+            y=df[col2],
+            text=df[col2] + ' by ' + author + ' ',
+            name='',
+            orientation='h',
+            marker_color=colors,
+            # hovertemplate="<b>%{x}</b>: %{y}",
+        )
+    )
+    
+    fig.update_layout(
+        yaxis_ticktext=ticktext,
+        yaxis_tickvals=tickvals
+    )
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, x_showgrid=True, y_showline=True)
+        
     return fig.show(config=config)
