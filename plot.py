@@ -290,6 +290,8 @@ def top10_graph(df, col1, col2, title, sub, color="#d27575"):
     ticktext = ['#' + f'{x+1}' for x in list(df.index)][::-1]
     tickvals = list(df.index)
     author = df['Author']
+    genre = list(df['Genre Pair'])
+    
     # ticktext = [t.replace("Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life", "Why Fish Don't Exist") for t in ticktext]
     
     fig = go.Figure()
@@ -298,14 +300,16 @@ def top10_graph(df, col1, col2, title, sub, color="#d27575"):
         go.Bar(
             x=df[col1],
             y=df[col2],
-            text=df[col2] + ' by ' + author + ' ',
+            text=df[col2],
             name='',
             orientation='h',
             marker_color=colors,
-            # hovertemplate="<b>%{x}</b>: %{y}",
+            customdata = np.stack((genre, author), axis=-1),
+            hovertemplate="<b>%{y}</b> - %{x:.1f}<br>%{customdata[0]}"
         )
     )
     
+    fig.update_traces(texttemplate='<i>%{text}</i> by %{customdata[1]}  ')
     fig.update_layout(
         yaxis_ticktext=ticktext,
         yaxis_tickvals=tickvals
