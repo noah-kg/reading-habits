@@ -23,7 +23,7 @@ config = {
       }
 }
 
-def gen_layout(fig, title, title_size=40, legendy_anchor='bottom', legendx_anchor='center', 
+def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_anchor='center', 
                height=600, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
@@ -81,7 +81,7 @@ def gen_menu(active, buttons):
     ]
     return updatemenus
 
-def gen_buttons(vals, multi=0, labels=[]):
+def gen_buttons(vals, multi=0):
     """
     Generates dropdown menu buttons.
     
@@ -107,8 +107,7 @@ def gen_buttons(vals, multi=0, labels=[]):
                 args=[{
                     'visible': args, #this is the key line!
                     'title': val,
-                    'showlegend': False,
-                    'xaxis_ticktext': labels
+                    'showlegend': False
                 }]
             )
         )
@@ -318,52 +317,7 @@ def top10_graph(df, col1, col2, title, sub, color="#d27575"):
         
     return fig.show(config=config)
 
-def gen_time_graph(df, col1, title, sub):
-    """
-    Produces a simple bar graph with the given dataframe and column.
-    
-    df: dataframe containing relevant data
-    col: data to be displayed along x-axis
-    """
-    times = ['Year', 'Year-Month']
-    active = 0
-    
-    fig = go.Figure()
-    for k, time in enumerate(times):
-        if k == 0: #"Year"
-            dft = df[[x for x in df.columns if len(x)==4]]
-        else:
-            dft = df[[x for x in df.columns if len(x)>4]]
-        
-        labels = [x for x in dft.columns]
-        colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(labels)
-        label_dict = {time: labels}
-        buttons_opts = gen_buttons(times)
-        
-        for j, col in enumerate(labels):
-            fig.add_trace(
-                go.Bar(
-                    x=[labels[j]],
-                    y=[dft.loc['Finished', col]],
-                    customdata = [col] * len(labels),
-                    name='',
-                    marker_color=colors,
-                    showlegend=False,
-                    hovertemplate="<b>Books Finished in %{customdata}</b>: %{y}",
-                    visible=True if k == active else False
-                )
-            )
-        
-    # Define buttons for dropdown          
-    fig.update_layout(updatemenus = gen_menu(active, buttons_opts))
-        
-    # Styling
-    title = f"{title}<br><sup>{sub}"
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
-        
-    return fig.show(config=config)
-
-def gen_test(df, title, sub):
+def gen_time_graph(df, title, sub):
     """
     Produces a simple bar graph with the given dataframe and column.
     
@@ -374,7 +328,7 @@ def gen_test(df, title, sub):
     rows = df.columns
     yearlabels = [x for x in df[rows[0]] if len(x)==4]
     monthlabels = [x for x in df[rows[0]] if len(x)>4]
-    years = len(yearlabels) #gets number of years
+    years = len(yearlabels) #gets number of 'whole' years (2020, 2021, 2022, etc.)
     colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(monthlabels)
     
     fig = go.Figure()
@@ -409,19 +363,21 @@ def gen_test(df, title, sub):
     button_opts.append(dict(method = "update",
                             args = [{'x': [df[rows[0]][:years]],
                                      'y': [df[rows[2]][:years]],
-                                     'visible':[True, False]}], 
+                                     'visible':[True, False]}, 
+                                     {'title.text' : f"{title}<br><sup>Total Number of Books Finished by Year"}],
                             label = 'Year'))
 
     button_opts.append(dict(method = "update",
                             args = [{'x': [df[rows[0]][years:]],
                                      'y': [df[rows[2]][years:]],
-                                     'visible':[False, True]}], 
+                                     'visible':[False, True]}, 
+                                     {'title.text' : f"{title}<br><sup>Total Number of Books Finished by Year-Month"}],
                             label = 'Year-Month'))
     
     fig.update_layout(updatemenus = gen_menu(active, button_opts))
     
     # Styling
-    title = f"{title}<br><sup>{sub}"
+    title = button_opts[active]['args'][1]['title.text'] #searches list in dictionary in list of dictionaries?
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
         
     return fig.show(config=config)
