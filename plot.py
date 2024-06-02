@@ -24,7 +24,7 @@ config = {
 }
 
 def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_anchor='center', 
-               height=600, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
+               height=600, showlegend=False, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False,
@@ -33,6 +33,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
     fig.update_layout(
         title=dict(text=title, font=dict(size=title_size, family="Baskerville, Bold", color=fontcolor)),
         height=height,
+        showlegend=showlegend,
         barmode=barmode,
         plot_bgcolor=plot_bg,
         paper_bgcolor=paper_bg,
@@ -383,5 +384,51 @@ def gen_time_graph(df, title, sub):
     # Styling
     title = button_opts[active]['args'][1]['title.text'] #searches list in dictionary in list of dictionaries?
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
+        
+    return fig.show(config=config)
+
+def gen_scatter(df, title, sub, color="#d27575"):
+    """
+    Produces a simple bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col: data to be displayed along x-axis
+    """
+    color_map = {'Fiction':'#d27575',
+             'Nonfiction': '#529b9c',
+             'Science': '#eac392',
+             'Philosophy': '#9cba8f',
+             'Psychology': '#675a55'}
+    
+    df['Color'] = df['Genre'].map(color_map)
+    names = list(df['Genre'].unique())
+    
+    fig = go.Figure()
+    for name in names:
+        dfs = df[df['Genre'] == name]
+        book = dfs['Title']
+        duration = dfs['Duration']
+        rating = dfs['Rating']
+        
+        fig.add_trace(
+            go.Scatter(
+                x=dfs['Duration'],
+                y=dfs['Rating'],
+                mode='markers',
+                name=name,
+                marker_line_width=1,
+                marker_size=12,
+                marker_color=dfs['Color'],
+                customdata = np.stack((book, duration, rating), axis=-1),
+                hovertemplate="""<b>Title</b>: %{customdata[0]}<br><b>Duration</b>: %{customdata[1]}<br><b>Rating</b>: %{customdata[2]:.1f}<extra></extra>"""
+            )
+        )
+    
+    fig.update_layout(legend=dict(x=0.5, y=1.03, orientation='h', xanchor='center'),
+                      xaxis=dict(zeroline=False))
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"    
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
         
     return fig.show(config=config)
