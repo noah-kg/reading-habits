@@ -247,9 +247,9 @@ def gen_stacked_bar_graph(dfp, title, sub):
     
     # Styling
     title = f"{title}<br><sup>{sub}"
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True)
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True, showlegend=True)
     # fig.update_layout(legend = list(orientation = 'h', xanchor = "center", x = 0.5, y= 1)) )
-    fig.update_layout(legend=dict(orientation='h', yanchor="top", y=0.99, xanchor="center", x=0.5))
+    fig.update_layout(legend=dict(orientation='h', yanchor="top", y=1.01, xanchor="center", x=0.5))
         
     return fig.show(config=config)
 
