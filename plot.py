@@ -279,7 +279,7 @@ def gen_heatmap(df, title, sub):
     
     return fig.show(config=config)
 
-def top10_graph(df, col1, col2, title, sub, color="#d27575"):
+def top_graph(df, col1, col2, title, sub, color="#d27575"):
     """
     Produces a simple bar graph with the given dataframe and column.
     
@@ -287,38 +287,48 @@ def top10_graph(df, col1, col2, title, sub, color="#d27575"):
     col1: data to be displayed along x-axis
     col2: data to be displayed along y-axis
     """
-    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
+    # colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
     ticktext = ['#' + f'{x+1}' for x in list(df.index)][::-1]
     tickvals = list(df.index)
-    author = df['Author']
-    genre = list(df['Genre Pair'])
+    names = list(df['Genre'].unique())
+    
+    color_map = {'Fiction':'#d27575',
+             'Nonfiction': '#529b9c',
+             'Science': '#eac392',
+             'Philosophy': '#9cba8f',
+             'Psychology': '#675a55'}    
+    df['Color'] = df['Genre'].map(color_map)
     
     # ticktext = [t.replace("Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life", "Why Fish Don't Exist") for t in ticktext]
     
     fig = go.Figure()
-
-    fig.add_trace(
-        go.Bar(
-            x=df[col1],
-            y=df[col2],
-            text=df[col2],
-            name='',
-            orientation='h',
-            marker_color=colors,
-            customdata = np.stack((genre, author), axis=-1),
-            hovertemplate="<b>%{y}</b> - %{x:.1f}<br>%{customdata[0]}"
+    for name in names:
+        dfs = df[df['Genre']==name]
+        author = dfs['Author']
+        genre = list(dfs['Genre Pair'])
+        fig.add_trace(
+            go.Bar(
+                x=dfs[col1],
+                y=dfs['index'],
+                text=dfs[col2],
+                name=name,
+                orientation='h',
+                marker_color=dfs['Color'],
+                customdata = np.stack((genre, author), axis=-1),
+                hovertemplate="<b>%{y}</b> - %{x:.1f}<br>%{customdata[0]}<extra></extra>"
+            )
         )
-    )
     
     fig.update_traces(texttemplate='<i>%{text}</i> by %{customdata[1]}  ')
     fig.update_layout(
         yaxis_ticktext=ticktext,
-        yaxis_tickvals=tickvals
+        yaxis_tickvals=tickvals,
+        legend=dict(x=0.5, y=1.05, orientation='h', xanchor='center')
     )
     
     # Styling
     title = f"{title}<br><sup>{sub}"
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, x_showgrid=True, y_showline=True)
+    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=140, b_mar=45, x_showgrid=True, y_showline=True, showlegend=True)
         
     return fig.show(config=config)
 
