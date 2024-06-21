@@ -417,6 +417,7 @@ def gen_scatter(df, title, sub, color="#d27575"):
     for name in names:
         dfs = df[df['Genre'] == name]
         book = dfs['Title']
+        author = dfs['Author']
         duration = dfs['Duration']
         rating = dfs['Rating']
         
@@ -429,8 +430,8 @@ def gen_scatter(df, title, sub, color="#d27575"):
                 marker_line_width=1,
                 marker_size=12,
                 marker_color=dfs['Color'],
-                customdata = np.stack((book, duration, rating), axis=-1),
-                hovertemplate="""<b>Title</b>: %{customdata[0]}<br><b>Duration</b>: %{customdata[1]}<br><b>Rating</b>: %{customdata[2]:.1f}<extra></extra>"""
+                customdata = np.stack((book, author, duration, rating), axis=-1),
+                hovertemplate="""<b>Title</b>: %{customdata[0]}<br><b>Author</b>: %{customdata[1]}<br><b>Duration</b>: %{customdata[2]}<br><b>Rating</b>: %{customdata[3]:.1f}<extra></extra>"""
             )
         )
     
