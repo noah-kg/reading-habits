@@ -5,7 +5,7 @@ The Four Agreements,Don Miguel Ruiz,Amber-Allen Publishing,Nonfiction,Self Help,
 The Art of Learning,Josh Waitzkin,Free Press,Nonfiction,Self Help,2007,288,Physical,03-30-2021,04-04-2021,6,5.0
 Almond: A Novel,Won Pyung Sohn,HarperVia,Fiction,Young Adult,2017,154,eBook,08-29-2021,08-30-2021,2,5.0
 The Self-Taught Programmer,Cory Althoff,Triangle Connection LLC,Science,Programming,2017,299,Physical,12-22-2021,01-23-2022,33,5.0
-Hitchhiker's Guide to The Galaxy,Douglas Adams,Del Rey,Fiction,Sci-fi,2007,224,Physical,03-17-2021,03-25-2021,9,5.5
+Hitchhiker's Guide to The Galaxy,Douglas Adams,Del Rey,Fiction,Science Fiction,2007,224,Physical,03-17-2021,03-25-2021,9,5.5
 How to Win Friends & Influence People,Dale Carnegie,Simon & Schuster,Nonfiction,Self Help,2011,276,Physical,,,,5.5
 The Metamorphosis,Franz Kafka,Project Gutenburg,Fiction,Classics,2005,68,eBook,04-05-2021,04-05-2021,1,6.0
 Of Mice and Men,John Steinbeck,Penguin Classics,Fiction,Classics,2006,93,eBook,04-11-2021,04-12-2021,2,6.0
@@ -27,8 +27,8 @@ The Old Man and The Sea,Ernest Hemingway,Scribner,Fiction,Classics,1995,69,eBook
 Blood Meridian,Cormac McCarthy,First Vintage International,Fiction,Historical Fiction,1992,376,eBook,09-15-2021,09-28-2021,14,8.0
 Cosmos,Carl Sagan,Ballantine Books,Science,Nonfiction,2013,396,Physical,01-03-2022,01-31-2022,29,8.0
 1984,George Orwell,Signet Classics,Fiction,Classics,1961,317,eBook,09-15-2020,04-11-2021,209,8.5
-Never Let Me Go,Kazuo Ishiguro,Faber and Faber,Fiction,Sci-fi,2005,264,eBook,08-15-2021,08-20-2021,6,8.5
-Klara and the Sun,Kazuo Ishiguro,Knopf Doubleday Publishing Group,Fiction,Sci-fi,2021,279,eBook,09-01-2021,09-05-2021,5,8.5
+Never Let Me Go,Kazuo Ishiguro,Faber and Faber,Fiction,Science Fiction,2005,264,eBook,08-15-2021,08-20-2021,6,8.5
+Klara and the Sun,Kazuo Ishiguro,Knopf Doubleday Publishing Group,Fiction,Science Fiction,2021,279,eBook,09-01-2021,09-05-2021,5,8.5
 Norwegian Wood,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Cultural,2000,298,Physical,,,,8.5
 The Remains of The Day,Kazuo Ishiguro,Faber and Faber,Fiction,Historical Fiction,1990,218,eBook,04-15-2021,04-20-2021,6,9.0
 The Rings of Saturn,W.G. Sebald,New Directions,Fiction,Historical Fiction,1998,187,eBook,08-21-2021,08-27-2021,7,9.0
@@ -66,10 +66,29 @@ The Emigrants,W.G. Sebald,Vintage,Fiction,German Literature,1992,159,eBook,04-02
 The Wisdom of Insecurity,Alan Watts,Vintage,Philosophy,Nonfiction,1951,152,Physical,05-09-2024,05-15-2024,7,7.0
 The Order of Time,Carlo Rovelli,Riverhead Books,Science,Nonfiction,2018,212,Physical,05-16-2024,05-22-2024,7,7.5
 The Beginning of Infinity: Explanations That Transform the World,David Deutsch,Penguin Group,Science,Nonfiction,2011,496,eBook,05-23-2024,,,
-Horus Rising (Horus Heresy #1),Dan Abnett,Black Library,Fiction,Science Fiction,2006,416,Physical,06-09-2024,06-11-2024,3,8.5
-False Gods (Horus Heresy #2),Graham McNeill,Black Library,Fiction,Science Fiction,2006,416,Physical,06-14-2024,06-16-2024,3,8.5
-Galaxy in Flames (Horus Heresy #3),Ben Counter,Black Library,Fiction,Science Fiction,2006,416,Physical,06-16-2024,06-19-2024,4,8.0
-Flight of the Eisenstein (Horus Heresy #4),James Swallow,Black Library,Fiction,Science Fiction ,2007,416,eBook,06-20-2024,,,
+Horus Rising (Horus Heresy #1),Dan Abnett,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-09-2024,06-11-2024,3,8.5
+False Gods (Horus Heresy #2),Graham McNeill,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-14-2024,06-16-2024,3,8.5
+Galaxy in Flames (Horus Heresy #3),Ben Counter,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-16-2024,06-19-2024,4,8.0
+Flight of the Eisenstein (Horus Heresy #4),James Swallow,Black Library,Fiction,Warhammer 40k,2007,416,eBook,06-20-2024,06-24-2024,5,7.5
+Fulgrim (Horus Heresy #5),Graham McNeill,Black Library,Fiction,Warhammer 40k,2007,512,eBook,06-25-2024,06-30-2024,6,8.0
+The Reflection Crack'd,Graham McNeill,Black Library,Fiction,Warhammer 40k,2012,95,eBook,06-30-2024,07-01-2024,2,8.0
+Kryptos,Graham McNeill,Black Library,Fiction,Warhammer 40k,2014,17,eBook,07-01-2024,07-01-2024,1,7.0
+Angel Exterminatus (Horus Heresy #23),Graham McNeill,Black Library,Fiction,Warhammer 40k,2012,448,eBook,07-01-2024,07-07-2024,7,7.5
+Imperfect,Nick Kyme,Black Library,Fiction,Warhammer 40k,2015,19,eBook,07-07-2024,07-07-2024,1,8.0
+Chiurgeon,Nick Kyme,Black Library,Fiction,Warhammer 40k,2015,18,eBook,07-07-2024,07-07-2024,1,8.5
+Descent of Angels (Horus Heresy #6),Mitchel Scanlon,Black Library,Fiction,Warhammer 40k,2007,416,eBook,07-07-2024,07-13-2024,7,8.0
+Call of the Lion,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2015,48,eBook,07-13-2024,07-13-2024,1,7.0
+Fallen Angels (Horus Heresy #11),Mike Lee,Black Library,Fiction,Warhammer 40k,2009,416,eBook,07-13-2024,07-18-2024,6,7.5
+Cypher: Guardian of the Order,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2017,4,eBook,07-18-2024,07-18-2024,1,7.0
+Savage Weapons,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2011,40,eBook,07-18-2024,07-18-2024,1,8.5
+The Lion,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2012,95,eBook,07-19-2024,07-19-2024,1,8.0
+By The Lion's Command,Gav Thorpe,Black Library ,Fiction,Warhammer 40k,2015,19,eBook,07-20-2024,07-20-2024,1,7.5
+Prince of Crows,Aaron Dembski-Bowden,Black Library ,Fiction,Warhammer 40k,2012,99,eBook,07-20-2024,07-23-2024,4,8.5
+Master of the First,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2016,20,eBook,07-23-2024,07-23-2024,1,7.0
+The Long Night,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2014,20,eBook,07-23-2024,07-23-2024,1,8.0
+The Midmight Library,Matt Haig,Penguin Books,Fiction,Fantasy,2020,288,Physical,07-23-2024,07-24-2024,2,9.0
+,,,,,,,,,,,
+,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
