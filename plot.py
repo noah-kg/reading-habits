@@ -168,6 +168,56 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
         
     return fig.show(config=config)
 
+def gen_bar_pie_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
+    """
+    Produces a simple bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col: data to be displayed along x-axis
+    """
+    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(df.index)
+    fig = make_subplots(rows=1, cols=2, column_widths=[0.7, 0.3], specs=[[{'type':'bar'}, {'type':'pie'}]])
+        
+    dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
+    
+    fig.add_trace(
+        go.Bar(
+            x=dfp[col],
+            y=dfp['Title'],
+            name='',
+            marker_color=color,
+            hovertemplate="<b>%{x}</b>: %{y}",
+        ),
+        row=1, col=1
+    )
+    
+    fig.add_trace(
+        go.Pie(
+            labels=dfp[col],
+            values=dfp['Title'],
+            name='',
+            marker_colors=colors,
+            hovertemplate="<b>%{label}</b>: %{value}",
+            hole=0.4
+        ),
+        row=1, col=2
+    )
+    
+    total = dfp['Title'].sum()
+    anno = f'<sup>Total: {total}'
+    
+    fig.add_annotation(dict(x=0.866, y=0.48,   ax=0, ay=0,
+                        xref = "paper", yref = "paper", 
+                        text= anno,
+                        font_size=40
+                      ))
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True, showlegend=False)
+        
+    return fig.show(config=config)
+
 def gen_hbar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
     """
     Produces a simple bar graph with the given dataframe and column.
