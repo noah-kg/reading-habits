@@ -28,7 +28,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False,
-               fontcolor="#001c40", fontsize=14):
+               fontcolor="#001c40", fontsize=14, hover_font_size=16):
     
     fig.update_layout(
         title=dict(text=title, font=dict(size=title_size, family="Baskerville, Bold", color=fontcolor)),
@@ -59,6 +59,9 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
             family="Baskerville",
             color=fontcolor,
             size=fontsize
+        ),
+        hoverlabel=dict(
+            font_size=hover_font_size
         )
     )
     return fig
