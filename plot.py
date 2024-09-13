@@ -212,7 +212,7 @@ def gen_bar_pie_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_
     fig.add_annotation(dict(x=0.866, y=0.48,   ax=0, ay=0,
                         xref = "paper", yref = "paper", 
                         text= anno,
-                        font_size=40
+                        font_size=30
                       ))
     
     # Styling
