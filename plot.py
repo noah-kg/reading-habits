@@ -85,7 +85,7 @@ def gen_menu(active, buttons):
     ]
     return updatemenus
 
-def gen_buttons(vals, multi=0):
+def gen_buttons(vals, multi=0, no_title=0):
     """
     Generates dropdown menu buttons.
     
@@ -95,7 +95,7 @@ def gen_buttons(vals, multi=0):
     i = 0
     for val in vals:
         if multi:
-            multivals = [v for v in vals for i in range(3)]
+            multivals = [v for v in vals for i in range(3)] #i think 3 is the number of traces you have - it can vary
             args = [False] * len(multivals)
             args[i:i+3] = [True] * 3
             i += 3
@@ -104,17 +104,29 @@ def gen_buttons(vals, multi=0):
             args[i] = True
             i += 1
 
-        buttons_opts.append(
-            dict(
-                method='update',
-                label=val,
-                args=[{
-                    'visible': args, #this is the key line!
-                    'title': val,
-                    'showlegend': False
-                }]
+        if no_title:
+            buttons_opts.append(
+                dict(
+                    method='update',
+                    label=val,
+                    args=[{
+                        'visible': args, #this is the key line!
+                        'showlegend': False
+                        }]
+                    )
+                )
+        else:
+            buttons_opts.append(
+                dict(
+                    method='update',
+                    label=val,
+                    args=[{
+                        'visible': args, #this is the key line!
+                        'title': val,
+                        'showlegend': False
+                    }]
+                )
             )
-        )
     return buttons_opts
 
 def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
@@ -546,7 +558,7 @@ def gen_infographic(df):
             )
         )
     
-    button_opts = gen_buttons(values,1) #need the 1 to flag multi values
+    button_opts = gen_buttons(values, multi=1, no_title=1) #need the 1 to flag multi values
 
     fig.update_layout(
         updatemenus = gen_menu(active, button_opts),
