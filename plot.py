@@ -455,7 +455,6 @@ def gen_scatter(df, title, sub, color="#d27575"):
     Produces a simple bar graph with the given dataframe and column.
     
     df: dataframe containing relevant data
-    col: data to be displayed along x-axis
     """
     color_map = {'Fiction':'#d27575',
              'Nonfiction': '#529b9c',
@@ -495,4 +494,71 @@ def gen_scatter(df, title, sub, color="#d27575"):
     title = f"{title}<br><sup>{sub}"    
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
         
+    return fig.show(config=config)
+
+def gen_infographic(df):
+    """
+    Produces a simple static infographic with some general stats. 
+
+    df: dataframe containing aggregated data
+    """
+    values = list(df['Date'])
+    active = len(values)-1
+    
+    fig = go.Figure()
+
+    for val in values:
+        dfp = df[df['Date'] == val]
+
+        booksPerYear = dfp.iloc[0,1]
+        fig.add_trace(
+            go.Indicator(
+                title = {'text': "Total Books Read"},
+                mode = "number",
+                value = booksPerYear,
+                number = {'valueformat':'f'},
+                domain = {'row': 0, 'column': 0},
+                visible = True if val == values[-1] else False
+            )
+        )
+
+        pagesPerYear = dfp.iloc[0,2]
+        fig.add_trace(
+            go.Indicator(
+                title = {'text': "Total Pages Read"},
+                mode = "number",
+                value = pagesPerYear,
+                number = {'valueformat':'f'},
+                domain = {'row': 0, 'column': 1},
+                visible = True if val == values[-1] else False
+            )
+        )
+
+        authorsPerYear = dfp.iloc[0,3]
+        fig.add_trace(
+            go.Indicator(
+                title = {'text': "Unique Authors Read"},
+                mode = "number",
+                value = authorsPerYear,
+                number = {'valueformat':'f'},
+                domain = {'row': 0, 'column': 2},
+                visible = True if val == values[-1] else False
+            )
+        )
+    
+    button_opts = gen_buttons(values,1) #need the 1 to flag multi values
+
+    fig.update_layout(
+        updatemenus = gen_menu(active, button_opts),
+        grid = {'rows': 1, 'columns': 3, 'pattern': "independent"},
+        template = {
+            'data': {'indicator': [{
+                'title': {'align': 'center'}
+            }]
+            }
+        }
+    )
+
+    fig = gen_layout(fig)
+
     return fig.show(config=config)
