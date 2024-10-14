@@ -566,7 +566,7 @@ def gen_infographic(df, full_df):
 
         top10 = full_df.drop(['Format', 'Duration', 'Genre Pair', 'Year', 'Start Date'], axis=1).sort_values(['Rating'])
         top10p = top10[(top10['Finish Date'].dt.year == year) & (top10['Pages'] >= 100)].tail(10)
-        
+        top10p = top10p.iloc[::-1]
         fig.add_trace(
             go.Table(
                 header=dict(values=['My Highest Rated Books'],
@@ -583,13 +583,20 @@ def gen_infographic(df, full_df):
             row=2, col=1
         )
 
+        auths = list(zip(*dfp['Most Read Authors'].iloc[0]))
+        if year == 2020:
+            auths = [auths[0][0] + ' (' + str(auths[1][0]) + ')']
+        else: 
+            auths = [auths[0][i] + ' (' + str(auths[1][i]) + ')' for i in range(3)]
+        print(year, auths)
+
         fig.add_trace(
             go.Table(
                 header=dict(values=['Most Read Author'],
                             align='center',
                             font_size=25,
                             height=35),
-                cells=dict(values=[dfp['Most Read Authors'].iloc[0]],
+                cells=dict(values=[auths],
                            align='center',
                            fill_color='#f0f0f0',
                            font_size=20,
@@ -599,13 +606,21 @@ def gen_infographic(df, full_df):
             row=2, col=3
         )
 
+        pubs = list(zip(*dfp['Most Read Publishers'].iloc[0]))
+        if year == 2020:
+            pubs = [pubs[0][0] + ' (' + str(pubs[1][0]) + ')']
+        else: 
+            pubs = [pubs[0][i] + ' (' + str(pubs[1][i]) + ')' for i in range(len(pubs))]
+        
+        print(year, pubs)
+
         fig.add_trace(
             go.Table(
                 header=dict(values=['Most Read Publisher'],
                             align='center',
                             font_size=25,
                             height=35),
-                cells=dict(values=[dfp['Most Read Publishers'].iloc[0]],
+                cells=dict(values=[pubs],
                            align='center',
                            fill_color='#f0f0f0',
                            font_size=20,
@@ -628,5 +643,5 @@ def gen_infographic(df, full_df):
         }
     )
 
-    fig = gen_layout(fig, t_mar=20, b_mar=80)
+    fig = gen_layout(fig, t_mar=50, b_mar=60)
     return fig.show()
