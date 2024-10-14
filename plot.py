@@ -85,7 +85,7 @@ def gen_menu(active, buttons):
     ]
     return updatemenus
 
-def gen_buttons(vals, multi=0, no_title=0):
+def gen_buttons(vals, num_traces=3, multi=0, no_title=0):
     """
     Generates dropdown menu buttons.
     
@@ -95,10 +95,10 @@ def gen_buttons(vals, multi=0, no_title=0):
     i = 0
     for val in vals:
         if multi:
-            multivals = [v for v in vals for i in range(3)] #i think 3 is the number of traces you have - it can vary
+            multivals = [v for v in vals for i in range(num_traces)] #i think 3 is the number of traces you have - it can vary
             args = [False] * len(multivals)
-            args[i:i+3] = [True] * 3
-            i += 3
+            args[i:i+num_traces] = [True] * num_traces
+            i += num_traces
         else:
             args = [False] * len(vals)
             args[i] = True
@@ -508,19 +508,25 @@ def gen_scatter(df, title, sub, color="#d27575"):
         
     return fig.show(config=config)
 
-def gen_infographic(df):
-    """
-    Produces a simple static infographic with some general stats. 
-
-    df: dataframe containing aggregated data
-    """
-    values = list(df['Date'])
-    active = len(values)-1
-    
+def gen_infographic(df, full_df):
     fig = go.Figure()
+    fig = make_subplots(
+        rows=3, cols=3,
+        # column_widths=[0.3, 0.3, 0.3],
+        row_heights=[0.2, 0.4, 0.4],
+        vertical_spacing=0.1,
+        # horizontal_spacing=0.06,
+        specs=[[{"rowspan": 1, "colspan":3, "type": "indicator"}, {"type": "indicator"}, {"type": "indicator"}],
+               [{"rowspan": 2, "colspan":2, "type": "table"}, {}, {"rowspan": 1, "colspan":1, "type": "table"}],
+               [{}, {}, {"rowspan": 1, "colspan":1, "type": "table"}]]
+        # subplot_titles=("Total Books Read", "Total Pages Read", "Unique Authors Read")
+    )
+    
+    years = list(df['Date'])
+    active = len(years)-1
 
-    for val in values:
-        dfp = df[df['Date'] == val]
+    for year in years:
+        dfp = df[df['Date'] == year]
 
         booksPerYear = dfp.iloc[0,1]
         fig.add_trace(
@@ -530,7 +536,7 @@ def gen_infographic(df):
                 value = booksPerYear,
                 number = {'valueformat':'f'},
                 domain = {'row': 0, 'column': 0},
-                visible = True if val == values[-1] else False
+                visible = True if year == years[-1] else False
             )
         )
 
@@ -542,7 +548,7 @@ def gen_infographic(df):
                 value = pagesPerYear,
                 number = {'valueformat':'f'},
                 domain = {'row': 0, 'column': 1},
-                visible = True if val == values[-1] else False
+                visible = True if year == years[-1] else False
             )
         )
 
@@ -554,23 +560,73 @@ def gen_infographic(df):
                 value = authorsPerYear,
                 number = {'valueformat':'f'},
                 domain = {'row': 0, 'column': 2},
-                visible = True if val == values[-1] else False
+                visible = True if year == years[-1] else False
             )
         )
+
+        top10 = full_df.drop(['Format', 'Duration', 'Genre Pair', 'Year', 'Start Date'], axis=1).sort_values(['Rating'])
+        top10p = top10[(top10['Finish Date'].dt.year == year) & (top10['Pages'] >= 100)].tail(10)
+        
+        fig.add_trace(
+            go.Table(
+                header=dict(values=['My Highest Rated Books'],
+                            align='center',
+                            font_size=25,
+                            height=35),
+                cells=dict(values=[top10p['Title'] + ' - ' + top10p['Author']],
+                           align='center',
+                           fill_color='#f0f0f0',
+                           font_size=20,
+                           height=30),
+                visible = True if year == years[-1] else False
+            ),
+            row=2, col=1
+        )
+
+        fig.add_trace(
+            go.Table(
+                header=dict(values=['Most Read Author'],
+                            align='center',
+                            font_size=25,
+                            height=35),
+                cells=dict(values=[dfp['Most Read Authors'].iloc[0]],
+                           align='center',
+                           fill_color='#f0f0f0',
+                           font_size=20,
+                           height=30),
+                visible = True if year == years[-1] else False
+            ),
+            row=2, col=3
+        )
+
+        fig.add_trace(
+            go.Table(
+                header=dict(values=['Most Read Publisher'],
+                            align='center',
+                            font_size=25,
+                            height=35),
+                cells=dict(values=[dfp['Most Read Publishers'].iloc[0]],
+                           align='center',
+                           fill_color='#f0f0f0',
+                           font_size=20,
+                           height=30),
+                visible = True if year == years[-1] else False
+            ),
+            row=3, col=3
+        )
     
-    button_opts = gen_buttons(values, multi=1, no_title=1) #need the 1 to flag multi values
+    button_opts = gen_buttons(years, num_traces=6, multi=1, no_title=1) #need the 1 to flag multi values
 
     fig.update_layout(
         updatemenus = gen_menu(active, button_opts),
-        grid = {'rows': 1, 'columns': 3, 'pattern': "independent"},
+        grid = {'rows': 3, 'columns': 3, 'pattern': "independent"},
         template = {
             'data': {'indicator': [{
-                'title': {'align': 'center'}
-            }]
+                'title': {'align': 'center', 'font':{'size':25}}
+                }]
             }
         }
     )
 
-    fig = gen_layout(fig)
-
-    return fig.show(config=config)
+    fig = gen_layout(fig, t_mar=20, b_mar=80)
+    return fig.show()
