@@ -588,7 +588,6 @@ def gen_infographic(df, full_df):
             auths = [auths[0][0] + ' (' + str(auths[1][0]) + ')']
         else: 
             auths = [auths[0][i] + ' (' + str(auths[1][i]) + ')' for i in range(3)]
-        print(year, auths)
 
         fig.add_trace(
             go.Table(
@@ -612,8 +611,6 @@ def gen_infographic(df, full_df):
         else: 
             pubs = [pubs[0][i] + ' (' + str(pubs[1][i]) + ')' for i in range(len(pubs))]
         
-        print(year, pubs)
-
         fig.add_trace(
             go.Table(
                 header=dict(values=['Most Read Publisher'],
