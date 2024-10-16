@@ -79,7 +79,7 @@ def gen_menu(active, buttons):
             buttons=buttons,
             x=1.0,
             xanchor='right',
-            y=1.11,
+            y=1.16,
             yanchor='top'
         )
     ]
@@ -534,7 +534,7 @@ def gen_infographic(df, full_df):
                 title = {'text': "Total Books Read"},
                 mode = "number",
                 value = booksPerYear,
-                number = {'valueformat':'f'},
+                number = {'valueformat':'f', 'font':{'size':50}},
                 domain = {'row': 0, 'column': 0},
                 visible = True if year == years[-1] else False
             )
@@ -546,7 +546,7 @@ def gen_infographic(df, full_df):
                 title = {'text': "Total Pages Read"},
                 mode = "number",
                 value = pagesPerYear,
-                number = {'valueformat':'f'},
+                number = {'valueformat':',', 'font':{'size':50}},
                 domain = {'row': 0, 'column': 1},
                 visible = True if year == years[-1] else False
             )
@@ -558,7 +558,7 @@ def gen_infographic(df, full_df):
                 title = {'text': "Unique Authors Read"},
                 mode = "number",
                 value = authorsPerYear,
-                number = {'valueformat':'f'},
+                number = {'valueformat':'f', 'font':{'size':50}},
                 domain = {'row': 0, 'column': 2},
                 visible = True if year == years[-1] else False
             )
@@ -591,7 +591,7 @@ def gen_infographic(df, full_df):
 
         fig.add_trace(
             go.Table(
-                header=dict(values=['Most Read Author'],
+                header=dict(values=['Most Read Authors'],
                             align='center',
                             font_size=25,
                             height=35),
@@ -613,7 +613,7 @@ def gen_infographic(df, full_df):
         
         fig.add_trace(
             go.Table(
-                header=dict(values=['Most Read Publisher'],
+                header=dict(values=['Most Read Publishers'],
                             align='center',
                             font_size=25,
                             height=35),
@@ -637,8 +637,12 @@ def gen_infographic(df, full_df):
                 'title': {'align': 'center', 'font':{'size':25}}
                 }]
             }
-        }
+        },
+        title_x = 0.5
     )
 
-    fig = gen_layout(fig, t_mar=50, b_mar=60)
+    # Styling
+    title = f"My Reading Stats by Year"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
+     
     return fig.show()
