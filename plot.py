@@ -576,8 +576,8 @@ def gen_infographic(df, full_df):
                 cells=dict(values=[top10p['Title'] + ' - ' + top10p['Author']],
                            align='center',
                            fill_color='#f0f0f0',
-                           font_size=20,
-                           height=30),
+                           font_size=18,
+                           height=26),
                 visible = True if year == years[-1] else False
             ),
             row=2, col=1
@@ -598,8 +598,8 @@ def gen_infographic(df, full_df):
                 cells=dict(values=[auths],
                            align='center',
                            fill_color='#f0f0f0',
-                           font_size=20,
-                           height=30),
+                           font_size=18,
+                           height=26),
                 visible = True if year == years[-1] else False
             ),
             row=2, col=3
@@ -609,7 +609,7 @@ def gen_infographic(df, full_df):
         if year == 2020:
             pubs = [pubs[0][0] + ' (' + str(pubs[1][0]) + ')']
         else: 
-            pubs = [pubs[0][i] + ' (' + str(pubs[1][i]) + ')' for i in range(len(pubs))]
+            pubs = [pubs[0][i] + ' (' + str(pubs[1][i]) + ')' for i in range(len(pubs[0]))]
         
         fig.add_trace(
             go.Table(
@@ -620,8 +620,8 @@ def gen_infographic(df, full_df):
                 cells=dict(values=[pubs],
                            align='center',
                            fill_color='#f0f0f0',
-                           font_size=20,
-                           height=30),
+                           font_size=18,
+                           height=26),
                 visible = True if year == years[-1] else False
             ),
             row=3, col=3
