@@ -511,14 +511,15 @@ def gen_scatter(df, title, sub, color="#d27575"):
 def gen_infographic(df, full_df):
     fig = go.Figure()
     fig = make_subplots(
-        rows=3, cols=3,
+        rows=4, cols=3,
         # column_widths=[0.3, 0.3, 0.3],
-        row_heights=[0.2, 0.4, 0.4],
+        row_heights=[0.2, 0.4, 0.4, 0.3],
         vertical_spacing=0.1,
         # horizontal_spacing=0.06,
         specs=[[{"rowspan": 1, "colspan":3, "type": "indicator"}, {"type": "indicator"}, {"type": "indicator"}],
                [{"rowspan": 2, "colspan":2, "type": "table"}, {}, {"rowspan": 1, "colspan":1, "type": "table"}],
-               [{}, {}, {"rowspan": 1, "colspan":1, "type": "table"}]]
+               [{}, {}, {"rowspan": 1, "colspan":1, "type": "table"}],
+               [{"rowspan": 1, "colspan":2, "type": "bar"}, {}, {"colspan": 1, "type": "bar"}]]
         # subplot_titles=("Total Books Read", "Total Pages Read", "Unique Authors Read")
     )
     
@@ -527,6 +528,7 @@ def gen_infographic(df, full_df):
 
     for year in years:
         dfp = df[df['Date'] == year]
+        dff = full_df[full_df['Finish Date'].dt.year == year]
 
         booksPerYear = dfp.iloc[0,1]
         fig.add_trace(
@@ -626,12 +628,43 @@ def gen_infographic(df, full_df):
             ),
             row=3, col=3
         )
+
+        dff1 = dff.groupby('Sub-Genre').count().sort_values('Title', ascending=False).reset_index()
+        colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(dff1.index)
+        fig.add_trace(
+            go.Bar(
+                x=dff1['Sub-Genre'],
+                y=dff1['Title'],
+                name='',
+                marker_color=colors,
+                # hovertemplate="<b>%{label}</b>: %{value}",
+                showlegend=False,
+                visible = True if year == years[-1] else False
+            ),
+            row=4, col=1
+        )
+
+        dff2 = dff.groupby('Genre').count().sort_values('Title', ascending=True).reset_index()
+        colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(dff2.index)
+        fig.add_trace(
+            go.Bar(
+                y=dff2['Genre'],
+                x=dff2['Title'],
+                name='',
+                orientation='h',
+                marker_color=colors,
+                # hovertemplate="<b>%{label}</b>: %{value}",
+                showlegend=False,
+                visible = True if year == years[-1] else False
+            ),
+            row=4, col=3
+        )
     
-    button_opts = gen_buttons(years, num_traces=6, multi=1, no_title=1) #need the 1 to flag multi values
+    button_opts = gen_buttons(years, num_traces=8, multi=1, no_title=1) #need the 1 to flag multi values
 
     fig.update_layout(
         updatemenus = gen_menu(active, button_opts),
-        grid = {'rows': 3, 'columns': 3, 'pattern': "independent"},
+        grid = {'rows': 4, 'columns': 3, 'pattern': "independent"},
         template = {
             'data': {'indicator': [{
                 'title': {'align': 'center', 'font':{'size':25}}
@@ -643,6 +676,6 @@ def gen_infographic(df, full_df):
 
     # Styling
     title = f"My Reading Stats by Year"
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
+    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
      
     return fig.show()
