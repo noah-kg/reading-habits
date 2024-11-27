@@ -757,6 +757,6 @@ def gen_linegraph(df, title, sub):
 
     # Styling
     title = f"{title}<br><sup>{sub}"
-    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=140, b_mar=45, y_showgrid=True, showlegend=True)
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, showlegend=True)
      
-    return fig.show()
+    return fig.show(config=config)
