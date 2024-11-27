@@ -28,7 +28,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False,
-               fontcolor="#001c40", fontsize=14, hover_font_size=16):
+               fontcolor="#001c40", fontsize=14, hover_font_size=16, zerolinewidth=1):
     
     fig.update_layout(
         title=dict(text=title, font=dict(size=title_size, family="Baskerville, Bold", color=fontcolor)),
@@ -45,6 +45,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
             showline=x_showline,
             linecolor=linecolor,
             gridcolor=gridcolor,
+            zerolinewidth = zerolinewidth,
             # autorange=True
         ),
         yaxis=dict(
@@ -53,6 +54,16 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
             showticklabels=y_labels,
             linecolor=linecolor,
             gridcolor=gridcolor,
+            zerolinewidth = zerolinewidth,
+            # autorange=True
+        ),
+        yaxis2=dict(
+            showgrid=y_showgrid,
+            showline=y_showline,
+            showticklabels=y_labels,
+            linecolor=linecolor,
+            gridcolor=gridcolor,
+            zerolinewidth = zerolinewidth,
             # autorange=True
         ),
         font=dict(
@@ -515,12 +526,12 @@ def gen_infographic(df, full_df):
         # column_widths=[0.3, 0.3, 0.3],
         row_heights=[0.2, 0.4, 0.4, 0.3],
         vertical_spacing=0.1,
-        # horizontal_spacing=0.06,
+        horizontal_spacing=0.1,
         specs=[[{"rowspan": 1, "colspan":3, "type": "indicator"}, {"type": "indicator"}, {"type": "indicator"}],
-               [{"rowspan": 2, "colspan":2, "type": "table"}, {}, {"rowspan": 1, "colspan":1, "type": "table"}],
-               [{}, {}, {"rowspan": 1, "colspan":1, "type": "table"}],
-               [{"rowspan": 1, "colspan":2, "type": "bar"}, {}, {"colspan": 1, "type": "bar"}]]
-        # subplot_titles=("Total Books Read", "Total Pages Read", "Unique Authors Read")
+               [{"rowspan": 2, "colspan":2, "type": "table"}, None, {"rowspan": 1, "colspan":1, "type": "table"}],
+               [None, None, {"rowspan": 1, "colspan":1, "type": "table"}],
+               [{"rowspan": 1, "colspan":2, "type": "bar"}, None, {"colspan": 1, "type": "bar"}]],
+        subplot_titles=("", "", "",  "", "", "", "Sub-Genres", "Genres")
     )
     
     years = list(df['Date'])
@@ -533,7 +544,7 @@ def gen_infographic(df, full_df):
         booksPerYear = dfp.iloc[0,1]
         fig.add_trace(
             go.Indicator(
-                title = {'text': "Total Books Read"},
+                title = {'text': "Total Books Read", 'font':{'size':25}},
                 mode = "number",
                 value = booksPerYear,
                 number = {'valueformat':'f', 'font':{'size':50}},
@@ -545,7 +556,7 @@ def gen_infographic(df, full_df):
         pagesPerYear = dfp.iloc[0,2]
         fig.add_trace(
             go.Indicator(
-                title = {'text': "Total Pages Read"},
+                title = {'text': "Total Pages Read", 'font':{'size':25}},
                 mode = "number",
                 value = pagesPerYear,
                 number = {'valueformat':',', 'font':{'size':50}},
@@ -557,7 +568,7 @@ def gen_infographic(df, full_df):
         authorsPerYear = dfp.iloc[0,3]
         fig.add_trace(
             go.Indicator(
-                title = {'text': "Unique Authors Read"},
+                title = {'text': "Unique Authors Read", 'font':{'size':25}},
                 mode = "number",
                 value = authorsPerYear,
                 number = {'valueformat':'f', 'font':{'size':50}},
@@ -674,8 +685,78 @@ def gen_infographic(df, full_df):
         title_x = 0.5
     )
 
+    fig.update_annotations(font_size=25)
+
     # Styling
     title = f"My Reading Stats by Year"
-    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
+    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, showlegend=True)
+     
+    return fig.show()
+
+def gen_linegraph(df, title, sub):
+
+    #stuff to align y-axis at 0
+    y1_min, y1_max = df['Pages'].min(), df['Pages'].max()
+    y1_padding = (y1_max - y1_min)/16
+    y1_range = [y1_min - y1_padding, y1_max + y1_padding]
+    y1_relative_zero = (0 - y1_range[0]) / (y1_range[1] - y1_range[0])
+    y2_min, y2_max = df['Title'].min(), df['Title'].max()
+    y2_padding = (y1_relative_zero * (y2_max - y2_min) + y2_min) / (1 - 2*y1_relative_zero)
+    y2_range = [y2_min - y2_padding, y2_max + y2_padding]
+
+    fig = go.Figure()
+
+    #first line
+    fig.add_trace(
+        go.Scatter(
+            x = df.index,
+            y = df['Title'],
+            line_shape='spline',
+            mode='lines+markers',
+            name='Books Read',
+            line_color='#529b9c',
+            yaxis='y',
+            customdata = np.stack(([x.strftime('%b %Y') for x in df.index]), axis=-1),
+            hovertemplate="""<b>%{customdata}</b><br><b>Books Read</b>: %{y}<extra></extra>""" #note customdata, and not customdata[0]
+        )
+    )
+
+    #second line
+    fig.add_trace(
+        go.Scatter(
+            x = df.index,
+            y = df['Pages'],
+            line_shape='spline',
+            mode='lines+markers',
+            name='Pages Read',
+            yaxis = 'y2',
+            line_color='#d27575',
+            customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
+            hovertemplate="""<b>%{customdata}</b><br><b>Pages Read</b>: %{y:,}<extra></extra>"""
+        )
+    )
+
+    #updating layout to include second y-axis
+    fig.update_layout(
+        yaxis=dict(       
+            range=y2_range
+        ),
+        yaxis2=dict(
+            overlaying="y",
+            side="right",
+            range=y1_range,
+            zerolinecolor='black'
+        ),
+        legend=dict(
+            orientation='h', 
+            yanchor="top", 
+            y=1.01, 
+            xanchor="center", 
+            x=0.5)
+    )
+
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=140, b_mar=45, y_showgrid=True, showlegend=True)
      
     return fig.show()
