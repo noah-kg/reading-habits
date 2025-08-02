@@ -5,7 +5,7 @@ LABEL email="noah.gampe@gmail.com"
 ARG DEPS="make"
 
 WORKDIR /app
-RUN apt-get update && apt-get install -y apt-transport-https
+RUN apt-get -y update
 RUN apt-get install -y --no-install-recommends $DEPS
 
 ADD ./requirements.txt /app/requirements.txt
