@@ -6,6 +6,7 @@ ARG DEPS="make"
 
 WORKDIR /app
 RUN apt-get update
+RUN apt-get install -y apt-transport-https
 RUN apt-get install -y --no-install-recommends $DEPS
 
 ADD ./requirements.txt /app/requirements.txt
