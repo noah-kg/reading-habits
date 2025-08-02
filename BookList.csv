@@ -22,7 +22,7 @@ The Old Man and The Sea,Ernest Hemingway,Scribner,Fiction,Classics,1995,69,eBook
 As I Lay Dying,William Faulkner,Vintage,Fiction,Classics,1991,192,eBook,04-13-2021,04-14-2021,2,6.5
 The Remains of The Day,Kazuo Ishiguro,Faber and Faber,Fiction,Historical Fiction,1990,218,eBook,04-15-2021,04-20-2021,6,9.0
 The Sound of the Mountain,Yasunari Kawabata,Vintage,Fiction,Cultural,1996,235,eBook,04-21-2021,05-17-2021,27,4.5
-Pachinko,Min Jin Lee,Grand Central Publishing,Fiction,Historical Fiction,2017,595,eBook,06-01-2021,06-13-2021,13,9.5
+Pachinko,Min Jin Lee,Grand Central Publishing,Fiction,Historical Fiction,2017,595,eBook,06-01-2021,06-13-2021,13,10.0
 Kim Ji Young: Born 1982,Cho Nam Ju,Minumsa,Fiction,Historical Fiction,2016,110,eBook,06-16-2021,07-18-2021,33,6.5
 Drifting House,Krys Lee,Penguin Books,Fiction,Historical Fiction,2012,224,Physical,07-27-2021,08-01-2021,6,7.0
 A Farewell to Arms,Ernest Hemingway,Simon & Schuster,Fiction,Historical Fiction,1929,300,eBook,08-06-2021,08-13-2021,8,7.0
@@ -30,8 +30,8 @@ Never Let Me Go,Kazuo Ishiguro,Faber and Faber,Fiction,Science Fiction,2005,264,
 The Rings of Saturn,W.G. Sebald,New Directions,Fiction,Historical Fiction,1998,187,eBook,08-21-2021,08-27-2021,7,9.0
 Almond: A Novel,Won Pyung Sohn,HarperVia,Fiction,Young Adult,2017,154,eBook,08-29-2021,08-30-2021,2,5.0
 Klara and the Sun,Kazuo Ishiguro,Knopf Doubleday Publishing Group,Fiction,Science Fiction,2021,279,eBook,09-01-2021,09-05-2021,5,8.5
-DaVinci's Ghost,Toby Lester,Free Press,Nonfiction,History,2012,299,eBook,09-06-2021,09-12-2021,7,9.0
-Blood Meridian,Cormac McCarthy,First Vintage International,Fiction,Historical Fiction,1992,376,eBook,09-15-2021,09-28-2021,14,8.0
+DaVinci's Ghost,Toby Lester,Free Press,Nonfiction,History,2012,299,eBook,09-06-2021,09-12-2021,7,10.0
+Blood Meridian,Cormac McCarthy,First Vintage International,Fiction,Historical Fiction,1992,376,eBook,09-15-2021,09-28-2021,14,10.0
 Normal People,Sally Rooney,Faber and Faber,Fiction,Contemporary,2019,246,eBook,10-02-2021,12-03-2021,63,6.0
 Animal Farm,George Orwell,Signet Classics,Fiction,Classics,1945,85,eBook,12-06-2021,12-15-2021,10,6.0
 The Symposium,Plato,Penguin Classics,Philosophy,Classics,1999,95,Physical,12-21-2021,01-02-2022,13,7.0
@@ -45,7 +45,7 @@ The Ardent Swarm,Yamen Manai,Amazon Crossing,Fiction,Historical Fiction,2021,174
 After Dark,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Cultural,2004,154,eBook,05-27-2022,06-02-2022,7,7.0
 Crying In H Mart,Michelle Zauner,Knopf Doubleday Publishing Group,Nonfiction,Memoir,2021,256,eBook,06-03-2022,06-08-2022,6,9.5
 "Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life",Lulu Miller,Simon & Schuster,Nonfiction,Memoir,2020,224,eBook,06-09-2022,06-10-2022,2,9.5
-Empire of Pain: The Secret History of the Sackler Dynasty,Patrick Radden Keefe,Doubleday,Nonfiction,History,2021,535,eBook,06-11-2022,08-27-2022,78,8.5
+Empire of Pain: The Secret History of the Sackler Dynasty,Patrick Radden Keefe,Doubleday,Nonfiction,History,2021,535,eBook,06-11-2022,08-27-2022,78,9.0
 In Waves,AJ Dungo,Nobrow,Nonfiction,Graphic Novel,2019,376,Physical,12-15-2022,12-15-2022,1,9.5
 Do Androids Dream of Electric Sheep?,Philip K. Dick,Ballantine Books,Fiction,Science Fiction,1968,244,Physical,12-31-2022,01-10-2023,11,8.0
 "The Boy, The Mole, The Fox, and The Horse",Charlie Mackesy,Ebury Press,Fiction,Graphic Novel,2019,128,Physical,01-16-2023,01-16-2023,1,8.5
@@ -142,8 +142,14 @@ Saturnine (Siege of Terra #4),Dan Abnett,Black Library,Fiction,Warhammer 40k,202
 The Fury of Magnus,Graham McNeill,Black Library,Fiction,Warhammer 40k,2021,226,eBook,03-31-2025,04-06-2025,7,8.5
 Mortis (Siege of Terra #5),John French,Black Library,Fiction,Warhammer 40k,2021,548,eBook,04-07-2025,04-14-2025,8,7.5
 Warhawk (Siege of Terra #6),Chris Wraight,Black Library,Fiction,Warhammer 40k,2021,480,eBook,04-15-2025,04-20-2025,6,8.5
-Echoes of Eternity (Siege of Terra #7),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2022,525,eBook,,,,
-Garro: Knight of Gray,James Swallow,Black Library,Fiction,Warhammer 40k,2023,144,eBook,,,,
-The End and The Death: Volume 1,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,628,eBook,,,,
-The End and The Death: Volume 2,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,673,eBook,,,,
-The End and The Death: Volume 3,Dan Abnett,Black Library,Fiction,Warhammer 40k,2024,512,eBook,,,,
+Echoes of Eternity (Siege of Terra #7),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2022,525,eBook,04-21-2025,04-26-2025,6,9.0
+Garro: Knight of Gray,James Swallow,Black Library,Fiction,Warhammer 40k,2023,144,eBook,04-26-2025,04-28-2025,3,8.0
+The End and The Death: Volume 1,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,628,eBook,04-28-2025,05-04-2025,7,8.5
+The End and The Death: Volume 2,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,673,eBook,05-05-2025,05-13-2025,9,8.5
+The End and The Death: Volume 3,Dan Abnett,Black Library,Fiction,Warhammer 40k,2024,512,eBook,05-13-2025,05-23-2025,11,10.0
+On Earth We're Briefly Gorgeous,Ocean Vuong,Penguin Press,Fiction,Poetry,2019,246,eBook,05-26-2025,06-02-2025,8,6.5
+The Demon-Haunted World: Science as a Candle in the Dark,Carl Sagan,Ballantine Books,Science,Nonfiction,1997,459,eBook,06-02-2025,06-21-2025,20,8.5
+Dopamine Nation: Finding Balance in the Age of Indulgence,Anne Lembke,Dutton Books,Nonfiction,Psychology,2021,234,Physical,06-21-2025,06-29-2025,9,8.0
+Oil and Marble,Stephanie Storey,Arcade,Fiction,Historical Fiction,2016,362,eBook,06-30-2025,07-06-2025,7,8.5
+The Prince of Tides,Pat Conroy,Mariner Books,Fiction,Classics,1986,688,Physical,07-07-2025,07-12-2025,6,10.0
+Lonesome Dove: A Novel,Larry McMurtry,Simon & Schuster Paperbacks,Fiction,Historical Fiction,1985,858,Physical,07-13-2025,07-31-2025,19,10.0
