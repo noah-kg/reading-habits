@@ -5,6 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: noahgampe/my-python-app:latest
-    container_name: my-python-app
+    image: noahhhhhhh/my-reading-habits:latest
+    container_name: my-reading-habits
     command: ["python", "main.py"]
