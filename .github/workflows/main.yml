@@ -21,19 +21,6 @@ jobs:
       # Updates Node.js version
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
-        
-      # Updated this section 8/2/2025
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: user/app:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
       
       # Clean up space
       - name: Remove unnecessary files
