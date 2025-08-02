@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: noahgampe/my-python-app:latest
+    container_name: my-python-app
+    command: ["python", "main.py"]
