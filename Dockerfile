@@ -20,7 +20,4 @@ RUN apt-get update && \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Downgrade Jinja2 to a version compatible with nbconvert
-RUN pip install "Jinja2<3.1"
-
 ADD . /app
