@@ -11,9 +11,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import matplotlib.pyplot as plt
 
-print("plot is loaded")
-print(__file__)
-
 from plotly.offline import download_plotlyjs, init_notebook_mode
 init_notebook_mode(connected=True)
 cf.go_offline()
