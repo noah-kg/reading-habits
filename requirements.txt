@@ -1,5 +1,9 @@
 pandas
 numpy
+requests
+json
+os
+time
 matplotlib
 plotly
 scipy
