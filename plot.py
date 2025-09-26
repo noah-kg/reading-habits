@@ -878,4 +878,4 @@ def move_col(df, col, idx):
 def save_col(df):
     col_df = df[['Title', 'cover_url']]
     col_df.to_csv(f"new_covers.csv", index=False)
-    print(f"Saved to new_covers.csv!")
+    # print(f"Saved to new_covers.csv!")
