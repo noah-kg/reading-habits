@@ -789,6 +789,10 @@ def get_book_cover(title, link):
 
     Returns a link to the thumbnail image
     """
+    if pd.isna(link) or not isinstance(link, str) or not link.startswith('http'):
+        # print(f"Skipping API request for '{title}': Invalid link/query.")
+        return None
+    
     headers = {'User-Agent': 'Mozilla/5.0'}
     
     try:
@@ -804,7 +808,7 @@ def get_book_cover(title, link):
         data = response.json()
 
         if data.get("totalItems", 0) > 0:
-            for idx, item in enumerate(data["items"]):
+            for item in (data["items"]):
                 volume_info = item.get("volumeInfo", {})
                 # search_info = item.get("searchInfo", {})
                 title = volume_info.get("title", "No Title")
@@ -824,9 +828,6 @@ def get_book_cover(title, link):
 
                 # save_cover(title, cover)
                 return cover
-
-                if idx == 0:
-                    break
         else:
             print(f"No data found for {title}.")
             return None
