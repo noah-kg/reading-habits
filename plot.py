@@ -31,7 +31,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
                height=600, showlegend=False, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
                y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
-               gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False,
+               gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False, y2_showgrid=False,
                fontcolor="#001c40", fontsize=14, hover_font_size=16, zerolinewidth=1):
     
     fig.update_layout(
@@ -62,7 +62,7 @@ def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_an
             # autorange=True
         ),
         yaxis2=dict(
-            showgrid=y_showgrid,
+            showgrid=y2_showgrid,
             showline=y_showline,
             showticklabels=y_labels,
             linecolor=linecolor,
@@ -329,7 +329,7 @@ def gen_stacked_bar_graph(dfp, title, sub):
     title = f"{title}<br><sup>{sub}"
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True, showlegend=True)
     # fig.update_layout(legend = list(orientation = 'h', xanchor = "center", x = 0.5, y= 1)) )
-    fig.update_layout(legend=dict(orientation='h', yanchor="top", y=1.01, xanchor="center", x=0.5))
+    fig.update_layout(legend=dict(orientation='h', yanchor="top", y=1.01, xanchor="center", x=0.5, bgcolor='rgba(0,0,0,0)'))
         
     return fig.show(config=config)
 
@@ -351,6 +351,63 @@ def gen_heatmap(df, title, sub):
             hoverongaps=False,
             hovertemplate="<b>%{y}-%{x}</b>: %{z}<extra></extra>",
         ) 
+    )
+    
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45)
+    fig.update_layout(margin_pad=10)
+    
+    return fig.show(config=config)
+
+def gen_heatmap2(df, title, sub):
+    """
+    Produces a heat map with the given dataframe.
+    
+    df: dataframe containing relevant data
+    """
+    names=['All', 'No WH40k']
+    active=0
+    dfp = df.drop("Warhammer 40k", axis=1)
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Heatmap(
+            x=df.columns,
+            y=df.index,
+            z=df.loc[df.index],
+            hoverongaps=False,
+            hovertemplate="<b>%{y}-%{x}</b>: %{z}<extra></extra>",
+            visible=True,
+            name='All'
+        ) 
+    )
+
+    fig.add_trace(
+        go.Heatmap(
+            x=dfp.columns,
+            y=dfp.index,
+            z=dfp.loc[dfp.index],
+            hoverongaps=False,
+            hovertemplate="<b>%{y}-%{x}</b>: %{z}<extra></extra>",
+            visible=False,
+            name='No WH40k'
+        ) 
+    )
+    
+    button_opts = gen_buttons(names, num_traces=2, multi=0, no_title=0)
+    fig.update_layout(updatemenus = gen_menu(active, button_opts))
+
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                type="buttons",
+                direction="right",
+                showactive=True,
+                x=1,
+                y=1.1,
+                buttons=button_opts
+            )
+        ]
     )
     
     title = f"{title}<br><sup>{sub}"
@@ -743,18 +800,22 @@ def gen_linegraph(df, title, sub):
     #updating layout to include second y-axis
     fig.update_layout(
         yaxis=dict(       
-            range=y2_range
+            range=y2_range,
+            showgrid=True,
+            gridcolor="lightgray"
         ),
         yaxis2=dict(
             overlaying="y",
             side="right",
             range=y1_range,
+            showgrid=False,
             zerolinecolor='black'
         ),
         legend=dict(
+            bgcolor='rgba(0,0,0,0)',
             orientation='h', 
             yanchor="top", 
-            y=1.01, 
+            y=1.05, 
             xanchor="center", 
             x=0.5)
     )
@@ -763,6 +824,63 @@ def gen_linegraph(df, title, sub):
     title = f"{title}<br><sup>{sub}"
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, showlegend=True)
      
+    return fig.show(config=config)
+
+def gen_linegraph2(df, title, sub):
+    traces = []
+    buttons = []
+    names = ['Books', 'Pages']
+    colors = ['#529b9c', '#d27575']
+
+    for idx, col in enumerate(df.columns):
+        traces.append(
+            go.Scatter(
+                x=df.index,
+                y=df[col],
+                line_color=colors[idx],
+                mode='lines+markers',
+                visible=True,
+                name=names[idx])
+        )
+
+        buttons.append(
+            dict(
+                method='restyle',
+                label=names[idx],
+                visible=True,
+                args=[{'visible':True},[i for i,x in enumerate(traces) if x.name == names[idx]]],
+                args2=[{'visible':'legendonly'},[i for i,x in enumerate(traces) if x.name == names[idx]]]
+            )
+        )
+
+    allButton = [
+        dict(
+            method='restyle',
+            label='Both',
+            visible=True,
+            args=[{'visible':True}],
+            args2=[{'visible':'legendonly'}]
+        )
+    ]
+
+    # create the layout 
+    layout = go.Layout(
+        updatemenus=[
+            dict(
+                type='buttons',
+                direction='right',
+                x=1,
+                y=1.05,
+                showactive=True,
+                buttons=allButton + buttons
+            )
+        ]
+    )
+
+    title = f"{title}<br><sup>{sub}"
+    fig = go.Figure(data=traces,layout=layout)    
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, showlegend=False)
+    
     return fig.show(config=config)
 
 def generate_search_url(og_title, og_author):
