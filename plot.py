@@ -27,9 +27,8 @@ config = {
       }
 }
 
-def gen_layout(fig, title='', title_size=40, legendy_anchor='bottom', legendx_anchor='center', 
-               height=600, showlegend=False, plot_bg='#f0f0f0', paper_bg='#f0f0f0', 
-               y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
+def gen_layout(fig, title='', title_size=40, height=600, showlegend=False, plot_bg='#f0f0f0', 
+               paper_bg='#f0f0f0', y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False, y2_showgrid=False,
                fontcolor="#001c40", fontsize=14, hover_font_size=16, zerolinewidth=1):
@@ -766,19 +765,22 @@ def gen_linegraph(df, title, sub):
     y2_range = [y2_min - y2_padding, y2_max + y2_padding]
 
     fig = go.Figure()
+    df['Avg'] = round(df['Pages'] / df['Title'],0)
 
     #first line
     fig.add_trace(
         go.Scatter(
             x = df.index,
-            y = df['Title'],
-            line_shape='spline',
+            y = df['Pages'],
+            line_shape='hvh',
+            fill='tozeroy',
             mode='lines+markers',
-            name='Books Read',
-            line_color='#529b9c',
-            yaxis='y',
-            customdata = np.stack(([x.strftime('%b %Y') for x in df.index]), axis=-1),
-            hovertemplate="""<b>%{customdata}</b><br><b>Books Read</b>: %{y}<extra></extra>""" #note customdata, and not customdata[0]
+            marker_size=4,
+            name='Pages Read',
+            yaxis = 'y2',
+            line_color='#d27575',
+            # customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
+            hovertemplate="""<b>Pages Read</b>: %{y:,}<extra></extra>"""
         )
     )
 
@@ -786,19 +788,40 @@ def gen_linegraph(df, title, sub):
     fig.add_trace(
         go.Scatter(
             x = df.index,
-            y = df['Pages'],
-            line_shape='spline',
+            y = df['Title'],
+            line_shape='hvh',
+            fill='tozeroy',
             mode='lines+markers',
-            name='Pages Read',
+            marker_size=4,
+            name='Books Read',
+            line_color='#529b9c',
+            yaxis='y',
+            # customdata = np.stack(([x.strftime('%b %Y') for x in df.index]), axis=-1),
+            hovertemplate="""<b>Books Read</b>: %{y}<extra></extra>""" #note customdata, and not customdata[0]
+        )
+    )
+
+    #third line
+    fig.add_trace(
+        go.Scatter(
+            x = df.index,
+            y = df['Avg'],
+            line_shape='hvh',
+            fill='tozeroy',
+            mode='lines+markers',
+            marker_size=4,
+            name='Avg. # Pages',
             yaxis = 'y2',
-            line_color='#d27575',
-            customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
-            hovertemplate="""<b>%{customdata}</b><br><b>Pages Read</b>: %{y:,}<extra></extra>"""
+            line_color='#9cba8f',
+            # customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
+            hovertemplate="""<b>Avg. Pages</b>: %{y:,}<extra></extra>""",
+            visible='legendonly'
         )
     )
 
     #updating layout to include second y-axis
     fig.update_layout(
+        hovermode='x unified',
         yaxis=dict(       
             range=y2_range,
             showgrid=True,
