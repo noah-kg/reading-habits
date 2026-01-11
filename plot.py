@@ -657,10 +657,17 @@ def gen_infographic(df, full_df):
         )
 
         auths = list(zip(*dfp['Most Read Authors'].iloc[0]))
+
+        #logic to grab < 3 authors
+        if len(auths[0]) >= 3:
+            mra = 3
+        else:
+            mra = len(auths[0])
+
         if year == 2020:
             auths = [auths[0][0] + ' (' + str(auths[1][0]) + ')']
-        else: 
-            auths = [auths[0][i] + ' (' + str(auths[1][i]) + ')' for i in range(3)]
+        else:            
+            auths = [auths[0][i] + ' (' + str(auths[1][i]) + ')' for i in range(mra)]
 
         fig.add_trace(
             go.Table(
