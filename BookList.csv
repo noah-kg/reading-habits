@@ -1,167 +1,169 @@
-Title,Author,Publisher,Genre,Sub-Genre,Year,Pages,Format,Start Date,Finish Date,Duration,Rating
-The War of Art,Steven Pressfield,Black Irish Entertrainment,Nonfiction,Self Help,2012,190,Physical,,,,3.0
-How to Win Friends & Influence People,Dale Carnegie,Simon & Schuster,Nonfiction,Self Help,2011,276,Physical,,,,5.5
-Meditations,Marcus Aurelius,Random House Publishing Group,Philosophy,Nonfiction,2003,194,Physical,,,,6.5
-Selected Writings & Discourses,Epictetus,Penguin Classics,Philosophy,Nonfiction,2008,276,Physical,,,,7.0
-Letters From A Stoic,Seneca,Penguin Classics,Philosophy,Nonfiction,2004,254,Physical,,,,7.0
-Emotional Agility,Susan David,Avery Publishing Group,Psychology,Self Help,2016,288,Physical,,,,7.5
-Norwegian Wood,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Cultural,2000,298,Physical,,,,8.5
-Refuse to Choose!,Barbara Sher,Rodale Books,Nonfiction,Self Help,2007,288,eBook,,,,
-Python Crash Course,Eric Matthes,No Starch Press,Science,Programming,2019,544,Physical,01-23-2022,,,
-The Song of Achilles,Madeline Miller,Ecco,Historical,Historical Fiction,2011,378,eBook,09-06-2022,,,
-The Beginning of Infinity: Explanations That Transform the World,David Deutsch,Penguin Group,Science,Nonfiction,2011,496,eBook,05-23-2024,,,
-The Four Agreements,Don Miguel Ruiz,Amber-Allen Publishing,Nonfiction,Self Help,1997,140,Physical,12-16-2020,12-16-2020,1,5.0
-Hitchhiker's Guide to The Galaxy,Douglas Adams,Del Rey,Fiction,Science Fiction,2007,224,Physical,03-17-2021,03-25-2021,9,5.5
-Men Without Women,Haruki Murakami,Vintage International,Fiction,Short Stories,2018,240,Physical,03-26-2021,03-30-2021,5,7.5
-The Art of Learning,Josh Waitzkin,Free Press,Nonfiction,Self Help,2007,288,Physical,03-30-2021,04-04-2021,6,5.0
-The Metamorphosis,Franz Kafka,Project Gutenburg,Fiction,Classics,2005,68,eBook,04-05-2021,04-05-2021,1,6.0
-Kafka on the Shore,Haruki Murakami,Vintage,Fiction,Fantasy,2006,546,eBook,04-06-2021,04-10-2021,5,8.0
-1984,George Orwell,Signet Classics,Fiction,Classics,1961,317,eBook,09-15-2020,04-11-2021,209,8.5
-Of Mice and Men,John Steinbeck,Penguin Classics,Fiction,Classics,2006,93,eBook,04-11-2021,04-12-2021,2,6.0
-The Old Man and The Sea,Ernest Hemingway,Scribner,Fiction,Classics,1995,69,eBook,04-12-2021,04-12-2021,1,8.0
-As I Lay Dying,William Faulkner,Vintage,Fiction,Classics,1991,192,eBook,04-13-2021,04-14-2021,2,6.5
-The Remains of The Day,Kazuo Ishiguro,Faber and Faber,Fiction,Historical Fiction,1990,218,eBook,04-15-2021,04-20-2021,6,9.0
-The Sound of the Mountain,Yasunari Kawabata,Vintage,Fiction,Cultural,1996,235,eBook,04-21-2021,05-17-2021,27,4.5
-Pachinko,Min Jin Lee,Grand Central Publishing,Fiction,Historical Fiction,2017,595,eBook,06-01-2021,06-13-2021,13,10.0
-Kim Ji Young: Born 1982,Cho Nam Ju,Minumsa,Fiction,Historical Fiction,2016,110,eBook,06-16-2021,07-18-2021,33,6.5
-Drifting House,Krys Lee,Penguin Books,Fiction,Historical Fiction,2012,224,Physical,07-27-2021,08-01-2021,6,7.0
-A Farewell to Arms,Ernest Hemingway,Simon & Schuster,Fiction,Historical Fiction,1929,300,eBook,08-06-2021,08-13-2021,8,7.0
-Never Let Me Go,Kazuo Ishiguro,Faber and Faber,Fiction,Science Fiction,2005,264,eBook,08-15-2021,08-20-2021,6,8.5
-The Rings of Saturn,W.G. Sebald,New Directions,Fiction,Historical Fiction,1998,187,eBook,08-21-2021,08-27-2021,7,9.0
-Almond: A Novel,Won Pyung Sohn,HarperVia,Fiction,Young Adult,2017,154,eBook,08-29-2021,08-30-2021,2,5.0
-Klara and the Sun,Kazuo Ishiguro,Knopf Doubleday Publishing Group,Fiction,Science Fiction,2021,279,eBook,09-01-2021,09-05-2021,5,8.5
-DaVinci's Ghost,Toby Lester,Free Press,Nonfiction,History,2012,299,eBook,09-06-2021,09-12-2021,7,10.0
-Blood Meridian,Cormac McCarthy,First Vintage International,Fiction,Historical Fiction,1992,376,eBook,09-15-2021,09-28-2021,14,10.0
-Normal People,Sally Rooney,Faber and Faber,Fiction,Contemporary,2019,246,eBook,10-02-2021,12-03-2021,63,6.0
-Animal Farm,George Orwell,Signet Classics,Fiction,Classics,1945,85,eBook,12-06-2021,12-15-2021,10,6.0
-The Symposium,Plato,Penguin Classics,Philosophy,Classics,1999,95,Physical,12-21-2021,01-02-2022,13,7.0
-The Self-Taught Programmer,Cory Althoff,Triangle Connection LLC,Science,Programming,2017,299,Physical,12-22-2021,01-23-2022,33,5.0
-Cosmos,Carl Sagan,Ballantine Books,Science,Nonfiction,2013,396,Physical,01-03-2022,01-31-2022,29,8.0
-One Left,Kim Soom,University of Washington Press,Fiction,Historical Fiction,2020,192,eBook,02-08-2022,02-27-2022,20,7.5
-The Alchemist,Paulo Coelho,HarperOne,Fiction,Classics,2014,182,Physical,02-28-2022,03-11-2022,12,5.0
-The Easy Life in Kamusari,Shion Miura,Amazon Crossing,Fiction,Cultural,2021,205,eBook,05-03-2022,05-11-2022,9,6.0
-Where The Desert Meets The Sea,Werner Sonne,Amazon Crossing,Fiction,Historical Fiction,2019,250,eBook,05-11-2022,05-20-2022,10,7.0
-The Ardent Swarm,Yamen Manai,Amazon Crossing,Fiction,Historical Fiction,2021,174,eBook,05-23-2022,05-26-2022,4,6.0
-After Dark,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Cultural,2004,154,eBook,05-27-2022,06-02-2022,7,7.0
-Crying In H Mart,Michelle Zauner,Knopf Doubleday Publishing Group,Nonfiction,Memoir,2021,256,eBook,06-03-2022,06-08-2022,6,9.5
-"Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life",Lulu Miller,Simon & Schuster,Nonfiction,Memoir,2020,224,eBook,06-09-2022,06-10-2022,2,9.5
-Empire of Pain: The Secret History of the Sackler Dynasty,Patrick Radden Keefe,Doubleday,Nonfiction,History,2021,535,eBook,06-11-2022,08-27-2022,78,9.0
-In Waves,AJ Dungo,Nobrow,Nonfiction,Graphic Novel,2019,376,Physical,12-15-2022,12-15-2022,1,9.5
-Do Androids Dream of Electric Sheep?,Philip K. Dick,Ballantine Books,Fiction,Science Fiction,1968,244,Physical,12-31-2022,01-10-2023,11,8.0
-"The Boy, The Mole, The Fox, and The Horse",Charlie Mackesy,Ebury Press,Fiction,Graphic Novel,2019,128,Physical,01-16-2023,01-16-2023,1,8.5
-Everything I Never Told You,Celeste Ng,Penguin Press,Fiction,Mystery,2014,292,Physical,01-16-2023,02-02-2023,18,8.0
-Sputnik Sweetheart,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Cultural,2001,178,eBook,06-09-2023,09-18-2023,102,7.0
-The Doors of Perception / Heaven & Hell,Aldous Huxley,Harper Perennial Modern Classics,Philosophy,Nonfiction,1956,208,Physical,04-10-2023,10-08-2023,182,8.0
-A Brief History of Time,Stephen Hawking,Bantam Books,Science,Nonfiction,1996,248,Physical,10-08-2023,10-31-2023,24,9.0
-The Latinos of Asia,Anthony Christian Ocampo,Stanford University Press,Nonfiction,History,2016,214,Physical,12-23-2023,01-06-2024,15,7.5
-Under Alien Skies,Philip Plait,W.W. North & Company,Science,Nonfiction,2023,336,Physical,01-07-2024,01-15-2024,9,8.5
-The Water Dancer,Ta-Nehisi Coates,One World,Fiction,Historical Fiction,2019,416,Physical,01-16-2024,01-30-2024,15,8.0
-Good Omens,Neil Gaiman & Terry Pratchett,William Morrow,Fiction,Fantasy,2006,491,Physical,01-31-2024,02-16-2024,17,8.0
-A Heartbreaking Work of Staggering Genius,Dave Eggers,Vintage,Fiction,Contemporary,2000,437,Physical,02-17-2024,02-29-2024,13,6.0
-Tiny Beautiful Things: Advice on Love and Life from Dear Sugar,Cheryl Strayed,Knopf Doubleday Publishing Group,Nonfiction,Self Help,2012,353,Physical,03-01-2024,03-14-2024,14,8.5
-Correction,Thomas Bernhard,Vintage,Fiction,German Literature,1975,271,eBook,03-15-2024,04-01-2024,18,9.0
-The Emigrants,W.G. Sebald,Vintage,Fiction,German Literature,1992,159,eBook,04-02-2024,04-14-2024,13,8.0
-1Q84 - Part 1,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,387,Physical,04-15-2024,04-23-2024,9,7.5
-1Q84 - Part 2,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,352,Physical,04-23-2024,04-30-2024,8,7.5
-1Q84 - Part 3,Haruki Murakami,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,418,Physical,04-30-2024,05-09-2024,10,8.0
-The Wisdom of Insecurity,Alan Watts,Vintage,Philosophy,Nonfiction,1951,152,Physical,05-09-2024,05-15-2024,7,7.0
-The Order of Time,Carlo Rovelli,Riverhead Books,Science,Nonfiction,2018,212,Physical,05-16-2024,05-22-2024,7,7.5
-Horus Rising (Horus Heresy #1),Dan Abnett,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-09-2024,06-11-2024,3,8.5
-False Gods (Horus Heresy #2),Graham McNeill,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-14-2024,06-16-2024,3,8.5
-Galaxy in Flames (Horus Heresy #3),Ben Counter,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-16-2024,06-19-2024,4,8.0
-Flight of the Eisenstein (Horus Heresy #4),James Swallow,Black Library,Fiction,Warhammer 40k,2007,416,eBook,06-20-2024,06-24-2024,5,7.5
-Fulgrim (Horus Heresy #5),Graham McNeill,Black Library,Fiction,Warhammer 40k,2007,512,eBook,06-25-2024,06-30-2024,6,8.0
-The Reflection Crack'd,Graham McNeill,Black Library,Fiction,Warhammer 40k,2012,95,eBook,06-30-2024,07-01-2024,2,8.0
-Kryptos,Graham McNeill,Black Library,Fiction,Warhammer 40k,2014,17,eBook,07-01-2024,07-01-2024,1,7.0
-Angel Exterminatus (Horus Heresy #23),Graham McNeill,Black Library,Fiction,Warhammer 40k,2012,448,eBook,07-01-2024,07-07-2024,7,7.5
-Imperfect,Nick Kyme,Black Library,Fiction,Warhammer 40k,2015,19,eBook,07-07-2024,07-07-2024,1,8.0
-Chiurgeon,Nick Kyme,Black Library,Fiction,Warhammer 40k,2015,18,eBook,07-07-2024,07-07-2024,1,8.5
-Descent of Angels (Horus Heresy #6),Mitchel Scanlon,Black Library,Fiction,Warhammer 40k,2007,416,eBook,07-07-2024,07-13-2024,7,8.0
-Call of the Lion,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2015,48,eBook,07-13-2024,07-13-2024,1,7.0
-Fallen Angels (Horus Heresy #11),Mike Lee,Black Library,Fiction,Warhammer 40k,2009,416,eBook,07-13-2024,07-18-2024,6,7.5
-Cypher: Guardian of the Order,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2017,4,eBook,07-18-2024,07-18-2024,1,7.0
-Savage Weapons,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2011,40,eBook,07-18-2024,07-18-2024,1,8.5
-The Lion,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2012,95,eBook,07-19-2024,07-19-2024,1,8.0
-By The Lion's Command,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2015,19,eBook,07-20-2024,07-20-2024,1,7.5
-Prince of Crows,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2012,99,eBook,07-20-2024,07-23-2024,4,8.5
-Master of the First,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2016,20,eBook,07-23-2024,07-23-2024,1,7.0
-The Long Night,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2014,20,eBook,07-23-2024,07-23-2024,1,8.0
-The Midmight Library,Matt Haig,Penguin Books,Fiction,Fantasy,2020,288,Physical,07-23-2024,07-24-2024,2,9.0
-A Thousand Suns (Horus Heresy #12),Graham McNeill,Black Library,Fiction,Warhammer 40k,2010,416,eBook,07-25-2024,07-31-2024,7,8.0
-Prospero Burns (Horus Heresy #15),Dan Abnett,Black Library,Fiction,Warhammer 40k,2011,416,eBook,08-01-2024,08-08-2024,8,6.0
-The First Heretic (Horus Heresy #14),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2010,502,eBook,08-08-2024,08-14-2024,7,8.0
-Aurelian,Aaron Dembski-Bowden ,Black Library,Fiction,Warhammer 40k,2011,128,eBook,08-14-2024,08-15-2024,2,8.5
-Legion (Horus Heresy #7),Dan Abnett,Black Library,Fiction,Warhammer 40k,2008,416,eBook,08-15-2024,08-25-2024,11,7.5
-Know No Fear (Horus Heresy #19),Dan Abnett,Black Library,Fiction,Warhammer 40k,2012,416,eBook,08-25-2024,09-03-2024,10,9.0
-The Unburdened,David Annandale,Black Library,Fiction,Warhammer 40k,2015,161,eBook,09-03-2024,09-07-2024,5,7.5
-The Honoured ,Rob Sanders,Black Library,Fiction,Warhammer 40k,2015,163,eBook,09-07-2024,09-11-2024,5,7.0
-Rules of Engagement,Graham McNeill,Black Library,Fiction,Warhammer 40k,2011,47,eBook,09-11-2024,09-13-2024,3,7.5
-Honour to the Dead,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2013,32,eBook,09-13-2024,09-13-2024,1,8.5
-Butcher's Nails,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2012,32,eBook,09-13-2024,09-13-2024,1,8.5
-After Desh'ea,Matthew Farrer,Black Library,Fiction,Warhammer 40k,2009,36,eBook,09-14-2024,09-14-2024,1,8.5
-Betrayer (Horus Heresy #24),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2013,416,eBook,09-15-2024,09-22-2024,8,8.5
-Inheritor,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2016,20,eBook,09-23-2024,09-23-2024,1,7.0
-Mark of Calth (Horus Heresy #25),Multiple,Black Library,Fiction,Warhammer 40k,2013,416,eBook,09-23-2024,10-04-2024,12,8.0
-Censure,Nick Kyme,Black Library,Fiction,Warhammer 40k,2013,35,eBook,10-05-2024,10-05-2024,1,8.5
-The Kaban Project,Graham McNeill,Black Library,Fiction,Warhammer 40k,2013,56,eBook,10-05-2024,10-06-2024,2,8.0
-Mechanicum (Horus Heresy #9),Graham McNeill,Black Library,Fiction,Warhammer 40k,2008,416,eBook,10-06-2024,10-15-2024,10,7.5
-Vorax,Matthew Farrer,Black Library,Fiction,Warhammer 40k,2014,11,eBook,10-15-2024,10-15-2024,1,6.5
-Into Exile,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2016,20,eBook,10-16-2024,10-16-2024,1,8.0
-Cybernetica,Rob Sanders,Black Library,Fiction,Warhammer 40k,2016,134,eBook,10-16-2024,10-19-2024,4,7.0
-Myriad,Rob Sanders,Black Library,Fiction,Warhammer 40k,2016,29,eBook,10-20-2024,10-20-2024,1,7.5
-Hands of The Emperor,Rob Sanders,Black Library,Fiction,Warhammer 40k,2015,37,eBook,10-20-2024,10-21-2024,2,8.0
-The Unremembered Empire (Horus Heresy #27),Dan Abnett,Black Library,Fiction,Warhammer 40k,2013,416,eBook,10-21-2024,10-27-2024,7,9.0
-Herald of Sanguinius,Andy Smillie,Black Library,Fiction,Warhammer 40k,2014,12,eBook,10-27-2024,10-27-2024,1,6.0
-Sins of the Father,Andy Smillie,Black Library,Fiction,Warhammer 40k,2015,7,eBook,10-27-2024,10-27-2024,1,5.5
-Virtues of the Sons,Andy Smillie,Black Library,Fiction,Warhammer 40k,2015,16,eBook,10-28-2024,10-28-2024,1,7.0
-The Laurel of Defiance,Guy Haley,Black Library,Fiction,Warhammer 40k,2017,30,eBook,10-28-2024,10-28-2024,1,7.5
-A Safe and Shadowed Place,Guy Haley,Black Library,Fiction,Warhammer 40k,2015,24,eBook,10-28-2024,10-29-2024,2,7.0
-Pharos (Horus Heresy #34),Guy Haley,Black Library,Fiction,Warhammer 40k,2015,441,eBook,10-29-2024,11-08-2024,11,8.0
-The Painted Count,Guy Haley,Black Library,Fiction,Warhammer 40k,2016,23,eBook,11-08-2024,11-08-2024,1,8.0
-Angels of Caliban (Horus Heresy #38),Gav Thorpe,Black Library,Fiction,Warhammer 40k,2016,368,eBook,11-08-2024,11-17-2024,10,8.5
-Exocytosis,James Swallow,Black Library,Fiction,Warhammer 40k,2016,28,eBook,11-18-2024,11-18-2024,1,8.0
-Ruinstorm (Horus Heresy #46),Dave Annandale,Black Library,Fiction,Warhammer 40k,2017,384,eBook,11-18-2024,11-24-2024,7,8.5
-All That Remains,James Swallow,Black Library,Fiction,Warhammer 40k,2016,28,eBook,11-24-2024,11-24-2024,1,8.0
-The Atonement of Fire,Dave Annendale,Black Library,Fiction,Warhammer 40k,2018,19,eBook,11-24-2024,11-25-2024,2,7.5
-The Spear of Ultramar,Dave Annendale,Black Library,Fiction,Warhammer 40k,2018,100,eBook,11-25-2024,11-27-2024,3,7.0
-Ordo Sinister,John French,Black Library,Fiction,Warhammer 40k,2017,22,eBook,11-28-2024,11-28-2024,1,6.5
-The Master of Mankind (Horus Heresy #41),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2018,448,eBook,11-28-2024,12-11-2024,14,8.0
-The Ember Wolves,Rob Sanders,Black Library,Fiction,Warhammer 40k,2017,21,eBook,12-11-2024,12-11-2024,1,7.5
-Magisterium,Chris Wraight,Black Library,Fiction,Warhammer 40k,2017,22,eBook,12-12-2024,12-12-2024,1,7.5
-Bringer of Sorrow,Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2017,19,eBook,12-12-2024,12-12-2024,1,8.5
-The Board is Set,Gav Thorpe,Black Library,Fiction,Warhammer 40k,2017,20,eBook,12-13-2024,12-13-2024,1,8.0
-Prologue to Nikaea,Dave Annandale,Black Library,Fiction,Warhammer 40k,2018,21,eBook,12-13-2024,12-13-2024,1,7.0
-The Last Council,L J Goulding,Black Library,Fiction,Warhammer 40k,2018,28,eBook,12-13-2024,12-13-2024,1,8.0
-Slaves to Darkness (Horus Heresy #51),John French,Black Library,Fiction,Warhammer 40k,2018,432,eBook,12-14-2024,12-31-2024,18,7.5
-The Buried Dagger (Horus Heresy #54),James Swallow,Black Library,Fiction,Warhammer 40k,2019,370,eBook,01-01-2025,01-10-2025,10,8.5
-The Solar War (Siege of Terra #1),John French,Black Library,Fiction,Warhammer 40k,2019,384,eBook,01-11-2025,01-27-2025,17,8.5
-The Lost and The Damned (Siege of Terra #2),Guy Haley,Black Library,Fiction,Warhammer 40k,2019,400,eBook,01-28-2025,02-12-2025,16,8.0
-The First Wall (Siege of Terra #3),Gav Thorpe,Black Library,Fiction,Warhammer 40k,2020,460,eBook,02-12-2025,02-26-2025,15,7.5
-Sons of the Selenar,Graham McNeill,Black Library,Fiction,Warhammer 40k,2020,192,eBook,02-27-2025,03-15-2025,17,8.0
-Saturnine (Siege of Terra #4),Dan Abnett,Black Library,Fiction,Warhammer 40k,2020,464,eBook,03-16-2025,03-30-2025,15,9.5
-The Fury of Magnus,Graham McNeill,Black Library,Fiction,Warhammer 40k,2021,226,eBook,03-31-2025,04-06-2025,7,8.5
-Mortis (Siege of Terra #5),John French,Black Library,Fiction,Warhammer 40k,2021,548,eBook,04-07-2025,04-14-2025,8,7.5
-Warhawk (Siege of Terra #6),Chris Wraight,Black Library,Fiction,Warhammer 40k,2021,480,eBook,04-15-2025,04-20-2025,6,8.5
-Echoes of Eternity (Siege of Terra #7),Aaron Dembski-Bowden,Black Library,Fiction,Warhammer 40k,2022,525,eBook,04-21-2025,04-26-2025,6,9.0
-Garro: Knight of Gray,James Swallow,Black Library,Fiction,Warhammer 40k,2023,144,eBook,04-26-2025,04-28-2025,3,8.0
-The End and The Death: Volume 1,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,628,eBook,04-28-2025,05-04-2025,7,8.5
-The End and The Death: Volume 2,Dan Abnett,Black Library,Fiction,Warhammer 40k,2023,673,eBook,05-05-2025,05-13-2025,9,8.5
-The End and The Death: Volume 3,Dan Abnett,Black Library,Fiction,Warhammer 40k,2024,512,eBook,05-13-2025,05-23-2025,11,10.0
-On Earth We're Briefly Gorgeous,Ocean Vuong,Penguin Press,Fiction,Poetry,2019,246,eBook,05-26-2025,06-02-2025,8,6.5
-The Demon-Haunted World: Science as a Candle in the Dark,Carl Sagan,Ballantine Books,Science,Nonfiction,1997,459,eBook,06-02-2025,06-21-2025,20,8.5
-Dopamine Nation: Finding Balance in the Age of Indulgence,Anne Lembke,Dutton Books,Nonfiction,Psychology,2021,234,Physical,06-21-2025,06-29-2025,9,8.0
-Oil and Marble,Stephanie Storey,Arcade,Fiction,Historical Fiction,2016,362,eBook,06-30-2025,07-06-2025,7,8.5
-The Prince of Tides,Pat Conroy,Mariner Books,Fiction,Classics,1986,688,Physical,07-07-2025,07-12-2025,6,10.0
-Lonesome Dove: A Novel,Larry McMurtry,Simon & Schuster Paperbacks,Fiction,Historical Fiction,1985,858,Physical,07-13-2025,07-31-2025,19,10.0
-The Sirens of Titan,Kurt Vonnegut,Dial Press,Fiction,Science Fiction,1959,326,Physical,08-02-2025,08-06-2025,5,7.5
-Recursion,Blake Crouch,Ballantine Books,Fiction,Science Fiction,2019,326,Physical,08-07-2025,08-10-2025,4,8.0
-White Nights,Fyodor Dostoevsky,Wordsworth Editions,Fiction,Classics,1918,43,Physical,08-11-2025,08-13-2025,3,7.0
-Notes From Underground,Fyodor Dostoevsky,Wordsworth Editions,Fiction,Classics,1864,91,Physical,08-14-2025,08-20-2025,7,8.5
-Vertigo,W.G. Sebald,New Directions,Fiction,German Literature,1990,263,Physical,08-21-2025,08-31-2025,11,7.5
-Annihilation,Jeff VanderMeer,Picador,Fiction,Science Fiction,2014,195,Physical,09-01-2025,09-06-2025,6,8.0
-Authority,Jeff VanderMeer,Picador,Fiction,Science Fiction,2014,338,Physical,09-07-2025,09-25-2025,19,6.5
-Acceptance,Jeff VanderMeer,Picador,Fiction,Science Fiction,2014,338,Physical,09-26-2025,10-20-2025,25,6.0
-All the Pretty Horses,Cormac McCarthy,Knopf Doubleday Publishing Group,Fiction,Historical Fiction,1992,302,Physical,10-22-2025,11-08-2025,18,8.5
-The Fall,Albert Camus,Vintage Books,Fiction,Philosophy,1957,147,Physical,11-08-2025,11-14-2025,7,8.5
-The Last Messiah,Peter Wessel Zapffe,OpenAirPhilosophy,Philosophy,Nonfiction,1933,10,eBook,11-15-2025,11-15-2025,1,9.0
-Don Quixote,Miguel de Cervantes,Ecco,Fiction,Classics,1615,940,Physical,11-16-2025,01-10-2026,56,8.5
+Title,Author,Country,Publisher,Genre,Sub-Genre,Year,Pages,Format,Start Date,Finish Date,Duration,Rating
+The War of Art,Steven Pressfield,United States,Black Irish Entertrainment,Nonfiction,Self Help,2012,190,Physical,,,,3.0
+How to Win Friends & Influence People,Dale Carnegie,United States,Simon & Schuster,Nonfiction,Self Help,2011,276,Physical,,,,5.5
+Meditations,Marcus Aurelius,Italy,Random House Publishing Group,Philosophy,Nonfiction,2003,194,Physical,,,,6.5
+Selected Writings & Discourses,Epictetus,Greece,Penguin Classics,Philosophy,Nonfiction,2008,276,Physical,,,,7.0
+Letters From A Stoic,Seneca,Italy,Penguin Classics,Philosophy,Nonfiction,2004,254,Physical,,,,7.0
+Emotional Agility,Susan David,South Africa,Avery Publishing Group,Psychology,Self Help,2016,288,Physical,,,,7.5
+Norwegian Wood,Haruki Murakami,Japan,Knopf Doubleday Publishing Group,Fiction,Cultural,2000,298,Physical,,,,8.5
+Refuse to Choose!,Barbara Sher,United States,Rodale Books,Nonfiction,Self Help,2007,288,eBook,,,,
+Python Crash Course,Eric Matthes,United States,No Starch Press,Science,Programming,2019,544,Physical,01-23-2022,,,
+The Song of Achilles,Madeline Miller,United States,Ecco,Historical,Historical Fiction,2011,378,eBook,09-06-2022,,,
+The Beginning of Infinity: Explanations That Transform the World,David Deutsch,United Kingdom,Penguin Group,Science,Nonfiction,2011,496,eBook,05-23-2024,,,
+The Four Agreements,Don Miguel Ruiz,Mexico,Amber-Allen Publishing,Nonfiction,Self Help,1997,140,Physical,12-16-2020,12-16-2020,1,5.0
+Hitchhiker's Guide to The Galaxy,Douglas Adams,United Kingdom,Del Rey,Fiction,Science Fiction,2007,224,Physical,03-17-2021,03-25-2021,9,5.5
+Men Without Women,Haruki Murakami,Japan,Vintage International,Fiction,Short Stories,2018,240,Physical,03-26-2021,03-30-2021,5,7.5
+The Art of Learning,Josh Waitzkin,United States,Free Press,Nonfiction,Self Help,2007,288,Physical,03-30-2021,04-04-2021,6,5.0
+The Metamorphosis,Franz Kafka,Czechia,Project Gutenburg,Fiction,Classics,2005,68,eBook,04-05-2021,04-05-2021,1,6.0
+Kafka on the Shore,Haruki Murakami,Japan,Vintage,Fiction,Fantasy,2006,546,eBook,04-06-2021,04-10-2021,5,8.0
+1984,George Orwell,United Kingdom,Signet Classics,Fiction,Classics,1961,317,eBook,09-15-2020,04-11-2021,209,8.5
+Of Mice and Men,John Steinbeck,United States,Penguin Classics,Fiction,Classics,2006,93,eBook,04-11-2021,04-12-2021,2,6.0
+The Old Man and The Sea,Ernest Hemingway,United States,Scribner,Fiction,Classics,1995,69,eBook,04-12-2021,04-12-2021,1,8.0
+As I Lay Dying,William Faulkner,United States,Vintage,Fiction,Classics,1991,192,eBook,04-13-2021,04-14-2021,2,6.5
+The Remains of The Day,Kazuo Ishiguro,United Kingdom,Faber and Faber,Fiction,Historical Fiction,1990,218,eBook,04-15-2021,04-20-2021,6,9.0
+The Sound of the Mountain,Yasunari Kawabata,Japan,Vintage,Fiction,Cultural,1996,235,eBook,04-21-2021,05-17-2021,27,4.5
+Pachinko,Min Jin Lee,United States,Grand Central Publishing,Fiction,Historical Fiction,2017,595,eBook,06-01-2021,06-13-2021,13,10.0
+Kim Ji Young: Born 1982,Cho Nam Ju,South Korea,Minumsa,Fiction,Historical Fiction,2016,110,eBook,06-16-2021,07-18-2021,33,6.5
+Drifting House,Krys Lee,South Korea,Penguin Books,Fiction,Historical Fiction,2012,224,Physical,07-27-2021,08-01-2021,6,7.0
+A Farewell to Arms,Ernest Hemingway,United States,Simon & Schuster,Fiction,Historical Fiction,1929,300,eBook,08-06-2021,08-13-2021,8,7.0
+Never Let Me Go,Kazuo Ishiguro,United Kingdom,Faber and Faber,Fiction,Science Fiction,2005,264,eBook,08-15-2021,08-20-2021,6,8.5
+The Rings of Saturn,W.G. Sebald,Germany,New Directions,Fiction,Historical Fiction,1998,187,eBook,08-21-2021,08-27-2021,7,9.0
+Almond: A Novel,Won Pyung Sohn,South Korea,HarperVia,Fiction,Young Adult,2017,154,eBook,08-29-2021,08-30-2021,2,5.0
+Klara and the Sun,Kazuo Ishiguro,United Kingdom,Knopf Doubleday Publishing Group,Fiction,Science Fiction,2021,279,eBook,09-01-2021,09-05-2021,5,8.5
+DaVinci's Ghost,Toby Lester,United States,Free Press,Nonfiction,History,2012,299,eBook,09-06-2021,09-12-2021,7,10.0
+Blood Meridian,Cormac McCarthy,United States,First Vintage International,Fiction,Historical Fiction,1992,376,eBook,09-15-2021,09-28-2021,14,10.0
+Normal People,Sally Rooney,Ireland,Faber and Faber,Fiction,Contemporary,2019,246,eBook,10-02-2021,12-03-2021,63,6.0
+Animal Farm,George Orwell,United Kingdom,Signet Classics,Fiction,Classics,1945,85,eBook,12-06-2021,12-15-2021,10,6.0
+The Symposium,Plato,Greece,Penguin Classics,Philosophy,Classics,1999,95,Physical,12-21-2021,01-02-2022,13,7.0
+The Self-Taught Programmer,Cory Althoff,United States,Triangle Connection LLC,Science,Programming,2017,299,Physical,12-22-2021,01-23-2022,33,5.0
+Cosmos,Carl Sagan,United States,Ballantine Books,Science,Nonfiction,2013,396,Physical,01-03-2022,01-31-2022,29,8.0
+One Left,Kim Soom,South Korea,University of Washington Press,Fiction,Historical Fiction,2020,192,eBook,02-08-2022,02-27-2022,20,7.5
+The Alchemist,Paulo Coelho,Brazil,HarperOne,Fiction,Classics,2014,182,Physical,02-28-2022,03-11-2022,12,5.0
+The Easy Life in Kamusari,Shion Miura,Japan,Amazon Crossing,Fiction,Cultural,2021,205,eBook,05-03-2022,05-11-2022,9,6.0
+Where The Desert Meets The Sea,Werner Sonne,Germany,Amazon Crossing,Fiction,Historical Fiction,2019,250,eBook,05-11-2022,05-20-2022,10,7.0
+The Ardent Swarm,Yamen Manai,Tunisia,Amazon Crossing,Fiction,Historical Fiction,2021,174,eBook,05-23-2022,05-26-2022,4,6.0
+After Dark,Haruki Murakami,Japan,Knopf Doubleday Publishing Group,Fiction,Cultural,2004,154,eBook,05-27-2022,06-02-2022,7,7.0
+Crying In H Mart,Michelle Zauner,United States,Knopf Doubleday Publishing Group,Nonfiction,Memoir,2021,256,eBook,06-03-2022,06-08-2022,6,9.5
+"Why Fish Don't Exist: A Story of Loss, Love, and the Hidden Order of Life",Lulu Miller,United States,Simon & Schuster,Nonfiction,Memoir,2020,224,eBook,06-09-2022,06-10-2022,2,9.5
+Empire of Pain: The Secret History of the Sackler Dynasty,Patrick Radden Keefe,United States,Doubleday,Nonfiction,History,2021,535,eBook,06-11-2022,08-27-2022,78,9.0
+In Waves,AJ Dungo,United States,Nobrow,Nonfiction,Graphic Novel,2019,376,Physical,12-15-2022,12-15-2022,1,9.5
+Do Androids Dream of Electric Sheep?,Philip K. Dick,United States,Ballantine Books,Fiction,Science Fiction,1968,244,Physical,12-31-2022,01-10-2023,11,8.0
+"The Boy, The Mole, The Fox, and The Horse",Charlie Mackesy,United Kingdom,Ebury Press,Fiction,Graphic Novel,2019,128,Physical,01-16-2023,01-16-2023,1,8.5
+Everything I Never Told You,Celeste Ng,United States,Penguin Press,Fiction,Mystery,2014,292,Physical,01-16-2023,02-02-2023,18,8.0
+Sputnik Sweetheart,Haruki Murakami,United States,Knopf Doubleday Publishing Group,Fiction,Cultural,2001,178,eBook,06-09-2023,09-18-2023,102,7.0
+The Doors of Perception / Heaven & Hell,Aldous Huxley,United Kingdom,Harper Perennial Modern Classics,Philosophy,Nonfiction,1956,208,Physical,04-10-2023,10-08-2023,182,8.0
+A Brief History of Time,Stephen Hawking,United Kingdom,Bantam Books,Science,Nonfiction,1996,248,Physical,10-08-2023,10-31-2023,24,9.0
+The Latinos of Asia,Anthony Christian Ocampo,United States,Stanford University Press,Nonfiction,History,2016,214,Physical,12-23-2023,01-06-2024,15,7.5
+Under Alien Skies,Philip Plait,United States,W.W. North & Company,Science,Nonfiction,2023,336,Physical,01-07-2024,01-15-2024,9,8.5
+The Water Dancer,Ta-Nehisi Coates,United States,One World,Fiction,Historical Fiction,2019,416,Physical,01-16-2024,01-30-2024,15,8.0
+Good Omens,Neil Gaiman & Terry Pratchett,United Kingdom,William Morrow,Fiction,Fantasy,2006,491,Physical,01-31-2024,02-16-2024,17,8.0
+A Heartbreaking Work of Staggering Genius,Dave Eggers,United States,Vintage,Fiction,Contemporary,2000,437,Physical,02-17-2024,02-29-2024,13,6.0
+Tiny Beautiful Things: Advice on Love and Life from Dear Sugar,Cheryl Strayed,United States,Knopf Doubleday Publishing Group,Nonfiction,Self Help,2012,353,Physical,03-01-2024,03-14-2024,14,8.5
+Correction,Thomas Bernhard,Austria,Vintage,Fiction,German Literature,1975,271,eBook,03-15-2024,04-01-2024,18,9.0
+The Emigrants,W.G. Sebald,Germany,Vintage,Fiction,German Literature,1992,159,eBook,04-02-2024,04-14-2024,13,8.0
+1Q84 - Part 1,Haruki Murakami,Japan,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,387,Physical,04-15-2024,04-23-2024,9,7.5
+1Q84 - Part 2,Haruki Murakami,Japan,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,352,Physical,04-23-2024,04-30-2024,8,7.5
+1Q84 - Part 3,Haruki Murakami,Japan,Knopf Doubleday Publishing Group,Fiction,Fantasy,2009,418,Physical,04-30-2024,05-09-2024,10,8.0
+The Wisdom of Insecurity,Alan Watts,United Kingdom,Vintage,Philosophy,Nonfiction,1951,152,Physical,05-09-2024,05-15-2024,7,7.0
+The Order of Time,Carlo Rovelli,Italy,Riverhead Books,Science,Nonfiction,2018,212,Physical,05-16-2024,05-22-2024,7,7.5
+Horus Rising (Horus Heresy #1),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-09-2024,06-11-2024,3,8.5
+False Gods (Horus Heresy #2),Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-14-2024,06-16-2024,3,8.5
+Galaxy in Flames (Horus Heresy #3),Ben Counter,United Kingdom,Black Library,Fiction,Warhammer 40k,2006,416,Physical,06-16-2024,06-19-2024,4,8.0
+Flight of the Eisenstein (Horus Heresy #4),James Swallow,United Kingdom,Black Library,Fiction,Warhammer 40k,2007,416,eBook,06-20-2024,06-24-2024,5,7.5
+Fulgrim (Horus Heresy #5),Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2007,512,eBook,06-25-2024,06-30-2024,6,8.0
+The Reflection Crack'd,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,95,eBook,06-30-2024,07-01-2024,2,8.0
+Kryptos,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2014,17,eBook,07-01-2024,07-01-2024,1,7.0
+Angel Exterminatus (Horus Heresy #23),Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,448,eBook,07-01-2024,07-07-2024,7,7.5
+Imperfect,Nick Kyme,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,19,eBook,07-07-2024,07-07-2024,1,8.0
+Chiurgeon,Nick Kyme,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,18,eBook,07-07-2024,07-07-2024,1,8.5
+Descent of Angels (Horus Heresy #6),Mitchel Scanlon,United Kingdom,Black Library,Fiction,Warhammer 40k,2007,416,eBook,07-07-2024,07-13-2024,7,8.0
+Call of the Lion,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,48,eBook,07-13-2024,07-13-2024,1,7.0
+Fallen Angels (Horus Heresy #11),Mike Lee,United States,Black Library,Fiction,Warhammer 40k,2009,416,eBook,07-13-2024,07-18-2024,6,7.5
+Cypher: Guardian of the Order,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,4,eBook,07-18-2024,07-18-2024,1,7.0
+Savage Weapons,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2011,40,eBook,07-18-2024,07-18-2024,1,8.5
+The Lion,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,95,eBook,07-19-2024,07-19-2024,1,8.0
+By The Lion's Command,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,19,eBook,07-20-2024,07-20-2024,1,7.5
+Prince of Crows,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,99,eBook,07-20-2024,07-23-2024,4,8.5
+Master of the First,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,20,eBook,07-23-2024,07-23-2024,1,7.0
+The Long Night,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2014,20,eBook,07-23-2024,07-23-2024,1,8.0
+The Midmight Library,Matt Haig,United Kingdom,Penguin Books,Fiction,Fantasy,2020,288,Physical,07-23-2024,07-24-2024,2,9.0
+A Thousand Suns (Horus Heresy #12),Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2010,416,eBook,07-25-2024,07-31-2024,7,8.0
+Prospero Burns (Horus Heresy #15),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2011,416,eBook,08-01-2024,08-08-2024,8,6.0
+The First Heretic (Horus Heresy #14),Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2010,502,eBook,08-08-2024,08-14-2024,7,8.0
+Aurelian,Aaron Dembski-Bowden ,United Kingdom,Black Library,Fiction,Warhammer 40k,2011,128,eBook,08-14-2024,08-15-2024,2,8.5
+Legion (Horus Heresy #7),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2008,416,eBook,08-15-2024,08-25-2024,11,7.5
+Know No Fear (Horus Heresy #19),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,416,eBook,08-25-2024,09-03-2024,10,9.0
+The Unburdened,David Annandale,Canada,Black Library,Fiction,Warhammer 40k,2015,161,eBook,09-03-2024,09-07-2024,5,7.5
+The Honoured ,Rob Sanders,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,163,eBook,09-07-2024,09-11-2024,5,7.0
+Rules of Engagement,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2011,47,eBook,09-11-2024,09-13-2024,3,7.5
+Honour to the Dead,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,32,eBook,09-13-2024,09-13-2024,1,8.5
+Butcher's Nails,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2012,32,eBook,09-13-2024,09-13-2024,1,8.5
+After Desh'ea,Matthew Farrer,Australia,Black Library,Fiction,Warhammer 40k,2009,36,eBook,09-14-2024,09-14-2024,1,8.5
+Betrayer (Horus Heresy #24),Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,416,eBook,09-15-2024,09-22-2024,8,8.5
+Inheritor,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,20,eBook,09-23-2024,09-23-2024,1,7.0
+Mark of Calth (Horus Heresy #25),Multiple,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,416,eBook,09-23-2024,10-04-2024,12,8.0
+Censure,Nick Kyme,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,35,eBook,10-05-2024,10-05-2024,1,8.5
+The Kaban Project,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,56,eBook,10-05-2024,10-06-2024,2,8.0
+Mechanicum (Horus Heresy #9),Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2008,416,eBook,10-06-2024,10-15-2024,10,7.5
+Vorax,Matthew Farrer,Australia,Black Library,Fiction,Warhammer 40k,2014,11,eBook,10-15-2024,10-15-2024,1,6.5
+Into Exile,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,20,eBook,10-16-2024,10-16-2024,1,8.0
+Cybernetica,Rob Sanders,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,134,eBook,10-16-2024,10-19-2024,4,7.0
+Myriad,Rob Sanders,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,29,eBook,10-20-2024,10-20-2024,1,7.5
+Hands of The Emperor,Rob Sanders,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,37,eBook,10-20-2024,10-21-2024,2,8.0
+The Unremembered Empire (Horus Heresy #27),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2013,416,eBook,10-21-2024,10-27-2024,7,9.0
+Herald of Sanguinius,Andy Smillie,United Kingdom,Black Library,Fiction,Warhammer 40k,2014,12,eBook,10-27-2024,10-27-2024,1,6.0
+Sins of the Father,Andy Smillie,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,7,eBook,10-27-2024,10-27-2024,1,5.5
+Virtues of the Sons,Andy Smillie,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,16,eBook,10-28-2024,10-28-2024,1,7.0
+The Laurel of Defiance,Guy Haley,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,30,eBook,10-28-2024,10-28-2024,1,7.5
+A Safe and Shadowed Place,Guy Haley,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,24,eBook,10-28-2024,10-29-2024,2,7.0
+Pharos (Horus Heresy #34),Guy Haley,United Kingdom,Black Library,Fiction,Warhammer 40k,2015,441,eBook,10-29-2024,11-08-2024,11,8.0
+The Painted Count,Guy Haley,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,23,eBook,11-08-2024,11-08-2024,1,8.0
+Angels of Caliban (Horus Heresy #38),Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,368,eBook,11-08-2024,11-17-2024,10,8.5
+Exocytosis,James Swallow,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,28,eBook,11-18-2024,11-18-2024,1,8.0
+Ruinstorm (Horus Heresy #46),Dave Annandale,Canada,Black Library,Fiction,Warhammer 40k,2017,384,eBook,11-18-2024,11-24-2024,7,8.5
+All That Remains,James Swallow,United Kingdom,Black Library,Fiction,Warhammer 40k,2016,28,eBook,11-24-2024,11-24-2024,1,8.0
+The Atonement of Fire,Dave Annendale,Canada,Black Library,Fiction,Warhammer 40k,2018,19,eBook,11-24-2024,11-25-2024,2,7.5
+The Spear of Ultramar,Dave Annendale,Canada,Black Library,Fiction,Warhammer 40k,2018,100,eBook,11-25-2024,11-27-2024,3,7.0
+Ordo Sinister,John French,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,22,eBook,11-28-2024,11-28-2024,1,6.5
+The Master of Mankind (Horus Heresy #41),Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2018,448,eBook,11-28-2024,12-11-2024,14,8.0
+The Ember Wolves,Rob Sanders,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,21,eBook,12-11-2024,12-11-2024,1,7.5
+Magisterium,Chris Wraight,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,22,eBook,12-12-2024,12-12-2024,1,7.5
+Bringer of Sorrow,Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,19,eBook,12-12-2024,12-12-2024,1,8.5
+The Board is Set,Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2017,20,eBook,12-13-2024,12-13-2024,1,8.0
+Prologue to Nikaea,Dave Annandale,Canada,Black Library,Fiction,Warhammer 40k,2018,21,eBook,12-13-2024,12-13-2024,1,7.0
+The Last Council,L J Goulding,United Kingdom,Black Library,Fiction,Warhammer 40k,2018,28,eBook,12-13-2024,12-13-2024,1,8.0
+Slaves to Darkness (Horus Heresy #51),John French,United Kingdom,Black Library,Fiction,Warhammer 40k,2018,432,eBook,12-14-2024,12-31-2024,18,7.5
+The Buried Dagger (Horus Heresy #54),James Swallow,United Kingdom,Black Library,Fiction,Warhammer 40k,2019,370,eBook,01-01-2025,01-10-2025,10,8.5
+The Solar War (Siege of Terra #1),John French,United Kingdom,Black Library,Fiction,Warhammer 40k,2019,384,eBook,01-11-2025,01-27-2025,17,8.5
+The Lost and The Damned (Siege of Terra #2),Guy Haley,United Kingdom,Black Library,Fiction,Warhammer 40k,2019,400,eBook,01-28-2025,02-12-2025,16,8.0
+The First Wall (Siege of Terra #3),Gav Thorpe,United Kingdom,Black Library,Fiction,Warhammer 40k,2020,460,eBook,02-12-2025,02-26-2025,15,7.5
+Sons of the Selenar,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2020,192,eBook,02-27-2025,03-15-2025,17,8.0
+Saturnine (Siege of Terra #4),Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2020,464,eBook,03-16-2025,03-30-2025,15,9.5
+The Fury of Magnus,Graham McNeill,United Kingdom,Black Library,Fiction,Warhammer 40k,2021,226,eBook,03-31-2025,04-06-2025,7,8.5
+Mortis (Siege of Terra #5),John French,United Kingdom,Black Library,Fiction,Warhammer 40k,2021,548,eBook,04-07-2025,04-14-2025,8,7.5
+Warhawk (Siege of Terra #6),Chris Wraight,United Kingdom,Black Library,Fiction,Warhammer 40k,2021,480,eBook,04-15-2025,04-20-2025,6,8.5
+Echoes of Eternity (Siege of Terra #7),Aaron Dembski-Bowden,United Kingdom,Black Library,Fiction,Warhammer 40k,2022,525,eBook,04-21-2025,04-26-2025,6,9.0
+Garro: Knight of Gray,James Swallow,United Kingdom,Black Library,Fiction,Warhammer 40k,2023,144,eBook,04-26-2025,04-28-2025,3,8.0
+The End and The Death: Volume 1,Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2023,628,eBook,04-28-2025,05-04-2025,7,8.5
+The End and The Death: Volume 2,Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2023,673,eBook,05-05-2025,05-13-2025,9,8.5
+The End and The Death: Volume 3,Dan Abnett,United Kingdom,Black Library,Fiction,Warhammer 40k,2024,512,eBook,05-13-2025,05-23-2025,11,10.0
+On Earth We're Briefly Gorgeous,Ocean Vuong,Vietnam,Penguin Press,Fiction,Poetry,2019,246,eBook,05-26-2025,06-02-2025,8,6.5
+The Demon-Haunted World: Science as a Candle in the Dark,Carl Sagan,United States,Ballantine Books,Science,Nonfiction,1997,459,eBook,06-02-2025,06-21-2025,20,8.5
+Dopamine Nation: Finding Balance in the Age of Indulgence,Anne Lembke,United States,Dutton Books,Nonfiction,Psychology,2021,234,Physical,06-21-2025,06-29-2025,9,8.0
+Oil and Marble,Stephanie Storey,United States,Arcade,Fiction,Historical Fiction,2016,362,eBook,06-30-2025,07-06-2025,7,8.5
+The Prince of Tides,Pat Conroy,United States,Mariner Books,Fiction,Classics,1986,688,Physical,07-07-2025,07-12-2025,6,10.0
+Lonesome Dove: A Novel,Larry McMurtry,United States,Simon & Schuster Paperbacks,Fiction,Historical Fiction,1985,858,Physical,07-13-2025,07-31-2025,19,10.0
+The Sirens of Titan,Kurt Vonnegut,United States,Dial Press,Fiction,Science Fiction,1959,326,Physical,08-02-2025,08-06-2025,5,7.5
+Recursion,Blake Crouch,United States,Ballantine Books,Fiction,Science Fiction,2019,326,Physical,08-07-2025,08-10-2025,4,8.0
+White Nights,Fyodor Dostoevsky,Russia,Wordsworth Editions,Fiction,Classics,1918,43,Physical,08-11-2025,08-13-2025,3,7.0
+Notes From Underground,Fyodor Dostoevsky,Russia,Wordsworth Editions,Fiction,Classics,1864,91,Physical,08-14-2025,08-20-2025,7,8.5
+Vertigo,W.G. Sebald,Germany,New Directions,Fiction,German Literature,1990,263,Physical,08-21-2025,08-31-2025,11,7.5
+Annihilation,Jeff VanderMeer,United States,Picador,Fiction,Science Fiction,2014,195,Physical,09-01-2025,09-06-2025,6,8.0
+Authority,Jeff VanderMeer,United States,Picador,Fiction,Science Fiction,2014,338,Physical,09-07-2025,09-25-2025,19,6.5
+Acceptance,Jeff VanderMeer,United States,Picador,Fiction,Science Fiction,2014,338,Physical,09-26-2025,10-20-2025,25,6.0
+All the Pretty Horses,Cormac McCarthy,United States,Knopf Doubleday Publishing Group,Fiction,Historical Fiction,1992,302,Physical,10-22-2025,11-08-2025,18,8.5
+The Fall,Albert Camus,France,Vintage Books,Fiction,Philosophy,1957,147,Physical,11-08-2025,11-14-2025,7,8.5
+The Last Messiah,Peter Wessel Zapffe,Norway,OpenAirPhilosophy,Philosophy,Nonfiction,1933,10,eBook,11-15-2025,11-15-2025,1,9.0
+Don Quixote,Miguel de Cervantes,Spain,Ecco,Fiction,Classics,1615,940,Physical,11-16-2025,01-10-2026,56,8.5
+The Myth of Sisyphus,Albert Camus,France,Vintage,Philosophy,Classics,1942,138,Physical,01-11-2026,01-15-2026,5,7.5
+Stay True,Hua Hsu,United States,Vintage,Nonfiction,Memoir,2022,193,Physical,01-16-2026,,,
