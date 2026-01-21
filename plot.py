@@ -913,6 +913,42 @@ def gen_linegraph2(df, title, sub):
     
     return fig.show(config=config)
 
+def gen_choropleth(df, title, sub):
+    """
+    Produces a simple map showing country count
+    
+    df: dataframe containing relevant data
+    """
+    # 2. Create the Choropleth trace
+    fig = go.Figure(data=go.Choropleth(
+        locations = df['Country'],
+        locationmode='country names',
+        z = df['Count'],
+        text = df['Country'],
+        colorscale = 'Viridis',
+        autocolorscale = False,
+        reversescale = False,
+        marker_line_color = 'darkgray',
+        marker_line_width = 0.5,
+        colorbar_title = 'Count Value',
+    ))
+
+    # 3. Update the layout
+    fig.update_layout(
+        # title_text = '2026 Global Distribution Map',
+        geo = dict(
+            showframe = False,
+            showcoastlines = False,
+            projection_type = 'equirectangular' # Options: 'orthographic', 'mercator', etc.
+        )
+    )
+
+    # Styling
+    title = f"{title}<br><sup>{sub}"    
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, x_title="Duration (Days)", showlegend=True)
+        
+    return fig.show(config=config)
+
 def generate_search_url(og_title, og_author):
     """
     Strips the title and author name, and generates a clean search query.
