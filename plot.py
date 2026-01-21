@@ -921,8 +921,8 @@ def gen_choropleth(df, title, sub):
     """
     # 2. Create the Choropleth trace
     fig = go.Figure(data=go.Choropleth(
-        locations = df['Country'],
-        locationmode='country names',
+        locations = df['ISO'],
+        locationmode='ISO-3',
         z = df['Count'],
         text = df['Country'],
         colorscale = 'Viridis',
@@ -930,7 +930,7 @@ def gen_choropleth(df, title, sub):
         reversescale = False,
         marker_line_color = 'darkgray',
         marker_line_width = 0.5,
-        colorbar_title = 'Count Value',
+        colorbar_title = 'Total',
     ))
 
     # 3. Update the layout
