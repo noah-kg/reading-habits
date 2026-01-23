@@ -928,17 +928,20 @@ def gen_choropleth(df, title, sub):
         colorscale = 'Viridis',
         autocolorscale = False,
         reversescale = False,
-        marker_line_color = 'darkgray',
-        marker_line_width = 0.5,
+        marker_line_color = 'black',
+        marker_line_width = 0.8,
         colorbar_title = 'Total',
-    ))
+        )
+    )
 
     # 3. Update the layout
     fig.update_layout(
         # title_text = '2026 Global Distribution Map',
         geo = dict(
+            bgcolor="#f0f0f0",
             showframe = False,
             showcoastlines = False,
+            showcountries = True,
             projection_type = 'equirectangular' # Options: 'orthographic', 'mercator', etc.
         )
     )
