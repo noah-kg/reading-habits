@@ -913,24 +913,32 @@ def gen_linegraph2(df, title, sub):
     
     return fig.show(config=config)
 
-def gen_choropleth(df, title, sub):
+def gen_choropleth(df, title, sub, col='Count'):
     """
     Produces a simple map showing country count
     
     df: dataframe containing relevant data
     """
     # 2. Create the Choropleth trace
+    customdata = np.stack([df['Count']], axis=-1)
+
     fig = go.Figure(data=go.Choropleth(
         locations = df['ISO'],
         locationmode='ISO-3',
-        z = df['Count'],
+        z = df[col],
         text = df['Country'],
+        customdata=customdata,
         colorscale = 'Viridis',
         autocolorscale = False,
         reversescale = False,
         marker_line_color = 'black',
         marker_line_width = 0.8,
-        colorbar_title = 'Total',
+        colorbar_title = col,
+        hovertemplate = (
+            "<b>%{text}</b>: " + "%{z}%<br>" +
+            "Books Read: %{customdata[0]}<br>" +
+            "<extra></extra>"
+            )
         )
     )
 
