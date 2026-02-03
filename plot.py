@@ -27,7 +27,7 @@ config = {
       }
 }
 
-def gen_layout(fig, title='', title_size=40, height=600, showlegend=False, plot_bg='#f0f0f0', 
+def gen_layout(fig, title='', title_size=40, autosize=True, height=600, width=None, showlegend=False, plot_bg='#f0f0f0', 
                paper_bg='#f0f0f0', y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False, y2_showgrid=False,
@@ -35,7 +35,9 @@ def gen_layout(fig, title='', title_size=40, height=600, showlegend=False, plot_
     
     fig.update_layout(
         title=dict(text=title, font=dict(size=title_size, family="Baskerville, Bold", color=fontcolor)),
+        autosize=autosize,
         height=height,
+        width=width,
         showlegend=showlegend,
         barmode=barmode,
         plot_bgcolor=plot_bg,
@@ -329,6 +331,40 @@ def gen_stacked_bar_graph(dfp, title, sub):
     fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True, showlegend=True)
     # fig.update_layout(legend = list(orientation = 'h', xanchor = "center", x = 0.5, y= 1)) )
     fig.update_layout(legend=dict(orientation='h', yanchor="top", y=1.01, xanchor="center", x=0.5, bgcolor='rgba(0,0,0,0)'))
+        
+    return fig.show(config=config)
+
+def gen_grouped_stacked_bar_graph(df, title, sub, col='Genre'):
+    colors = ['#d27575', '#529b9c']
+    
+    fig = go.Figure()
+
+    for gender_value, group_df in df.groupby('Gender'):
+        
+        # KEY FIX: Create customdata only for THIS group's rows
+        # This ensures row 0 of the Male trace matches row 0 of Male customdata
+        group_customdata = np.stack((group_df['Total'], group_df['Total %']), axis=-1)
+
+        fig.add_trace(go.Bar(
+            name=gender_value,
+            x=group_df[col],
+            y=group_df['Total'],
+            marker_color=colors[1] if gender_value == 'Male' else colors[0],
+            customdata=group_customdata, # Use the localized data
+            offsetgroup=gender_value,
+            hovertemplate=(
+                f"<b>%{{x}} - {gender_value}</b>:<br>" + 
+                "Books Read: %{customdata[0]}<br>" +
+                "<b>%{customdata[1]}%</b> of %{x}<br>" +
+                "<extra></extra>"
+            )
+        ))
+
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, barmode="stack", x_showline=True)
+    fig.update_layout(barmode='group')
+    fig.update_yaxes(type="log")
         
     return fig.show(config=config)
 
@@ -960,6 +996,7 @@ def gen_choropleth(df, title, sub, col='Count'):
         
     return fig.show(config=config)
 
+# These functions are for finding the book covers for the itable
 def generate_search_url(og_title, og_author):
     """
     Strips the title and author name, and generates a clean search query.
