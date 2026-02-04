@@ -27,7 +27,7 @@ config = {
       }
 }
 
-def gen_layout(fig, title='', title_size=40, autosize=True, height=600, width=None, showlegend=False, plot_bg='#f0f0f0', 
+def gen_layout(fig, title='', title_size=35, autosize=True, height=600, width=1000, showlegend=False, plot_bg='#f0f0f0', 
                paper_bg='#f0f0f0', y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
                x_showline=False, y_showline=False, linecolor='black', y_labels=True, 
                gridcolor='#cbcbcb', barmode='group', x_showgrid=False, y_showgrid=False, y2_showgrid=False,
@@ -192,6 +192,33 @@ def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg=
                 hovertemplate="<b>%{x}</b>: %{y}",
             )
         )
+    
+    # Styling
+    title = f"{title}<br><sup>{sub}"
+    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
+        
+    return fig.show(config=config)
+
+def gen_month_graph(df, title, sub):
+    """
+    Produces a simple bar graph with the given dataframe and column.
+    
+    df: dataframe containing relevant data
+    col: data to be displayed along x-axis
+    """
+    color = ['#9cba8f'] * len(df.index)
+    fig = go.Figure()
+    
+    # dfp = df.groupby(col).count().sort_values('Title', ascending=False).reset_index()[:num]
+    fig.add_trace(
+        go.Bar(
+            x=df['Month Name'],
+            y=df['Title'],
+            name='',
+            marker_color=color,
+            hovertemplate="<b>%{x}</b>: %{y}",
+        )
+    )
     
     # Styling
     title = f"{title}<br><sup>{sub}"
@@ -794,7 +821,7 @@ def gen_infographic(df, full_df):
     title = f"My Reading Stats by Year"
     fig = gen_layout(fig, title, height=800, l_mar=85, r_mar=85, t_mar=120, b_mar=65, y_showgrid=True, x_showline=True, y_showline=False, showlegend=True)
      
-    return fig.show()
+    return fig.show(config=config)
 
 def gen_linegraph(df, title, sub):
 
