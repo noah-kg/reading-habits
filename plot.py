@@ -95,7 +95,7 @@ def gen_menu(active, buttons):
             buttons=buttons,
             x=1.0,
             xanchor='right',
-            y=1.16,
+            y=1.14,
             yanchor='top'
         )
     ]
