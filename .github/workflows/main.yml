@@ -16,11 +16,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       # Updates Node.js version
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
       
       # Clean up space
       - name: Remove unnecessary files
