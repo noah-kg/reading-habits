@@ -15,6 +15,15 @@ from plotly.offline import download_plotlyjs, init_notebook_mode
 init_notebook_mode(connected=True)
 cf.go_offline()
 
+# GET API KEY 
+def load_api_key(filepath="book_creds.json"):
+    with open(filepath, 'r') as f:
+        config = json.load(f)
+        return config.get("api_key")
+
+# Usage
+API_KEY = load_api_key()
+
 # Remove unnecessary control items in figures (for Plotly)
 config = {
     'modeBarButtonsToRemove': ['zoomIn', 'zoomOut', 'resetScale2d', 'select2d', 'lasso2d'],
@@ -1024,21 +1033,71 @@ def gen_choropleth(df, title, sub, col='Count'):
     return fig.show(config=config)
 
 # These functions are for finding the book covers for the itable
-def generate_search_url(og_title, og_author):
+def get_book_cover_v2(title, query):
     """
-    Strips the title and author name, and generates a clean search query.
-    og_title = (str) Title of book from dataframe
-    og_author = (str) Name of author from dataframe
+    Fetches cover with robust retry logic and authentication.
+    """
+    if pd.isna(query) or not isinstance(query, str):
+        return None
     
-    Returns a link to the results of the api call
-    """
-    title = og_title.replace('[^a-zA-Z0-9 ]', '').lower().replace(r'\s+', ' ')
-    author = og_author.replace('[^a-zA-Z0-9 ]', '').lower().replace(r'\s+', ' ')
+    url = "https://www.googleapis.com/books/v1/volumes"
+    
+    # Use params for cleaner, safer URL building
+    params = {
+        'q': query,
+        'key': API_KEY,
+        'maxResults': 1  # Optimization: we only need the first cover
+    }
+    
+    # Enhanced retry logic (Exponential Backoff)
+    max_retries = 5
+    for attempt in range(max_retries):
+        try:            
+            response = requests.get(url, params=params)
+            # print(f"DEBUG: Full Request URL: {response.url}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("totalItems", 0) > 0:
+                    volume_info = data["items"][0].get("volumeInfo", {})
+                    return volume_info.get("imageLinks", {}).get("thumbnail")
+                return None
+            
+            elif response.status_code == 429:
+                # Use server's suggestion or double the wait time each time
+                wait_time = int(response.headers.get("Retry-After", 2 ** (attempt + 1)))
+                print(f"Rate limited. Attempt {attempt+1}: Waiting {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                response.raise_for_status()
+                
+        except requests.exceptions.RequestException as e:
+            print(f"Error for '{title}': {e}")
+            if attempt == max_retries - 1: return None
+            
+    return None
 
-    base = "https://www.googleapis.com/books/v1/volumes?q="
-    title = title.replace(' ', '+')
-    author = author.replace(' ', '+')
-    return f"{base}intitle:{title}+inauthor:{author}"
+def update_missing_covers(df):
+    for index, row in df.iterrows():
+        # Check if cover_url is empty (NaN) or missing
+        if pd.isna(row['cover_url']) or row['cover_url'] == "":
+            print(f"Fetching cover for: {row['Title']}...")
+            
+            # Use your existing generate function (clean up title for query)
+            query = f"intitle:{row['Title']}" 
+            
+            # Call your API function (with the retry logic we discussed)
+            new_url = get_book_cover_v2(row['Title'], query)
+            
+            if new_url:
+                df.at[index, 'cover_url'] = new_url
+                print(f"Success! Found: {new_url}")
+            else:
+                print(f"Could not find cover for {row['Title']}")
+    
+    # Save the updated list back to the CSV
+    df.to_csv('new_covers.csv', index=False)
+    # print("Update complete and saved to new_covers.csv.")
 
 def get_book_cover(title, link):
     """
