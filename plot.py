@@ -15,14 +15,14 @@ from plotly.offline import download_plotlyjs, init_notebook_mode
 init_notebook_mode(connected=True)
 cf.go_offline()
 
-# GET API KEY 
-def load_api_key(filepath="book_creds.json"):
-    with open(filepath, 'r') as f:
-        config = json.load(f)
-        return config.get("api_key")
+# # GET API KEY 
+# def load_api_key(filepath="book_creds.json"):
+#     with open(filepath, 'r') as f:
+#         config = json.load(f)
+#         return config.get("api_key")
 
-# Usage
-API_KEY = load_api_key()
+# # Usage
+# API_KEY = load_api_key()
 
 # Remove unnecessary control items in figures (for Plotly)
 config = {
@@ -1045,7 +1045,7 @@ def get_book_cover_v2(title, query):
     # Use params for cleaner, safer URL building
     params = {
         'q': query,
-        'key': API_KEY,
+        # 'key': API_KEY,
         'maxResults': 1  # Optimization: we only need the first cover
     }
     
