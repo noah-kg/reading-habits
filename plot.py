@@ -552,7 +552,7 @@ def gen_time_graph(df, title, sub):
     yearlabels = [x for x in df[rows[0]] if len(x)==4]
     monthlabels = [x for x in df[rows[0]] if len(x)>4]
     years = len(yearlabels) #gets number of 'whole' years (2020, 2021, 2022, etc.)
-    colors = ['#d27575', '#529b9c', '#eac392', '#9cba8f', '#675a55'] * len(monthlabels)
+    colors = ['#529b9c'] * len(monthlabels)
     
     fig = go.Figure()
     
@@ -1033,6 +1033,66 @@ def gen_choropleth(df, title, sub, col='Count'):
     return fig.show(config=config)
 
 # These functions are for finding the book covers for the itable
+def sync_booklist_to_covers(booklist, covers):
+    """
+    Checks booklist.csv for new titles and adds them to new_covers.csv.
+    Does not perform any API calls.
+    """
+    # Find titles in booklist that aren't in covers yet
+    new_titles = booklist[~booklist['Title'].isin(covers['Title'])]['Title'].unique()
+
+    if len(new_titles) > 0:
+        new_rows = pd.DataFrame({'Title': new_titles, 'cover_url': [np.nan] * len(new_titles)})
+        covers = pd.concat([covers, new_rows], ignore_index=True)
+        covers.to_csv('new_covers.csv', index=False)
+        print(f"Added {len(new_titles)} new title(s) to new_covers.csv (URLs are pending).")
+    # else:
+        # print("Everything is up to date!")
+
+def fetch_pending_covers(booklist):
+    """
+    Iterates through new_covers.csv and fetches URLs for rows with missing covers.
+    """
+    # Reads in updated list
+    covers = pd.read_csv('new_covers.csv')
+
+    # Filter for rows that need a URL
+    pending = covers[covers['cover_url'].isna() | (covers['cover_url'] == "")]
+
+    if pending.empty:
+        # print("No pending covers to fetch.")
+        return
+
+    for index, row in pending.iterrows():
+        title = row['Title']
+        
+        # Look up author from booklist for a better search
+        # author_match = booklist[booklist['Title'] == title]['Author'].values
+        # author = author_match[0] if len(author_match) > 0 else ""
+        author = booklist[booklist['Title'] == title]['Author'].values
+
+        print(f"Fetching cover for: {title} by {author}...")
+        
+        # Use a clean query string
+        query = f'intitle:"{title}" inauthor:"{author}"'
+        
+        # This calls existing get_book_cover_v2 function
+        new_url = get_book_cover_v2(title, query)
+
+        if new_url:
+            covers.at[index, 'cover_url'] = new_url
+            print(f"✅ Success: {new_url}")
+        else:
+            covers.at[index, 'cover_url'] = "N/A"
+            print(f"⚠️ No result found for {title}.")
+        
+        # Wait 1 second between books to be safe with the API
+        time.sleep(1)
+
+    # Save the updated URLs back to the file
+    covers.to_csv('new_covers.csv', index=False)
+    print("Fetch process complete.")
+
 def get_book_cover_v2(title, query):
     """
     Fetches cover with robust retry logic and authentication.
@@ -1076,28 +1136,6 @@ def get_book_cover_v2(title, query):
             if attempt == max_retries - 1: return None
             
     return None
-
-def update_missing_covers(df):
-    for index, row in df.iterrows():
-        # Check if cover_url is empty (NaN) or missing
-        if pd.isna(row['cover_url']) or row['cover_url'] == "":
-            print(f"Fetching cover for: {row['Title']}...")
-            
-            # Use your existing generate function (clean up title for query)
-            query = f"intitle:{row['Title']}" 
-            
-            # Call your API function (with the retry logic we discussed)
-            new_url = get_book_cover_v2(row['Title'], query)
-            
-            if new_url:
-                df.at[index, 'cover_url'] = new_url
-                print(f"Success! Found: {new_url}")
-            else:
-                print(f"Could not find cover for {row['Title']}")
-    
-    # Save the updated list back to the CSV
-    df.to_csv('new_covers.csv', index=False)
-    # print("Update complete and saved to new_covers.csv.")
 
 def get_book_cover(title, link):
     """
