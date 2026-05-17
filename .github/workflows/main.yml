@@ -34,7 +34,9 @@ jobs:
 
       # Converts .ipynb to html
       - name: Convert notebook
-        run: docker run -v $PWD/docs:/app/docs booksread make convert
+        env:
+          BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
+        run: docker run -e BOOKS_API_KEY=$BOOKS_API_KEY -v $PWD/docs:/app/docs booksread make convert
 
       - name: List files in the docs folder
         run: |
