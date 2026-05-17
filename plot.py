@@ -15,13 +15,27 @@ from plotly.offline import download_plotlyjs, init_notebook_mode
 init_notebook_mode(connected=True)
 cf.go_offline()
 
-# # GET API KEY 
 def load_api_key(filepath="book_creds.json"):
-    with open(filepath, 'r') as f:
-        config = json.load(f)
-        return config.get("api_key")
+    """
+    Checks for a GitHub environment variable first.
+    Falls back to the local JSON file if running locally.
+    """
+    # 1. Check if running on GitHub Actions
+    github_key = os.environ.get("BOOKS_API_KEY")
+    if github_key:
+        return github_key
 
-# Usage
+    # 2. If not on GitHub, fall back to your local JSON file
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, 'r') as f:
+                return json.load(f).get("api_key")
+        except Exception:
+            return None
+            
+    return None
+
+# Global key initialization
 API_KEY = load_api_key()
 
 # Remove unnecessary control items in figures (for Plotly)
@@ -1089,48 +1103,45 @@ def fetch_pending_covers():
     print("Fetch process complete.")
 
 def get_book_cover_v2(title, query):
-    """
-    Fetches cover with robust retry logic and authentication.
-    """
-    if pd.isna(query) or not isinstance(query, str):
-        return None
+    url = "https://googleapis.com"
     
-    url = "https://www.googleapis.com/books/v1/volumes"
-    
-    # Use params for cleaner, safer URL building
+    # Base parameters
     params = {
         'q': query,
-        'key': API_KEY,
-        'maxResults': 1  # Optimization: we only need the first cover
+        'maxResults': 1
     }
     
-    # Enhanced retry logic (Exponential Backoff)
-    max_retries = 5
+    # Only append the key parameter if the key variable is not None
+    if API_KEY:
+        params['key'] = API_KEY
+
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    max_retries = 3
+    
     for attempt in range(max_retries):
-        try:            
-            response = requests.get(url, params=params)
-            # print(f"DEBUG: Full Request URL: {response.url}")
-            print(response, response.url)
-        
+        try:
+            response = requests.get(url, params=params, headers=headers)
+            
             if response.status_code == 200:
                 data = response.json()
                 if data.get("totalItems", 0) > 0:
-                    volume_info = data["items"][0].get("volumeInfo", {})
-                    return volume_info.get("imageLinks", {}).get("thumbnail")
+                    volume_info = data["items"][0].get("volumeInfo", {}) # Fix: added [0] index to grab first search result item
+                    image_links = volume_info.get("imageLinks", {})
+                    return image_links.get("thumbnail")
                 return None
-            
+                
             elif response.status_code == 429:
-                # Use server's suggestion or double the wait time each time
-                wait_time = int(response.headers.get("Retry-After", 2 ** (attempt + 1)))
-                print(f"Rate limited. Attempt {attempt+1}: Waiting {wait_time}s...")
+                wait_time = int(response.headers.get("Retry-After", 2 ** (attempt + 2)))
+                print(f"Rate limited. Retrying in {wait_time}s...")
                 time.sleep(wait_time)
             else:
                 response.raise_for_status()
                 
         except requests.exceptions.RequestException as e:
-            print(f"Error for '{title}': {e}")
-            if attempt == max_retries - 1: return None
-            
+            print(f"Error making API request for '{title}': {e}")
+            if attempt == max_retries - 1:
+                return None
+                
     return None
 
 def get_book_cover(title, link):
