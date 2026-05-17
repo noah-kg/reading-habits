@@ -16,13 +16,13 @@ init_notebook_mode(connected=True)
 cf.go_offline()
 
 # # GET API KEY 
-# def load_api_key(filepath="book_creds.json"):
-#     with open(filepath, 'r') as f:
-#         config = json.load(f)
-#         return config.get("api_key")
+def load_api_key(filepath="book_creds.json"):
+    with open(filepath, 'r') as f:
+        config = json.load(f)
+        return config.get("api_key")
 
-# # Usage
-# API_KEY = load_api_key()
+# Usage
+API_KEY = load_api_key()
 
 # Remove unnecessary control items in figures (for Plotly)
 config = {
@@ -1038,45 +1038,42 @@ def sync_booklist_to_covers(booklist, covers):
     Checks booklist.csv for new titles and adds them to new_covers.csv.
     Does not perform any API calls.
     """
+    booklist = booklist.copy()
+    booklist['Title'] = booklist['Title'].astype(str).str.strip()
+    booklist['Author'] = booklist['Author'].astype(str).str.strip()
+
     # Find titles in booklist that aren't in covers yet
-    new_titles = booklist[~booklist['Title'].isin(covers['Title'])]['Title'].unique()
+    new_books = booklist[~booklist['Title'].isin(covers['Title'])][['Title', 'Author']].drop_duplicates(subset=['Title'])
 
-    if len(new_titles) > 0:
-        new_rows = pd.DataFrame({'Title': new_titles, 'cover_url': [np.nan] * len(new_titles)})
-        covers = pd.concat([covers, new_rows], ignore_index=True)
+    if not new_books.empty:
+        # Add the blank cover_url column to our new rows
+        new_books['cover_url'] = np.nan
+        new_books['cover_url'] = new_books['cover_url'].astype(object)
+        
+        # Combine the old covers with the new books dataframe
+        covers = pd.concat([covers, new_books], ignore_index=True)
+        
+        # Save to CSV
         covers.to_csv('new_covers.csv', index=False)
-        print(f"Added {len(new_titles)} new title(s) to new_covers.csv (URLs are pending).")
-    # else:
-        # print("Everything is up to date!")
+        print(f"Added {len(new_books)} new title(s) to new_covers.csv (URLs are pending).")
 
-def fetch_pending_covers(booklist):
+def fetch_pending_covers():
     """
     Iterates through new_covers.csv and fetches URLs for rows with missing covers.
     """
-    # Reads in updated list
-    covers = pd.read_csv('new_covers.csv')
-
-    # Filter for rows that need a URL
+    covers = pd.read_csv('new_covers.csv', dtype={'cover_url': object})
     pending = covers[covers['cover_url'].isna() | (covers['cover_url'] == "")]
 
     if pending.empty:
-        # print("No pending covers to fetch.")
         return
 
     for index, row in pending.iterrows():
         title = row['Title']
-        
-        # Look up author from booklist for a better search
-        # author_match = booklist[booklist['Title'] == title]['Author'].values
-        # author = author_match[0] if len(author_match) > 0 else ""
-        author = booklist[booklist['Title'] == title]['Author'].values
+        author = row['Author']# if 'Author' in row and pd.notna(row['Author']) else ""
 
         print(f"Fetching cover for: {title} by {author}...")
         
-        # Use a clean query string
-        query = f'intitle:"{title}" inauthor:"{author}"'
-        
-        # This calls existing get_book_cover_v2 function
+        query = f'intitle:{title} inauthor:{author}'
         new_url = get_book_cover_v2(title, query)
 
         if new_url:
@@ -1086,10 +1083,8 @@ def fetch_pending_covers(booklist):
             covers.at[index, 'cover_url'] = "N/A"
             print(f"⚠️ No result found for {title}.")
         
-        # Wait 1 second between books to be safe with the API
         time.sleep(1)
 
-    # Save the updated URLs back to the file
     covers.to_csv('new_covers.csv', index=False)
     print("Fetch process complete.")
 
@@ -1105,7 +1100,7 @@ def get_book_cover_v2(title, query):
     # Use params for cleaner, safer URL building
     params = {
         'q': query,
-        # 'key': API_KEY,
+        'key': API_KEY,
         'maxResults': 1  # Optimization: we only need the first cover
     }
     
@@ -1115,7 +1110,8 @@ def get_book_cover_v2(title, query):
         try:            
             response = requests.get(url, params=params)
             # print(f"DEBUG: Full Request URL: {response.url}")
-            
+            print(response, response.url)
+        
             if response.status_code == 200:
                 data = response.json()
                 if data.get("totalItems", 0) > 0:
@@ -1231,8 +1227,3 @@ def show_thumb(img_url):
 def move_col(df, col, idx):
     col_series = df.pop(col)
     df = df.insert(idx, col, col_series)
-
-def save_col(df):
-    col_df = df[['Title', 'cover_url']]
-    col_df.to_csv(f"new_covers.csv", index=False)
-    # print(f"Saved to new_covers.csv!")
