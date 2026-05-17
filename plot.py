@@ -554,69 +554,90 @@ def top_graph(df, col1, col2, title, sub, color="#d27575"):
         
     return fig.show(config=config)
 
-def gen_time_graph(df, title, sub):
+def gen_time_graph(monthly_counts, title, sub):
     """
-    Produces a simple bar graph with the given dataframe and column.
-    
-    df: dataframe containing count of books finished
+    Produces a 2-row layout chart using a flat DataFrame containing 'Year', 'Month', and 'Finished' columns.
+    Top row: Total books finished by Year.
+    Bottom row: Continuous Jan-Dec calendar view swapped dynamically by a Year slider.
     """
-    active = 0
-    df.reset_index(inplace=True)
-    rows = df.columns
-    yearlabels = [x for x in df[rows[0]] if len(x)==4]
-    monthlabels = [x for x in df[rows[0]] if len(x)>4]
-    years = len(yearlabels) #gets number of 'whole' years (2020, 2021, 2022, etc.)
-    colors = ['#529b9c'] * len(monthlabels)
+    # 1. Aggregate data for the Top Row
+    yearly_data = monthly_counts.groupby('Year')['Finished'].sum().reset_index()
+    available_years = sorted(monthly_counts['Year'].unique())
+    initial_year = available_years[-1] if available_years else 2024
     
-    fig = go.Figure()
+    # 2. Setup Subplot Layout Grid
+    fig = make_subplots(
+        rows=2, cols=1,
+        shared_xaxes=False,
+        vertical_spacing=0.16,
+        subplot_titles=("Books Finished per Year", f"Books Finished per Month ({initial_year})")
+    )
+    
+    # 3. Add Top Row Trace (Trace Index 0)
+    fig.add_trace(
+        go.Bar(
+            x = yearly_data['Year'].astype(str),
+            y = yearly_data['Finished'].tolist(),
+            name = 'Yearly Total',
+            marker_color = '#529b9c',
+            showlegend = False,
+            hovertemplate = "<b>Year %{x}</b>: %{y} books finished<extra></extra>"
+        ),
+        row=1, col=1
+    )
+    
+    # 4. Set up Fixed Calendar Labels and Initial Bottom Row Trace (Trace Index 1)
+    month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    init_df = monthly_counts[monthly_counts['Year'] == initial_year]
+    init_y = [init_df[init_df['Month'] == m]['Finished'].sum() for m in range(1, 13)]
     
     fig.add_trace(
         go.Bar(
-            x = df[rows[0]][:years], 
-            y = df[rows[2]][:years],
-            name = '',
-            marker_color = colors,
+            x = month_names,
+            y = init_y,
+            name = 'Monthly Total',
+            marker_color = '#529b9c',
             showlegend = False,
-            customdata = yearlabels,
-            hovertemplate="<b>Books Finished in %{customdata}</b>: %{y}",
-            visible = True if active == 0 else False
-        )
+            hovertemplate = "<b>%{x}</b>: %{y} books finished<extra></extra>"
+        ),
+        row=2, col=1
     )
     
-    fig.add_trace(
-        go.Bar(
-            x = df[rows[0]][years:], 
-            y = df[rows[2]][years:],
-            name = '',
-            marker_color = colors,
-            showlegend = False,
-            customdata = monthlabels,
-            hovertemplate="<b>Books Finished in %{customdata}</b>: %{y}",
-            visible = True if active == 1 else False
-        )
-    )
-    
-    button_opts = []
-    button_opts.append(dict(method = "update",
-                            args = [{'x': [df[rows[0]][:years]],
-                                     'y': [df[rows[2]][:years]],
-                                     'visible':[True, False]}, 
-                                     {'title.text' : f"{title}<br><sup>Total Number of Books Finished by Year"}],
-                            label = 'Year'))
-
-    button_opts.append(dict(method = "update",
-                            args = [{'x': [df[rows[0]][years:]],
-                                     'y': [df[rows[2]][years:]],
-                                     'visible':[False, True]}, 
-                                     {'title.text' : f"{title}<br><sup>Total Number of Books Finished by Year-Month"}],
-                            label = 'Year-Month'))
-    
-    fig.update_layout(updatemenus = gen_menu(active, button_opts))
-    
-    # Styling
-    title = button_opts[active]['args'][1]['title.text'] #searches list in dictionary in list of dictionaries?
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=True)
+    # 5. Build Interactive Year Slider Steps
+    slider_steps = []
+    for yr in available_years:
+        yr_df = monthly_counts[monthly_counts['Year'] == yr]
+        yr_y = [yr_df[yr_df['Month'] == m]['Finished'].sum() for m in range(1, 13)]
         
+        step = dict(
+            method = "update",
+            args = [
+                {'y': [yr_y]},
+                {'annotations[1].text': f"Books Finished per Month ({yr})"},
+                [1] # Target trace 1 exclusively
+            ],
+            label = str(yr)
+        )
+        slider_steps.append(step)
+        
+    sliders = [dict(
+        active = available_years.index(initial_year),
+        currentvalue = {"prefix": "Reading Year: ", "font": {"size": 14, "family": "Baskerville"}},
+        pad = {"t": 50, "b": 10},
+        steps = slider_steps
+    )]
+    
+    # 6. Apply original styling adjustments
+    full_title = f"{title}<br><sup>{sub}</sup>"
+    fig = gen_layout(fig, title=full_title, l_mar=85, r_mar=85, t_mar=120, b_mar=100, height=850, y_showgrid=True, x_showline=True)
+    
+    # 7. Final layout override to attach category types and sliders
+    fig.update_layout(
+        xaxis = dict(type='category'),
+        xaxis2 = dict(type='category'),
+        sliders = sliders
+    )
+    
     return fig.show(config=config)
 
 def gen_scatter(df, title, sub, color="#d27575"):
@@ -846,156 +867,71 @@ def gen_infographic(df, full_df):
      
     return fig.show(config=config)
 
-def gen_linegraph(df, title, sub):
-
-    #stuff to align y-axis at 0
-    y1_min, y1_max = df['Pages'].min(), df['Pages'].max()
-    y1_padding = (y1_max - y1_min)/16
-    y1_range = [y1_min - y1_padding, y1_max + y1_padding]
-    y1_relative_zero = (0 - y1_range[0]) / (y1_range[1] - y1_range[0])
-    y2_min, y2_max = df['Title'].min(), df['Title'].max()
-    y2_padding = (y1_relative_zero * (y2_max - y2_min) + y2_min) / (1 - 2*y1_relative_zero)
-    y2_range = [y2_min - y2_padding, y2_max + y2_padding]
-
+def gen_linegraph(df, title, sub, standard_pages=300):
+    """
+    Plots Actual Books Read vs. Normalized Books Read (Standard Book Equivalents)
+    on a single clean Y-axis to eliminate dual-axis clutter.
+    """
+    df = df.copy()
+    
+    # Calculate Normalized Books (e.g., Total Pages / 300)
+    df['Normalized Books'] = (df['Pages'] / standard_pages).round(1)
+    
     fig = go.Figure()
-    df['Avg'] = round(df['Pages'] / df['Title'],0)
-
-    #first line
-    fig.add_trace(
-        go.Scatter(
-            x = df.index,
-            y = df['Pages'],
-            line_shape='hvh',
-            fill='tozeroy',
-            mode='lines+markers',
-            marker_size=4,
-            name='Pages Read',
-            yaxis = 'y2',
-            line_color='#d27575',
-            # customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
-            hovertemplate="""<b>Pages Read</b>: %{y:,}<extra></extra>"""
-        )
-    )
-
-    #second line
+    
+    # Line 1: Actual Books Read (Count of unique Titles)
     fig.add_trace(
         go.Scatter(
             x = df.index,
             y = df['Title'],
-            line_shape='hvh',
-            fill='tozeroy',
-            mode='lines+markers',
-            marker_size=4,
-            name='Books Read',
-            line_color='#529b9c',
-            yaxis='y',
-            # customdata = np.stack(([x.strftime('%b %Y') for x in df.index]), axis=-1),
-            hovertemplate="""<b>Books Read</b>: %{y}<extra></extra>""" #note customdata, and not customdata[0]
+            line_shape = 'hvh',  # Keeps your preferred step-line style
+            mode = 'lines+markers',
+            marker_size = 4,
+            name = 'Actual Books Read',
+            line_color = '#529b9c',
+            hovertemplate = "<b>Actual Books</b>: %{y}<extra></extra>"
         )
     )
-
-    #third line
+    
+    # Line 2: Normalized Books Read
     fig.add_trace(
         go.Scatter(
             x = df.index,
-            y = df['Avg'],
-            line_shape='hvh',
-            fill='tozeroy',
-            mode='lines+markers',
-            marker_size=4,
-            name='Avg. # Pages',
-            yaxis = 'y2',
-            line_color='#9cba8f',
-            # customdata = np.stack([x.strftime('%b %Y') for x in df.index], axis=-1),
-            hovertemplate="""<b>Avg. Pages</b>: %{y:,}<extra></extra>""",
-            visible='legendonly'
+            y = df['Normalized Books'],
+            line_shape = 'hvh',
+            mode = 'lines+markers',
+            marker_size = 4,
+            name = 'Normalized Books',
+            line_color = '#d27575',
+            hovertemplate = "<b>Normalized Books</b>: %{y}<extra></extra>"
         )
     )
-
-    #updating layout to include second y-axis
+    
+    # Apply your template's styling rules
+    full_title = f"{title}<br><sup>{sub}</sup>"
+    fig = gen_layout(fig, title=full_title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, x_showline=False, showlegend=True)
+    
+    # Clean up the single Y-axis settings and legend
     fig.update_layout(
-        hovermode='x unified',
-        yaxis=dict(       
-            range=y2_range,
-            showgrid=True,
-            gridcolor="lightgray"
+        hovermode = 'x unified',
+        yaxis = dict(
+            title_text = "Number of Books",
+            showgrid = True,
+            gridcolor = "lightgray",
+            zeroline = True,           # Draw the line at Y = 0
+            zerolinecolor = "black",   # Give it a crisp solid color
+            # zerolinewidth = 1,       # Make it clean and visible
+            rangemode = "tozero"       # Forces the axis scale to start cleanly at 0
         ),
-        yaxis2=dict(
-            overlaying="y",
-            side="right",
-            range=y1_range,
-            showgrid=False,
-            zerolinecolor='black'
-        ),
-        legend=dict(
-            bgcolor='rgba(0,0,0,0)',
-            orientation='h', 
-            yanchor="top", 
-            y=1.05, 
-            xanchor="center", 
-            x=0.5)
+        legend = dict(
+            bgcolor = 'rgba(0,0,0,0)',
+            orientation = 'h', 
+            yanchor = "top", 
+            y = 1.05, 
+            xanchor = "center", 
+            x = 0.5
+        )
     )
-
-    # Styling
-    title = f"{title}<br><sup>{sub}"
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, showlegend=True)
-     
-    return fig.show(config=config)
-
-def gen_linegraph2(df, title, sub):
-    traces = []
-    buttons = []
-    names = ['Books', 'Pages']
-    colors = ['#529b9c', '#d27575']
-
-    for idx, col in enumerate(df.columns):
-        traces.append(
-            go.Scatter(
-                x=df.index,
-                y=df[col],
-                line_color=colors[idx],
-                mode='lines+markers',
-                visible=True,
-                name=names[idx])
-        )
-
-        buttons.append(
-            dict(
-                method='restyle',
-                label=names[idx],
-                visible=True,
-                args=[{'visible':True},[i for i,x in enumerate(traces) if x.name == names[idx]]],
-                args2=[{'visible':'legendonly'},[i for i,x in enumerate(traces) if x.name == names[idx]]]
-            )
-        )
-
-    allButton = [
-        dict(
-            method='restyle',
-            label='Both',
-            visible=True,
-            args=[{'visible':True}],
-            args2=[{'visible':'legendonly'}]
-        )
-    ]
-
-    # create the layout 
-    layout = go.Layout(
-        updatemenus=[
-            dict(
-                type='buttons',
-                direction='right',
-                x=1,
-                y=1.05,
-                showactive=True,
-                buttons=allButton + buttons
-            )
-        ]
-    )
-
-    title = f"{title}<br><sup>{sub}"
-    fig = go.Figure(data=traces,layout=layout)    
-    fig = gen_layout(fig, title, l_mar=85, r_mar=85, t_mar=120, b_mar=45, y_showgrid=True, showlegend=False)
     
     return fig.show(config=config)
 
