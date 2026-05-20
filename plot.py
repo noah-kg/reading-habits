@@ -37,6 +37,7 @@ def load_api_key(filepath="book_creds.json"):
 
 # Global key initialization
 API_KEY = load_api_key()
+# print(API_KEY)
 
 # Remove unnecessary control items in figures (for Plotly)
 config = {
@@ -1024,6 +1025,7 @@ def fetch_pending_covers():
         print(f"Fetching cover for: {title} by {author}...")
         
         query = f'intitle:{title} inauthor:{author}'
+        # print(query)
         new_url = get_book_cover_v2(title, query)
 
         if new_url:
@@ -1039,7 +1041,7 @@ def fetch_pending_covers():
     print("Fetch process complete.")
 
 def get_book_cover_v2(title, query):
-    url = "https://googleapis.com"
+    url = "https://www.googleapis.com/books/v1/volumes"
     
     # Base parameters
     params = {
@@ -1057,6 +1059,7 @@ def get_book_cover_v2(title, query):
     for attempt in range(max_retries):
         try:
             response = requests.get(url, params=params, headers=headers)
+            # print(response.url)
             
             if response.status_code == 200:
                 data = response.json()
