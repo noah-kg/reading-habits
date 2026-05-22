@@ -9,6 +9,8 @@ import chart_studio.plotly as py
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from scipy.stats import gaussian_kde
+import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 
 from plotly.offline import download_plotlyjs, init_notebook_mode
@@ -50,6 +52,10 @@ config = {
         'scale': 1
       }
 }
+
+##############################################################
+### FUNCTIONS REGARDING PLOTLY LAYOUTS, BUTTONS, MENUS, ETC.
+##############################################################
 
 def gen_layout(fig, title='', title_size=35, autosize=True, height=600, width=1000, showlegend=False, plot_bg='#f0f0f0', 
                paper_bg='#f0f0f0', y_title=None, x_title=None, l_mar=45, r_mar=45, t_mar=115, b_mar=45, 
@@ -168,6 +174,10 @@ def gen_buttons(vals, num_traces=3, multi=0, no_title=0):
                 )
             )
     return buttons_opts
+
+##############################################################
+### FUNCTIONS FOR GRAPHING DATA
+##############################################################
 
 def gen_bar_graph(df, col, title, sub, num=5, avg=False, color="#d27575", w_avg='Rating'):
     """
@@ -983,7 +993,10 @@ def gen_choropleth(df, title, sub, col='Count'):
         
     return fig.show(config=config)
 
-# These functions are for finding the book covers for the itable
+##############################################################
+### FUNCTIONS TO SEARCH FOR THE BOOK COVERS FOR THE ITABLE
+##############################################################
+
 def sync_booklist_to_covers(booklist, covers):
     """
     Checks booklist.csv for new titles and adds them to new_covers.csv.
@@ -1177,3 +1190,715 @@ def show_thumb(img_url):
 def move_col(df, col, idx):
     col_series = df.pop(col)
     df = df.insert(idx, col, col_series)
+
+##############################################################
+### REWORKED FUNCTIONS
+##############################################################
+
+def gen_categorical_dropdown(df, columns_list=['Genre', 'Sub-Genre', 'Author', 'Format', 'Publisher', 'Gender'], top_n=10):
+    """
+    Creates a side-by-side layout (Bar + Donut) with a unified Dropdown Menu.
+    Includes a dynamic center text annotation displaying total books per group view.
+    """
+    subtitle_map = {
+        'Genre': 'I definitely enjoy fiction more than anything else',
+        'Sub-Genre': 'Aside from WH40k, I enjoy Classics and Historial Fiction',
+        'Author': 'My most-read authors (8 of them are WH40K writers!)',
+        'Format': 'eBooks were massively convenient when I lived abroad',
+        'Publisher': 'My most-read publishers (Black Library is WH40K)',
+        'Gender': 'I tend to read more male authors, but I\'m expanding my horizons!'        
+    }
+
+    fig = make_subplots(
+        rows=1, cols=2,
+        column_widths=[0.6, 0.4],       
+        specs=[[{"type": "xy"}, {"type": "domain"}]], 
+        horizontal_spacing=0.05
+    )
+    
+    total_columns = len(columns_list)
+    totals_per_column = [] # To store calculated totals for the dropdown updates
+    
+    for idx, col in enumerate(columns_list):
+        # 1. Extract clean value counts
+        counts = df[col].dropna().value_counts().reset_index()
+        counts.columns = ['Category', 'Count']
+        
+        # Track the absolute total before we slice or cap for visualization limits
+        if str(col).lower() == 'author':
+            # For authors, since we drop the long tail, total equals sum of the Top 10
+            col_total = counts.head(10)['Count'].sum()
+        else:
+            # For structural groupings, total equals the complete library volume
+            col_total = counts['Count'].sum()
+            
+        totals_per_column.append(col_total)
+        
+        # 2. Clutter Filter
+        if len(counts) > top_n:
+            if str(col).lower() == 'author':
+                counts = counts.head(top_n)
+            else:
+                top_m = counts.head(top_n - 1)
+                leftovers_count = counts.iloc[top_n - 1:]['Count'].sum()
+                other_row = pd.DataFrame([{'Category': 'Other', 'Count': leftovers_count}])
+                counts = pd.concat([top_m, other_row], ignore_index=True)
+            
+        is_visible = (idx == 0)
+        
+        # Add Bar Chart Trace (Left Side)
+        fig.add_trace(
+            go.Bar(
+                x = counts['Category'],
+                y = counts['Count'],
+                name = col,
+                marker_color = '#529b9c',
+                visible = is_visible,
+                hovertemplate = "<b>%{x}</b><br>Volume: %{y} books<extra></extra>"
+            ),
+            row=1, col=1
+        )
+        
+        # Add Donut Chart Trace (Right Side -> hole set to 0.5)
+        fig.add_trace(
+            go.Pie(
+                labels = counts['Category'],
+                values = counts['Count'],
+                name = col,
+                visible = is_visible,
+                textinfo = 'percent',          
+                textposition = 'inside',
+                hole = 0.3,                    # Expanded hole width for comfortable text housing
+                marker = dict(colors=['#529b9c', '#d27575', '#9cba8f', '#eac435', '#a6b1e1', '#7f7f7f']),
+                hovertemplate = "<b>%{label}</b><br>Count: %{value}<br>Share: %{percent}<extra></extra>"
+            ),
+            row=1, col=2
+        )
+        
+    # 3. Create the Initial Center Annotation
+    # Column 2 maps roughly to x-domain coordinates [0.55 to 1.0]. Center is around x=0.80
+    center_annotation = dict(
+        text = f"<b>{totals_per_column[0]}</b><br>Books",
+        font = dict(family="Baskerville", size=18, color="#001c40"),
+        showarrow = False,
+        x = 0.838, y = 0.5, # Locks text exactly in the middle of the right column domain
+        xref = "paper", yref = "paper"
+    )
+    
+    # 4. Generate Dropdown Buttons
+    buttons = []
+    for idx, col in enumerate(columns_list):
+        visibility = [False] * (total_columns * 2)
+        visibility[idx * 2] = True       
+        visibility[(idx * 2) + 1] = True 
+        
+        # Fetch subtitle from our map, fallback to a default if column isn't found
+        current_sub = subtitle_map.get(col, f"Library distribution broken down by {col}")
+        
+        button = dict(
+            method = "update",
+            label = f"Group By: {col}",
+            args = [
+                {"visible": visibility}, 
+                {
+                    # Dynamically inject the personalized subtitle string here
+                    "title.text": f"Library Composition by {col}<br><sup>{current_sub}</sup>",
+                    "annotations[2].text": f"<b>{totals_per_column[idx]}</b><br>Books"
+                } 
+            ]
+        )
+        buttons.append(button)
+        
+    # 5. Apply everything to Layout
+    fig.update_layout(
+        updatemenus=[dict(
+            active = 0,
+            buttons = buttons,
+            x = 1.0, y = 1.15, 
+            xanchor = 'right', yanchor = 'top',
+            font = dict(family="Baskerville", size=13)
+        )],
+        legend = dict(
+            orientation = "h",
+            yanchor = "top", y = -0.05,
+            xanchor = "center", x = 0.5
+        )
+    )
+    
+    # 4. Generate Initial Static Title
+    first_col = columns_list[0]
+    initial_sub = subtitle_map.get(first_col, f"Library distribution broken down by {first_col}")
+    initial_title = f"Library Composition by {first_col}<br><sup>{initial_sub}</sup>"
+
+    # Style via your core notebook parameters
+    fig = gen_layout(fig, title=initial_title, height=600, t_mar=130, l_mar=85, r_mar=85, b_mar=65, y_showgrid=True, x_showline=True)
+    
+    # Append our custom donut annotation onto the existing list created by gen_layout
+    fig.add_annotation(center_annotation)
+    
+    return fig.show(config=config)
+
+import plotly.express as px
+
+def gen_genre_sunburst(df):
+    """
+    Creates an interactive nested Sunburst chart showing the hierarchy 
+    of Category -> Genre -> Sub-Genre.
+    """
+    # 1. Clean data: Drop rows that are missing any part of the hierarchy path
+    # If a book has a Sub-Genre but no main Genre, Plotly's path logic will break.
+    hierarchy_cols = ['Format', 'Genre', 'Sub-Genre']
+    df_clean = df.dropna(subset=hierarchy_cols)
+    
+    # 2. Generate the Sunburst plot using Plotly Express
+    fig = px.sunburst(
+        df_clean, 
+        path = hierarchy_cols, # Dictates the ring order from inside out
+        color_discrete_sequence = ['#529b9c', '#d27575', '#9cba8f', '#eac435', '#a6b1e1']
+    )
+    
+    # 3. Optimize the hover text and slice labels
+    fig.update_traces(
+        textinfo = "label+percent parent", # Displays the slice name and its % share of the parent ring
+        hovertemplate = "<b>%{label}</b><br>Books: %{value}<br>Share of Parent: %{percentParent:.1%}<extra></extra>"
+    )
+    
+    # 4. Bind it to your global notebook layout engine
+    title = "Library Composition Hierarchy<br><sup>Click individual inner segments to drill down into deeper sub-genres</sup>"
+    fig = gen_layout(fig, title=title, height=700, t_mar=130, b_mar=50)
+    
+    return fig.show(config=config)
+
+def gen_genre_sunburst2(df):
+    """
+    Creates an interactive nested Sunburst chart using pure plotly.graph_objects.
+    Dynamically maps hierarchies across Format -> Genre -> Sub-Genre.
+    """
+    hierarchy_cols = ['Format', 'Genre', 'Sub-Genre']
+    df_clean = df.dropna(subset=hierarchy_cols)
+    
+    # --- STEP 1: TRANSLATE DATA FOR GRAPH OBJECTS ---
+    # go.Sunburst needs a single list of unique labels, and a matching list of parents.
+    labels = []
+    parents = []
+    values = []
+    
+    # Level 1: Root nodes (Formats)
+    formats = df_clean['Format'].value_counts()
+    for fmt, count in formats.items():
+        labels.append(fmt)
+        parents.append("") # Root elements have no parent
+        values.append(count)
+        
+    # Level 2: Middle nodes (Format -> Genre)
+    fmt_genre = df_clean.groupby(['Format', 'Genre']).size()
+    for (fmt, genre), count in fmt_genre.items():
+        # We use a unique ID "Format - Genre" to prevent duplicate names from colliding
+        labels.append(f"{fmt} - {genre}") 
+        parents.append(fmt)
+        values.append(count)
+        
+    # Level 3: Outer nodes (Format -> Genre -> Sub-Genre)
+    # We use tracking IDs to make sure the outer sub-genres nest under the right parent path
+    full_path = df_clean.groupby(['Format', 'Genre', 'Sub-Genre']).size()
+    for (fmt, genre, sub_genre), count in full_path.items():
+        labels.append(f"{fmt} - {genre} - {sub_genre}")
+        parents.append(f"{fmt} - {genre}")
+        values.append(count)
+
+    # --- STEP 2: BUILD THE GRAPH OBJECT TRACE ---
+    fig = go.Figure()
+    
+    fig.add_trace(go.Sunburst(
+        ids = labels, # Unique identification string for each slice
+        # Clean up the display labels so the user only sees "Sci-Fi" instead of "Audiobook - Sci-Fi"
+        labels = [x.split(" - ")[-1] for x in labels], 
+        parents = parents,
+        values = values,
+        branchvalues = "total", # Ensures parent slices cleanly equal the sum of their children
+        textinfo = "label+percent parent",
+        hovertemplate = "<b>%{label}</b><br>Books: %{value}<br>Share of Parent: %{percentParent:.1%}<extra></extra>",
+        marker = dict(colors=['#529b9c', '#d27575', '#9cba8f', '#eac435', '#a6b1e1'])
+    ))
+    
+    # --- STEP 3: APPLY STANDARD TEMPLATE LAYOUT ---
+    title = "Library Composition Hierarchy - WIP<br><sup>Click an inner segment to explore deeper within it</sup>"
+    fig = gen_layout(fig, title=title, height=700, t_mar=130, b_mar=50)
+    
+    return fig.show(config=config)
+
+def gen_reading_heatmap(df, date_col='Finish Date'):
+    """
+    Creates a density heatmap grid (Day of Week vs. Month) 
+    showing completion velocity using pure plotly.graph_objects.
+    """
+    # 1. Ensure the date column is parsed and filter out missing values
+    df_dates = df[df[date_col].notnull()].copy()
+    df_dates[date_col] = pd.to_datetime(df_dates[date_col])
+    
+    # Extract shorthand string names
+    df_dates['Month'] = df_dates[date_col].dt.strftime('%b')
+    df_dates['Day'] = df_dates[date_col].dt.strftime('%a')
+    
+    # 2. Establish strict calendar sorting rules
+    months_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    
+    # 3. Group and pivot data into a literal 2D matrix layout
+    grid_data = df_dates.groupby(['Month', 'Day']).size().reset_index(name='Counts')
+    matrix = grid_data.pivot(index='Day', columns='Month', values='Counts').fillna(0)
+    
+    # Reindex forces the matrix rows/columns to align to our strict calendar order
+    matrix = matrix.reindex(index=days_order, columns=months_order).fillna(0)
+    
+    # 4. Generate the Heatmap Trace
+    fig = go.Figure()
+    
+    fig.add_trace(go.Heatmap(
+        z = matrix.values,     # The raw density integer array
+        x = matrix.columns,    # Months on the horizontal axis
+        y = matrix.index,      # Days of the week on the vertical axis
+        
+        # Color gradient: Shifts from a soft neutral light gray (0) to your main theme teal (1)
+        colorscale = [[0, '#f8f9fa'], [1, '#529b9c']], 
+        showscale = True,
+        
+        # Clear, interactive custom hover tooltips
+        hovertemplate = "<b>%{y}s in %{x}</b><br>Books Finished: %{z}<extra></extra>"
+    ))
+    
+    # 5. Connect to your core layout pipeline
+    title = "My Reading DNA<br><sup>Total book completions cross-referenced by Day of Week vs. Month</sup>"
+    fig = gen_layout(fig, title=title, height=500, l_mar=70, r_mar=40, t_mar=100, b_mar=60)
+    
+    # Reverse the Y-axis so Monday starts cleanly at the top and Sunday rests at the bottom
+    fig.update_layout(yaxis=dict(autorange="reversed"))
+    
+    return fig.show(config=config)
+
+def gen_reading_intensity_heatmap(df, start_col='Start Date', finish_col='Finish Date', pages_col='Pages'):
+    """
+    Creates a density heatmap grid (Day of Week vs. Month) showing daily page volume.
+    Distributes book pages across reading durations and silences empty hover gaps.
+    """
+    # 1. Clean data and ensure proper datetime parsing
+    df_clean = df.dropna(subset=[start_col, finish_col, pages_col]).copy()
+    df_clean[start_col] = pd.to_datetime(df_clean[start_col])
+    df_clean[finish_col] = pd.to_datetime(df_clean[finish_col])
+    
+    # 2. MATH PIPELINE: Explode books day-by-day across their reading duration
+    day_records = []
+    for _, row in df_clean.iterrows():
+        date_range = pd.date_range(start=row[start_col], end=row[finish_col])
+        days_count = len(date_range)
+        if days_count == 0:
+            continue
+            
+        pages_per_day = row[pages_col] / days_count
+        for single_date in date_range:
+            day_records.append({'Date': single_date, 'Pages': pages_per_day})
+            
+    df_daily = pd.DataFrame(day_records)
+    if df_daily.empty:
+        print("No valid reading duration data found.")
+        return
+        
+    # Sum pages for overlapping books read on the same calendar day
+    df_daily_totals = df_daily.groupby('Date')['Pages'].sum().reset_index()
+    
+    # 3. EXTRACTION: Pull chronological string tokens from the dates
+    df_daily_totals['Month'] = df_daily_totals['Date'].dt.strftime('%b')
+    df_daily_totals['Day'] = df_daily_totals['Date'].dt.strftime('%a')
+    
+    # Calculate the average pages read for each Day of Week + Month combination
+    # (Using average instead of raw sum prevents older years from completely dominating newer ones)
+    grid_data = df_daily_totals.groupby(['Month', 'Day'])['Pages'].mean().reset_index(name='AvgPages')
+    
+    # 4. MATRIX PIPELINE: Pivot and sort into calendar grid order
+    months_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    
+    matrix = grid_data.pivot(index='Day', columns='Month', values='AvgPages')
+    matrix = matrix.reindex(index=days_order, columns=months_order)
+    
+    # 5. GENERATE THE HEATMAP TRACE
+    fig = go.Figure()
+    
+    fig.add_trace(go.Heatmap(
+        z = matrix.values,     # The average daily pages array
+        x = matrix.columns,    # Months on the horizontal axis
+        y = matrix.index,      # Days of the week on the vertical axis
+        
+        # Color gradient: Neutral off-white up to your primary theme teal
+        colorscale = [[0, '#f8f9fa'], [1, '#529b9c']], 
+        
+        # Turn off tooltips for cells with NaN (gaps where you have no historical reading)
+        hoverongaps = False,
+        
+        showscale = True,
+        colorbar = dict(title="Avg Pages", titleside="top"),
+        
+        hovertemplate = (
+            "<b>%{y}s in %{x}</b><br>"
+            "Pace: ~%{z:.1f} Pages/Day<extra></extra>"
+        )
+    ))
+    
+    # 6. LAYOUT PIPELINE
+    title = "My Weekly Reading DNA<br><sup>Average daily reading volume cross-referenced by Day of Week vs. Month</sup>"
+    fig = gen_layout(fig, title=title, height=450, l_mar=70, r_mar=40, t_mar=100, b_mar=60)
+    
+    # Reverse the Y-axis so Monday starts at the top and Sunday rests at the bottom
+    fig.update_layout(yaxis=dict(autorange="reversed", showgrid=False, zeroline=False))
+    
+    return fig.show(config=config)
+
+def gen_reading_calendar_waffle(df, start_col='Start Date', finish_col='Finish Date', pages_col='Pages', title_col='Title', genre_col='Sub-Genre', manga_genres=['Graphic Novel', 'Manga']):
+    """
+    Creates an annual calendar waffle chart (12 Months x 31 Days) using go.Heatmap.
+    Uses hoverongaps=False to natively silence hover text on all inactive days.
+    """
+    # 1. Clean data and ensure proper datetime parsing
+    df_clean = df.dropna(subset=[start_col, finish_col, pages_col, title_col]).copy()
+    df_clean[start_col] = pd.to_datetime(df_clean[start_col])
+    df_clean[finish_col] = pd.to_datetime(df_clean[finish_col])
+    
+    # 2. MATH PIPELINE: Explode books day-by-day
+    day_records = []
+    manga_genres_lower = [g.lower() for g in manga_genres]
+    
+    for _, row in df_clean.iterrows():
+        date_range = pd.date_range(start=row[start_col], end=row[finish_col])
+        days_count = len(date_range)
+        if days_count == 0:
+            continue
+            
+        pages_per_day = row[pages_col] / days_count
+        is_manga = str(row.get(genre_col, '')).lower() in manga_genres_lower
+        
+        for single_date in date_range:
+            day_records.append({
+                'Date': single_date, 
+                'Pages': pages_per_day,
+                'Title': str(row[title_col]),
+                'IsManga': is_manga
+            })
+            
+    df_daily = pd.DataFrame(day_records)
+    if df_daily.empty:
+        print("No valid reading data found.")
+        return
+        
+    def combine_day(group):
+        titles = " | ".join(group['Title'].unique())
+        total_pages = group['Pages'].sum()
+        manga_pages = group[group['IsManga']]['Pages'].sum()
+        prose_pages = group[~group['IsManga']]['Pages'].sum()
+        return pd.Series({'Pages': total_pages, 'Titles': titles, 'IsMangaDay': manga_pages > prose_pages})
+
+    df_daily_totals = df_daily.groupby('Date').apply(combine_day).reset_index()
+    df_daily_totals['Year'] = df_daily_totals['Date'].dt.year
+    unique_years = sorted(df_daily_totals['Year'].unique())
+    
+    prose_max_ceiling = 60.0
+    months_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    # 3. BUILD THE DISCRETE COLORSCALE ENGINE
+    # We change the 0 index from off-white to transparent/background color since it represents gaps now
+    custom_colorscale = [[0.0, '#f8f9fa']] 
+    rgba_bg = np.array(mcolors.to_rgba('#f8f9fa'))
+    rgba_tl = np.array(mcolors.to_rgba('#529b9c'))
+    
+    for i in range(1, 101):
+        pct = i / 100.0
+        mixed_color = mcolors.to_hex(rgba_bg * (1 - pct) + rgba_tl * pct)
+        custom_colorscale.append([i / 102.0, mixed_color])
+        
+    custom_colorscale.append([101 / 102.0, '#d27575'])
+    custom_colorscale.append([102 / 102.0, '#d27575'])
+
+    fig = go.Figure()
+    
+    # 4. TRACE LOOP: Generate grids for each unique year
+    for idx, year in enumerate(unique_years):
+        df_year = df_daily_totals[df_daily_totals['Year'] == year]
+        
+        # Initialize the baseline matrix as NaNs (gaps) instead of zeros
+        matrix_z = np.full((12, 31), np.nan)
+        matrix_titles = np.full((12, 31), '', dtype=object) 
+        matrix_hover_pages = np.zeros((12, 31)) 
+        
+        # Pin down calendar days that flat out don't exist
+        invalid_days_mask = np.zeros((12, 31), dtype=bool)
+        for m_idx, month in enumerate(months_order):
+            for d_idx in range(1, 32):
+                try:
+                    pd.to_datetime(f"{year}-{m_idx+1}-{d_idx}")
+                except:
+                    invalid_days_mask[m_idx, d_idx-1] = True
+
+        for _, row in df_year.iterrows():
+            m_name = row['Date'].strftime('%b')
+            day_num = row['Date'].day
+            if m_name in months_order and 1 <= day_num <= 31:
+                m_idx = months_order.index(m_name)
+                d_idx = day_num - 1
+                
+                pages = row['Pages']
+                matrix_hover_pages[m_idx, d_idx] = pages
+                matrix_titles[m_idx, d_idx] = row['Titles']
+                
+                if row['IsMangaDay']:
+                    matrix_z[m_idx, d_idx] = 101 
+                else:
+                    pct = min(pages / prose_max_ceiling, 1.0)
+                    matrix_z[m_idx, d_idx] = max(int(pct * 100), 1)
+
+        # Force invalid calendar days to be None so they hide completely, 
+        # while keeping unread active days as NaN so they display as soft gray boxes
+        matrix_z = matrix_z.astype(object)
+        matrix_z[invalid_days_mask] = None
+        
+        custom_data_pack = np.stack((matrix_titles, matrix_hover_pages), axis=-1)
+        is_visible = (idx == len(unique_years) - 1)
+        
+        fig.add_trace(go.Heatmap(
+            z = matrix_z,
+            x = [f"{d}" for d in range(1, 32)],
+            y = months_order,
+            xgap = 3, ygap = 3,
+            colorscale = custom_colorscale,
+            zmin = 0, zmax = 102,
+            
+            # --- CRITICAL HOVER FIXES ---
+            hoverongaps = False, # This natively kills the hover tooltip window on all NaN boxes!
+            
+            showscale = False,
+            
+            customdata = custom_data_pack,
+            visible = is_visible,
+            # Back to a strict single-string template structure that Plotly won't choke on
+            hovertemplate = (
+                "<b>%{y} %{x}, " + str(year) + "</b><br>"
+                "Books: <i>%{customdata[0]}</i><br>"
+                "Estimated Daily Total: %{customdata[1]:.1f} Pages<extra></extra>"
+            )
+        ))
+
+    # 5. TIMELINE SLIDER GENERATION
+    steps = []
+    for idx, year in enumerate(unique_years):
+        visibility = [False] * len(unique_years)
+        visibility[idx] = True
+        
+        step = dict(
+            method = "update",
+            label = str(year),
+            args = [
+                {"visible": visibility}, 
+                {"title.text": f"My Reading Blueprint ({year})<br><sup>Teal indicates prose intensity. Coral highlights Graphic Novels (they skew the data!)</sup>"} 
+            ]
+        )
+        steps.append(step)
+        
+    sliders = [dict(
+        active = len(unique_years) - 1, 
+        currentvalue = {"prefix": "Reading Year: ", "font": {"family": "Baskerville", "size": 15}},
+        pad = {"t": 20, "b": 30}, 
+        yanchor = "top",          
+        y = -0.05,                
+        steps = steps
+    )]
+    
+    # 6. CORE LAYOUT
+    latest_year = unique_years[-1]
+    initial_title = f"My Reading Blueprint ({latest_year})<br><sup>Teal indicates prose intensity. Coral highlights Graphic Novels (they skew the data!)</sup>"
+    
+    fig = gen_layout(fig, title=initial_title, height=520, t_mar=100, b_mar=140, l_mar=60, r_mar=40)
+    fig.update_layout(
+        sliders = sliders,
+        yaxis = dict(autorange="reversed", showgrid=False, zeroline=False),
+        xaxis = dict(showgrid=False, zeroline=False, tickmode="linear", dtick=5)
+    )
+    
+    return fig.show(config=config)
+
+def gen_reading_burnup(df, start_col='Start Date', finish_col='Finish Date', pages_col='Pages', daily_target_goal=30):
+    """
+    Generates a yearly Page Accumulation Burn-Up Chart using go.Scatter.
+    Plots cumulative actual pages read against a linear target trajectory line.
+    """
+    # 1. Clean data and ensure proper datetime parsing
+    df_clean = df.dropna(subset=[start_col, finish_col, pages_col]).copy()
+    df_clean[start_col] = pd.to_datetime(df_clean[start_col])
+    df_clean[finish_col] = pd.to_datetime(df_clean[finish_col])
+    
+    # 2. MATH PIPELINE: Explode books day-by-day
+    day_records = []
+    for _, row in df_clean.iterrows():
+        date_range = pd.date_range(start=row[start_col], end=row[finish_col])
+        days_count = len(date_range)
+        if days_count == 0:
+            continue
+            
+        pages_per_day = row[pages_col] / days_count
+        for single_date in date_range:
+            day_records.append({'Date': single_date, 'Pages': pages_per_day})
+            
+    df_daily = pd.DataFrame(day_records)
+    if df_daily.empty:
+        print("No valid reading data found.")
+        return
+        
+    # Group by date to handle your rare "finish morning / start evening" double-book days
+    df_daily_totals = df_daily.groupby('Date')['Pages'].sum().reset_index()
+    
+    # 3. CHRONOLOGICAL TIMELINE ALIGNMENT
+    # Filter dataset down exclusively to the current calendar year
+    current_year = 2026
+    df_year = df_daily_totals[df_daily_totals['Date'].dt.year == current_year].copy()
+    
+    # Create a continuous baseline index from Jan 1st to Dec 31st of the current year
+    full_year_range = pd.date_range(start=f"{current_year}-01-01", end=f"{current_year}-12-31")
+    df_timeline = pd.DataFrame({'Date': full_year_range})
+    
+    # Merge your reading tracking data into the master calendar timeline
+    df_timeline = pd.merge(df_timeline, df_year, on='Date', how='left').fillna(0)
+    
+    # Run the cumulative sum to generate the climbing velocity metrics
+    df_timeline['CumulativePages'] = df_timeline['Pages'].cumsum()
+    
+    # 4. TARGET TRAJECTORY LINE LOGIC
+    # Calculates a perfect diagonal target line: Day 1 (0 pages) up to Day 365 (365 * daily_target_goal)
+    day_indices = np.arange(len(full_year_range))
+    df_timeline['TargetTrajectory'] = day_indices * daily_target_goal
+    
+    # 5. GENERATE PLOTLY GRAPH OBJECTS TRACES
+    fig = go.Figure()
+    
+    # Trace A: The Target Baseline (Dashed neutral line)
+    fig.add_trace(go.Scatter(
+        x = df_timeline['Date'],
+        y = df_timeline['TargetTrajectory'],
+        mode = 'lines',
+        name = f'Target Baseline ({daily_target_goal} pgs/day)',
+        line = dict(color='#cbd5e1', width=2, dash='dash'),
+        hovertemplate = "Target Cumulative Total: %{y:,.0f} Pages<extra></extra>"
+    ))
+    
+    # Trace B: Your Actual Reading Progress (Solid core theme color)
+    fig.add_trace(go.Scatter(
+        x = df_timeline['Date'],
+        y = df_timeline['CumulativePages'],
+        mode = 'lines',
+        name = 'My Actual Progress',
+        line = dict(color='#529b9c', width=3.5),
+        fill = 'tozeroy', # Shades the area underneath the line to give it a solid "mountain" feel
+        fillcolor = 'rgba(82, 155, 156, 0.06)', 
+        hovertemplate = (
+            "<b>%{x|%b %d, %Y}</b><br>"
+            "Total Pages Read: <b>%{y:,.0f}</b><extra></extra>"
+        )
+    ))
+    
+    # 6. LAYOUT CONFIGURATION
+    title = f"2026 Reading Burn-Up Campaign<br><sup>Tracking real-time cumulative page momentum against a yearly baseline trajectory</sup>"
+    fig = gen_layout(fig, title=title, width=950, height=500, t_mar=100, b_mar=60, l_mar=70, r_mar=40)
+    
+    fig.update_layout(
+        hovermode = "x unified", # Triggers both the target and actual popups simultaneously on vertical crosshairs
+        legend = dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        xaxis = dict(showgrid=True, gridcolor='#f1f5f9', tickformat="%b"),
+        yaxis = dict(showgrid=True, gridcolor='#f1f5f9', title="Cumulative Pages Consumed")
+    )
+    
+    return fig.show(config=config)
+
+def gen_rating_thickness_scatter(df, rating_col='Rating', pages_col='Pages', title_col='Title', format_col='Format'):
+    """
+    Creates a 'Book Thickness' vs. Rating Scatter Plot with vertical jittering.
+    Color-codes by reading format and preserves absolute ratings in the hovercards.
+    """
+    # 1. Clean data and drop missing value rows
+    df_clean = df.dropna(subset=[rating_col, pages_col, title_col]).copy()
+    
+    # 2. Inject a tight vertical noise offset to spread out clusters on the 1-5 axis
+    # We set a random seed so the data configuration remains stable across refreshes
+    np.random.seed(42)
+    jitter_range = 0.14
+    df_clean['JitteredRating'] = df_clean[rating_col] + np.random.uniform(-jitter_range, jitter_range, size=len(df_clean))
+    
+    fig = go.Figure()
+    
+    # 3. TRACE LOOP: Split data by Format to enable automatic color-coding and legend filtering
+    if format_col in df_clean.columns:
+        unique_formats = sorted(df_clean[format_col].dropna().unique())
+    else:
+        unique_formats = ['All Books']
+        
+    # Cohesive theme palette matching your brand teal, a complementary warm coral, and deep slate
+    theme_palette = ['#529b9c', '#d27575', '#475569', '#94a3b8']
+    
+    for idx, fmt in enumerate(unique_formats):
+        if format_col in df_clean.columns:
+            df_fmt = df_clean[df_clean[format_col] == fmt]
+        else:
+            df_fmt = df_clean
+            
+        color = theme_palette[idx % len(theme_palette)]
+        
+        fig.add_trace(go.Scatter(
+            x = df_fmt[pages_col],
+            y = df_fmt['JitteredRating'],
+            mode = 'markers',
+            name = str(fmt),
+            
+            # Using semi-transparent markers (opacity=0.7) means heavily overlapping 
+            # regions naturally darken, showing you exactly where your rating "sweet spots" sit.
+            marker = dict(
+                size = 11,
+                color = color,
+                opacity = 0.7,
+                line = dict(width=0.5, color='#ffffff')
+            ),
+            
+            text = df_fmt[title_col],
+            # customdata passes the true, unjittered integer rating straight to the hover template
+            customdata = df_fmt[rating_col], 
+            
+            hovertemplate = (
+                "<b>%{text}</b><br>"
+                "Format: " + str(fmt) + "<br>"
+                "Thickness: %{x} Pages<br>"
+                "True Rating: <b>%{customdata} Stars</b><extra></extra>"
+            )
+        ))
+        
+    # 4. CORE LAYOUT PIPELINE
+    title = "Book Thickness vs. Score Evaluation<br><sup>Analyzing page count influence across media formats (vertical jitter applied)</sup>"
+    fig = gen_layout(fig, title=title, width=950, height=520, t_mar=100, b_mar=60, l_mar=90, r_mar=40)
+    
+    # 5. FIXED COORD GRID: Overwrite the Y-axis to frame the integer steps perfectly
+    fig.update_layout(
+        legend = dict(title="Reading Format", orientation="v", yanchor="top", y=1, xanchor="left", x=1.02),
+        xaxis = dict(
+            title = "Book Thickness (Page Count)",
+            showgrid = True,
+            gridcolor = '#f1f5f9',
+            zeroline = False
+        ),
+        yaxis = dict(
+            title = "Assigned Rating Score",
+            tickmode = 'array',
+            # We explicitly target the clean 1-5 boundaries
+            # tickvals = [1, 2, 3, 4, 5],
+            # ticktext = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
+            # Hard bounds set between 0.5 and 5.5 give the jitter clouds room to breathe
+            range = [0.5, 10.5], 
+            showgrid = True,
+            gridcolor = '#e2e8f0',
+            zeroline = False
+        )
+    )
+    
+    return fig.show(config=config) 
