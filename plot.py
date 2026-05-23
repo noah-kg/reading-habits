@@ -1536,7 +1536,7 @@ def gen_reading_intensity_heatmap(df, start_col='Start Date', finish_col='Finish
         hoverongaps = False,
         
         showscale = True,
-        colorbar = dict(title="Avg Pages", titleside="top"),
+        colorbar = dict(title="Avg Pages"),
         
         hovertemplate = (
             "<b>%{y}s in %{x}</b><br>"
