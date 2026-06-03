@@ -1152,36 +1152,6 @@ def get_book_cover(title, link):
     except json.JSONDecodeError:
         print(f"Error decoding JSON response")
         
-def save_cover(title, image_url):
-    output_folder = "covers"
-    title = ''.join(c for c in title if c.isalnum())
-    filename = f"{output_folder}/{title}.jpg"
-
-    if not os.path.exists(output_folder):
-        print("Creating directory for covers...")
-        os.makedirs(output_folder)
-
-    try:
-        if not os.path.isfile(filename):
-            response = requests.get(image_url)
-
-            if response.status_code == 429:
-                retry_after = int(response.headers.get("Retry-After", 10))
-                print(f"Rate limit exceeded. Retrying after {retry_after} seconds.")
-                time.sleep(retry_after)
-                response = requests.get(image_url)
-                
-            response.raise_for_status()
-
-            with open(filename, 'wb') as file:
-                file.write(response.content)
-                print(f"...saved cover as {filename}")
-        else:
-            print(f"already saved {title} cover!")
-    
-    except requests.exceptions.RequestException as e:
-        print(f"Error downloading {title} image: {e}")
-        
 def show_thumb(img_url):
     img = f'<img src="{img_url}" style="max-height:120px; max-width:100px;">'
     return img
@@ -1337,8 +1307,6 @@ def gen_categorical_dropdown(df, columns_list=['Genre', 'Sub-Genre', 'Author', '
     fig.add_annotation(center_annotation)
     
     return fig.show(config=config)
-
-import plotly.express as px
 
 def gen_genre_sunburst(df):
     """
